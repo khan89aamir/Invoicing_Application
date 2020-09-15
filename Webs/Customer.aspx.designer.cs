@@ -15,49 +15,49 @@ namespace Invoicing_Application.Webs
     {
 
         /// <summary>
-        /// frmaccount control.
+        /// frmCustomer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm frmaccount;
+        protected global::System.Web.UI.HtmlControls.HtmlForm frmCustomer;
 
         /// <summary>
-        /// txtAccounID control.
+        /// txtCustomerID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtAccounID;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtCustomerID;
 
         /// <summary>
-        /// txtFulName control.
+        /// txtCustomerName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtFulName;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtCustomerName;
 
         /// <summary>
-        /// Text1 control.
+        /// txtCompanyName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtCompanyName;
 
         /// <summary>
-        /// Text2 control.
+        /// txtGSTNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtGSTNo;
 
         /// <summary>
         /// txtEmail control.
@@ -69,21 +69,21 @@ namespace Invoicing_Application.Webs
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txtEmail;
 
         /// <summary>
-        /// cmbProduct control.
+        /// cmdState control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cmbProduct;
+        protected global::System.Web.UI.WebControls.DropDownList cmdState;
 
         /// <summary>
-        /// Text3 control.
+        /// txtAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea Text3;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtAddress;
     }
 }

@@ -1,7 +1,43 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Products.aspx.cs" Inherits="Invoicing_Application.Webs.Products" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Products.aspx.cs" Inherits="Invoicing_Application.Webs.Products" ClientIDMode="Static" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
+    <script src="../assets/js/mindmup-editabletable.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
+
+type = "text/javascript"></script>
+
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
+rel = "Stylesheet" type="text/css" />
+    <style>
+        .selected2 {
+            background-color: midnightblue !important;
+            color: white !important;
+            text-decoration: none !important;
+        }
+
+        td {
+            text-align: center;
+            padding: 1px !important;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .dataTables_paginate {
+            text-align: center !important;
+            float: none !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+
+        .lnkSelect, .lnkDelete {
+            padding: 1px !important;
+            text-align: center !important;
+        }
+    </style>
+
     <br />
     <div class="container d-flex justify-content-center">
         <div class="card border-info" style="width: 100%;">
@@ -77,6 +113,7 @@
 
                         <tr>
                             <th>Select</th>
+                            <th>Delete</th>
                             <th>SKUID</th>
                             <th>SKU Name</th>
                             <th>Rate</th>
@@ -90,6 +127,7 @@
             </div>
         </div>
     </div>
+    <br />
     <br />
     <br />
 
@@ -114,7 +152,10 @@
                                 event.preventDefault();
                                 event.stopPropagation();
 
-                               SaveProductDetails();
+                                SaveSKUDetails();
+                                //$.ManageProducts();
+                                //$('#example').DataTable().ajax.reload(null, false);
+                                //$('#btnCancel').click();
                             }
                         }
                         form.classList.add('was-validated');
@@ -123,71 +164,198 @@
             }, false);
         })();
 
-        function SaveProductDetails() {
+        function SaveSKUDetails() {
             $.ManageProducts();
+            //$('#example').DataTable().ajax.reload(null, false);
         }
 
-        $.ManageAccount = function () {
+        $(document).ready(function () {
 
+            $.GetSKUDetails();
+        });
 
-            //  let post_url = $("#frmaccount").attr("action"); //get form action url
-            // let request_method = $("#frmaccount").attr("method"); //get form GET/POST method
-            // let form_data = $("#frmaccount").serialize(); //Encode form elements for submission	
+            $.ManageProducts = function () {
 
+                //  let post_url = $("#frmaccount").attr("action"); //get form action url
+                // let request_method = $("#frmaccount").attr("method"); //get form GET/POST method
+                // let form_data = $("#frmaccount").serialize(); //Encode form elements for submission	
 
+                var SkuName = $('#txtSkuName').val();
+                var Rate = $('#txtRate').val();
+                var description = $('#txtDescription').val();
+                var productid = $('#txtProductID').val();
 
-            var SkuName = $('#txtSkuName').val();
-            var Rate = $('#txtRate').val();
-            var description = $('#txtDescription').val();
-            var productid = $('#txtProductID').val();
+                // Create an object:
+                var ProductData = { SKUName: SkuName, Rate: Rate, Description: description, ProudctID: productid };
+                //alert(JSON.stringify(ProductData));
 
-            // Create an object:
-            var ProductData = { SKUName: SkuName, Rate: Rate, Description: description, ProudctID: productid };
-            alert(JSON.stringify(ProductData));
-
-            $.ajax({
-                url: "../Service/Sales_Invoicing.asmx/ManageProducts",
-                type: 'POST',
-                data: JSON.stringify(ProductData),
-                contentType: "application/json",
-                dataType: "json",
-                beforeSend: function () {
-                    $('#lblLoadingtxt').text("Creating SKU Details please wait....");
-                    $('#loadingBox').modal('show');
-                },
-                complete: function () {
-
-                    $('#loadingBox').modal('hide');
-                },
-                success: function (responseData) {
-                    // parse it to java script object so that you can access property
-                    // data = $.parseJSON(responseData.d);
-
-                    if (responseData.Result) {
+                $.ajax({
+                    url: "../Service/Invoicing_Service.asmx/ManageProducts",
+                    type: 'POST',
+                    data: JSON.stringify(ProductData),
+                    contentType: "application/json",
+                    dataType: "json",
+                    beforeSend: function () {
+                        $('#lblLoadingtxt').text("Inserting SKU Details please wait....");
+                        $('#loadingBox').modal('show');
+                    },
+                    complete: function () {
 
                         $('#loadingBox').modal('hide');
+                    },
+                    success: function (responseData) {
+                        // parse it to java script object so that you can access property
+                        // data = $.parseJSON(responseData.d);
 
-                        $('#lblMessage').text(responseData.strMessage);
+                        if (responseData.Result) {
 
-                        $('#mdlNormalMessage').modal('show');
+                            $('#loadingBox').modal('hide');
 
-                        $('#frmaccount').trigger("reset");
+                            $('#lblMessage').text(responseData.strMessage);
 
-                        // after reset remove the class else it will show validtion message.
-                        let jsContactForm = document.getElementById('frmSKU');                   // <=== 
-                        jsContactForm.classList.remove('was-validated');
-                        //
+                            $('#mdlNormalMessage').modal('show');
+
+                            $('#frmSKU').trigger("reset");
+
+                            $('#example').DataTable().ajax.reload(null, false);
+                            // after reset remove the class else it will show validtion message.
+                            let jsContactForm = document.getElementById('frmSKU');                   // <=== 
+                            jsContactForm.classList.remove('was-validated');
+                            //
+                        }
+                        else {
+                            $('#lblMessage').text(responseData.strMessage);
+                            $('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
+                            $('#iconMsg').css('color', 'red');
+                            $('#mdlNormalMessage').modal('show');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+
+                        $('#loadingBox').modal('hide');
+                        alert("Error : " + error);
+                        alert("Error Text: " + xhr.responseText);
+                    },
+                    failure: function (r) {
+                        alert("Fail:" + r.responseText);
+                    }
+                }).done(function (response) { //
+
+                    // alert("Done : " + response);
+                });
+            };
+
+
+        $.GetSKUDetails = function () {
+
+            var table = $('#example').DataTable({
+                fixedHeader: true,
+                processing: true,
+                responsive: true,
+                stateSave: true,
+                aLengthMenu: [
+                    [10, 25, 50, 100, 200, -1],
+                    [10, 25, 50, 100, 200, "All"]
+                ],
+                ajax: {
+
+                    url: "../Service/Invoicing_Service.asmx/GetSKUDetails",
+                    type: 'POST',
+
+                    dataSrc: function (d) {
+                        return d
+                    }
+                },
+                columns: [
+                    {
+                        data: 'Select',
+                        render: function (data, type, row) {
+
+                            return "<a class='lnkSelect btn btn btn-primary' href='" + data + "'>Select</a>";
+                        }
+                    },
+                    {
+                        data: 'Delete',
+                        render: function (data, type, row) {
+
+                            return "<a class='lnkDelete btn btn btn-primary' href='" + data + "'>Delete</a>";
+                        }
+                    },
+                    { 'data': 'SKUID' },
+                    { 'data': 'SKUName' },
+                    { 'data': 'Rate' },
+                    { 'data': 'Description' }
+                ],
+            }); // table ends here
+
+            $('#example tbody').on('click', 'tr', function () {
+
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+            //to invisble multipe columns
+            // table.columns([1, 2]).visible(false);
+
+            table.columns([2]).visible(false);
+        };
+
+        //   attaching event on table , then on link ( to be pricese)
+        $("#example").on("click", ".lnkSelect", function () {
+
+            event.preventDefault(); // <---------you may want this to stop the link
+
+            // get the link value
+            //var addressValue = $(this).attr("href");
+
+            //remove all other selected rows..
+            $('#example tr.selected2').removeClass('selected2');
+
+            // set the selected rows.
+            $(this).parent().parent().addClass('selected2');
+
+            var varSKUID = $(this).attr("href");
+
+            // SKUName column
+            var varSKUName = $(this).parent().parent().find("TD").eq(2).text();
+
+            // Rate Colmn
+            var varRate = $(this).parent().parent().find("TD").eq(3).text();
+
+            // Description Colmn
+            var varDescription = $(this).parent().parent().find("TD").eq(4).text();
+
+            $('#txtSkuName').val(varSKUName);
+            $('#txtRate').val(varRate);
+            $('#txtDescription').val(varDescription);
+            $('#txtProductID').val(varSKUID);
+
+            return false; // <---------or this if you want to prevent bubbling as well
+        });
+
+        $.DeletedSKU = function (id) {
+            $.ajax({
+                url: "../Service/Invoicing_Service.asmx/DeleteSKU",
+                type: 'POST',
+                data: { SKUID: id },
+                dataType: 'json',
+
+                success: function (responseData) {
+
+                    if (responseData.Result) {
+                        // alert("Result : " + responseData.strMessage);
+                        $('#example').DataTable().ajax.reload(null, false);
                     }
                     else {
-                        $('#lblMessage').text(responseData.strMessage);
-                        $('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
-                        $('#iconMsg').css('color', 'red');
-                        $('#mdlNormalMessage').modal('show');
+                        alert("Failed Result : " + responseData.strMessage);
                     }
                 },
                 error: function (xhr, status, error) {
-
-                    $('#loadingBox').modal('hide');
                     alert("Error : " + error);
                     alert("Error Text: " + xhr.responseText);
                 },
@@ -196,12 +364,35 @@
                 }
             }).done(function (response) { //
 
-                // alert("Done : " + response);
+                //alert("Done : " + response);
             });
-
-
         };
 
-        </script>
+        var deletedID = 0;
+        // attaching event on table , then on link ( to be pricese)
+        $("#example").on("click", ".lnkDelete", function () {
+
+            event.preventDefault(); // <---------you may want this to stop the link
+
+            $('#spanConfirmMsg').text("Are you sure , you want to delete?");
+            $('#confirmationModel').modal('show');
+
+            var addressValue = $(this).attr("href");
+            deletedID = addressValue;
+
+            return false; // <---------or this if you want to prevent bubbling as well
+        });
+
+        // confrimed to delete
+        $('#btnConfirm').click(function () {
+
+            $.DeletedSKU(deletedID);
+
+            //$('#example').DataTable().ajax.reload(null, false);
+
+            $('#confirmationModel').modal('hide');
+        });
+
+    </script>
 
 </asp:Content>

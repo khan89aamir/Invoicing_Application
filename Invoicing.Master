@@ -36,7 +36,7 @@
             <div class="modal-content">
                 <div class="modal-header">
 
-                    <h5 class="modal-title" style="font-family: 'Times New Roman';">ZTech Valves</h5>
+                    <h5 class="modal-title" style="font-family: 'Times New Roman';">Anja Creation</h5>
 
                 </div>
 
@@ -67,7 +67,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">ZTech Valves</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Anja Creation</h5>
 
                 </div>
                 <div class="modal-dialog">
@@ -101,7 +101,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">ZTech Valves</h4>
+                    <h4 class="modal-title">Anja Creation</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
