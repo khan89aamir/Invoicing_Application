@@ -53,7 +53,7 @@
 
                         <div class="col-md-12  text-right">
                             <button id="btnSave" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o mr-1" aria-hidden="true"></i>Save</button>
-                            <button id="btnCancel" type="reset" formnovalidate="formnovalidate" class="btn btn-secondary">Cancel</button>
+                            <button id="btnCancel" type="reset" formnovalidate="formnovalidate" class="btn btn-secondary"><i class="fa fa-times mr-1" aria-hidden="true"></i>Cancel</button>
                         </div>
 
                     </div>
@@ -114,7 +114,7 @@
                                 event.preventDefault();
                                 event.stopPropagation();
 
-                               //SaveSKUDetails();
+                               SaveProductDetails();
                             }
                         }
                         form.classList.add('was-validated');
@@ -122,6 +122,85 @@
                 });
             }, false);
         })();
+
+        function SaveProductDetails() {
+            $.ManageProducts();
+        }
+
+        $.ManageAccount = function () {
+
+
+            //  let post_url = $("#frmaccount").attr("action"); //get form action url
+            // let request_method = $("#frmaccount").attr("method"); //get form GET/POST method
+            // let form_data = $("#frmaccount").serialize(); //Encode form elements for submission	
+
+
+
+            var SkuName = $('#txtSkuName').val();
+            var Rate = $('#txtRate').val();
+            var description = $('#txtDescription').val();
+            var productid = $('#txtProductID').val();
+
+            // Create an object:
+            var ProductData = { SKUName: SkuName, Rate: Rate, Description: description, ProudctID: productid };
+            alert(JSON.stringify(ProductData));
+
+            $.ajax({
+                url: "../Service/Sales_Invoicing.asmx/ManageProducts",
+                type: 'POST',
+                data: JSON.stringify(ProductData),
+                contentType: "application/json",
+                dataType: "json",
+                beforeSend: function () {
+                    $('#lblLoadingtxt').text("Creating SKU Details please wait....");
+                    $('#loadingBox').modal('show');
+                },
+                complete: function () {
+
+                    $('#loadingBox').modal('hide');
+                },
+                success: function (responseData) {
+                    // parse it to java script object so that you can access property
+                    // data = $.parseJSON(responseData.d);
+
+                    if (responseData.Result) {
+
+                        $('#loadingBox').modal('hide');
+
+                        $('#lblMessage').text(responseData.strMessage);
+
+                        $('#mdlNormalMessage').modal('show');
+
+                        $('#frmaccount').trigger("reset");
+
+                        // after reset remove the class else it will show validtion message.
+                        let jsContactForm = document.getElementById('frmSKU');                   // <=== 
+                        jsContactForm.classList.remove('was-validated');
+                        //
+                    }
+                    else {
+                        $('#lblMessage').text(responseData.strMessage);
+                        $('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
+                        $('#iconMsg').css('color', 'red');
+                        $('#mdlNormalMessage').modal('show');
+                    }
+                },
+                error: function (xhr, status, error) {
+
+                    $('#loadingBox').modal('hide');
+                    alert("Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
+                },
+                failure: function (r) {
+                    alert("Fail:" + r.responseText);
+                }
+            }).done(function (response) { //
+
+                // alert("Done : " + response);
+            });
+
+
+        };
 
         </script>
 
