@@ -27,7 +27,7 @@ namespace Invoicing_Application.Service
         public void BindState()
         {
             DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT StateID,StateName FROM ztech.tblStateMaster");
-            if (dataTable!=null && dataTable.Rows.Count > 0)
+            if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 var NameList = (from r in dataTable.AsEnumerable()
                                 select new
@@ -56,11 +56,11 @@ namespace Invoicing_Application.Service
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void ManageProducts(string SKUName,decimal Rate,string Description,int ProudctID)
+        public void ManageProducts(string SKUName, decimal Rate, string Description, int ProudctID)
         {
             clsMessage message = new clsMessage();
 
-            ObjDAL.SetStoreProcedureData("ParmSKUName", MySqlConnector.MySqlDbType.VarChar, SKUName,clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmSKUName", MySqlConnector.MySqlDbType.VarChar, SKUName, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("ParmRate", MySqlConnector.MySqlDbType.Decimal, Rate, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("ParmDescription", MySqlConnector.MySqlDbType.VarChar, Description, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("ParmProductID", MySqlConnector.MySqlDbType.Int32, ProudctID, clsMySQLCoreApp.ParamType.Input);
@@ -72,7 +72,7 @@ namespace Invoicing_Application.Service
                 message.Result = true;
                 if (ProudctID == 0)
                 {
-                    message.strMessage = "SKU ["+ SKUName + "] has been Created successfully";
+                    message.strMessage = "SKU [" + SKUName + "] has been Created successfully";
                 }
                 else
                 {
@@ -99,15 +99,14 @@ namespace Invoicing_Application.Service
         public void GetSKUDetails()
         {
             // System.Threading.Thread.Sleep(2000);
-
+            string jsonData = "{}";
             DataTable dataTable = ObjDAL.ExecuteSelectStatement("CALL ztech.SPR_GetSKUDetails()");
-            if (dataTable!=null && dataTable.Rows.Count > 0)
+            if (dataTable != null && dataTable.Rows.Count > 0)
             {
-                string jsonData = DataTableToJSONWithJSONNet(dataTable);
-
-                Context.Response.ContentType = "application/json";
-                Context.Response.Write(jsonData);
+                jsonData = DataTableToJSONWithJSONNet(dataTable);
             }
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(jsonData);
         }
 
         public string DataTableToJSONWithJSONNet(DataTable table)
@@ -143,7 +142,7 @@ namespace Invoicing_Application.Service
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void ManageCustomers(string CustomerName, string CompanyName, string GSTNo, string EmailID
-            , string Address,int StateID, int CustomerID)
+            , string Address, int StateID, int CustomerID)
         {
             clsMessage message = new clsMessage();
 
@@ -189,15 +188,14 @@ namespace Invoicing_Application.Service
         public void GetCustomerDetails()
         {
             // System.Threading.Thread.Sleep(2000);
-
+            string jsonData = "{}";
             DataTable dataTable = ObjDAL.ExecuteSelectStatement("CALL ztech.SPR_GetCustomerDetails()");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
-                string jsonData = DataTableToJSONWithJSONNet(dataTable);
-
-                Context.Response.ContentType = "application/json";
-                Context.Response.Write(jsonData);
+                jsonData = DataTableToJSONWithJSONNet(dataTable);
             }
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(jsonData);
         }
 
         [WebMethod]

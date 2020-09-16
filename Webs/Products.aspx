@@ -9,34 +9,7 @@ type = "text/javascript"></script>
 
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
 rel = "Stylesheet" type="text/css" />
-    <style>
-        .selected2 {
-            background-color: midnightblue !important;
-            color: white !important;
-            text-decoration: none !important;
-        }
-
-        td {
-            text-align: center;
-            padding: 1px !important;
-        }
-
-        th {
-            text-align: center;
-        }
-
-        .dataTables_paginate {
-            text-align: center !important;
-            float: none !important;
-            margin-left: auto !important;
-            margin-right: auto !important;
-        }
-
-        .lnkSelect, .lnkDelete {
-            padding: 1px !important;
-            text-align: center !important;
-        }
-    </style>
+    <link href="../assets/css/MasterFormCSS.css" rel="stylesheet" />
 
     <br />
     <div class="container d-flex justify-content-center">
@@ -153,9 +126,6 @@ rel = "Stylesheet" type="text/css" />
                                 event.stopPropagation();
 
                                 SaveSKUDetails();
-                                //$.ManageProducts();
-                                //$('#example').DataTable().ajax.reload(null, false);
-                                //$('#btnCancel').click();
                             }
                         }
                         form.classList.add('was-validated');
@@ -166,7 +136,6 @@ rel = "Stylesheet" type="text/css" />
 
         function SaveSKUDetails() {
             $.ManageProducts();
-            //$('#example').DataTable().ajax.reload(null, false);
         }
 
         $(document).ready(function () {
@@ -196,7 +165,7 @@ rel = "Stylesheet" type="text/css" />
                     contentType: "application/json",
                     dataType: "json",
                     beforeSend: function () {
-                        $('#lblLoadingtxt').text("Inserting SKU Details please wait....");
+                        $('#lblLoadingtxt').text("Saving SKU Details please wait....");
                         $('#loadingBox').modal('show');
                     },
                     complete: function () {
@@ -349,6 +318,8 @@ rel = "Stylesheet" type="text/css" />
 
                     if (responseData.Result) {
                         // alert("Result : " + responseData.strMessage);
+                        $('#frmSKU').trigger("reset");
+
                         $('#example').DataTable().ajax.reload(null, false);
                     }
                     else {
@@ -387,8 +358,6 @@ rel = "Stylesheet" type="text/css" />
         $('#btnConfirm').click(function () {
 
             $.DeletedSKU(deletedID);
-
-            //$('#example').DataTable().ajax.reload(null, false);
 
             $('#confirmationModel').modal('hide');
         });

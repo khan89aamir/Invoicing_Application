@@ -1,0 +1,26 @@
+﻿.selected2 {
+    background-color: midnightblue !important;
+    color: white !important;
+    text-decoration: none !important;
+}
+
+td {
+    text-align: center;
+    padding: 1px !important;
+}
+
+th {
+    text-align: center;
+}
+
+.dataTables_paginate {
+    text-align: center !important;
+    float: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.lnkSelect, .lnkDelete {
+    padding: 1px !important;
+    text-align: center !important;
+}

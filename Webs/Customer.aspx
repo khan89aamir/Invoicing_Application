@@ -8,34 +8,8 @@
 
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
         rel="Stylesheet" type="text/css" />
-    <style>
-        .selected2 {
-            background-color: midnightblue !important;
-            color: white !important;
-            text-decoration: none !important;
-        }
-
-        td {
-            text-align: center;
-            padding: 1px !important;
-        }
-
-        th {
-            text-align: center;
-        }
-
-        .dataTables_paginate {
-            text-align: center !important;
-            float: none !important;
-            margin-left: auto !important;
-            margin-right: auto !important;
-        }
-
-        .lnkSelect, .lnkDelete {
-            padding: 1px !important;
-            text-align: center !important;
-        }
-    </style>
+    
+    <link href="../assets/css/MasterFormCSS.css" rel="stylesheet" />
 
     <br />
 
@@ -79,9 +53,9 @@
 
                                 <label for="txtGSTNo">GST No : </label>
 
-                                <input type="text" runat="server" class="form-control text" id="txtGSTNo" placeholder="Enter GST NO" required>
+                                <input type="text" runat="server" class="form-control text" id="txtGSTNo" placeholder="Enter GST No" required>
                                 <div class="invalid-feedback text-left">
-                                    Enter GST No
+                                    Please Enter GST No
                                 </div>
                             </div>
                         </div>
@@ -112,24 +86,20 @@
                             <div class="form-group">
 
                                 <label for="txtAddress">Address </label>
-                                <textarea runat="server" rows="4" class="form-control text" id="txtAddress" placeholder="Enter Address" required>
-                                 
-                              </textarea>
+                                <textarea runat="server" rows="4" class="form-control text" id="txtAddress" placeholder="Enter Address" required></textarea>
 
                                 <div class="invalid-feedback text-left">
-                                    Enter Address
+                                    Please Enter Address
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
+
                     <div class="form-row">
 
                         <div class="col-md-12  text-right">
                             <button id="btnSave" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o mr-1" aria-hidden="true"></i>Save</button>
                             <button id="btnCancel" type="reset" formnovalidate="formnovalidate" class="btn btn-secondary"><i class="fa fa-times mr-1" aria-hidden="true"></i>Cancel</button>
-
                         </div>
 
                     </div>
@@ -159,6 +129,7 @@
                             <th>GST NO</th>
                             <th>Email</th>
                             <th>Address</th>
+                            <th>StateID</th>
                             <th>State</th>
                         </tr>
                     </thead>
@@ -202,6 +173,10 @@
             }, false);
         })();
 
+        $("#btnok").click(function () {
+            alert('ok clicked');
+        });
+
         function SaveCustomerDetails() {
             $.ManageCustomers();
             //$('#example').DataTable().ajax.reload(null, false);
@@ -218,7 +193,7 @@
                 //data: JSON.stringify(ObjMyData),
                 contentType: "application/json",
                 success: function (res) {
-                    $("#cmdState").append($("<option></option>").val(0).html('Select State'));
+                    $("#cmdState").append($("<option selected='selected' disabled='disabled'></option>").val('').html('Select State'));
                     $.each(res, function (data, value) {
 
                         $("#cmdState").append($("<option></option>").val(value.StateID).html(value.StateName));
@@ -232,7 +207,7 @@
                 failure: function (r) {
                     alert("Fail:" + r.responseText);
                 }
-            }); 
+            });
 
             $.GetCustomerDetails();
         });
@@ -265,7 +240,7 @@
                 contentType: "application/json",
                 dataType: "json",
                 beforeSend: function () {
-                    $('#lblLoadingtxt').text("Inserting Customer Details please wait....");
+                    $('#lblLoadingtxt').text("Saving Customer Details please wait....");
                     $('#loadingBox').modal('show');
                 },
                 complete: function () {
@@ -356,7 +331,8 @@
                     { 'data': 'GSTNo' },
                     { 'data': 'EmailID' },
                     { 'data': 'Address' },
-                    { 'data': 'StateID' }
+                    { 'data': 'StateID' },
+                    { 'data': 'State' }
                 ],
             }); // table ends here
 
@@ -373,8 +349,7 @@
 
             //to invisble multipe columns
             // table.columns([1, 2]).visible(false);
-
-            table.columns([2]).visible(false);
+            table.columns([2, 8]).visible(false);
         };
 
         //   attaching event on table , then on link ( to be pricese)
@@ -391,19 +366,24 @@
             // set the selected rows.
             $(this).parent().parent().addClass('selected2');
 
-            var varCustomerID = $(this).attr("href");
+            //var varCustomerID = $(this).attr("href");
 
             // CustomerName column
             var varCustomerName = $(this).parent().parent().find("TD").eq(2).text();
 
-            // Rate CompanyName
+            // CompanyName
             var varCompanyName = $(this).parent().parent().find("TD").eq(3).text();
 
             // GSTNo Colmn
             var varGSTNo = $(this).parent().parent().find("TD").eq(4).text();
             var varEmailID = $(this).parent().parent().find("TD").eq(5).text();
             var varAddress = $(this).parent().parent().find("TD").eq(6).text();
-            var varStateID = $(this).parent().parent().find("TD").eq(7).text();
+            //var varStateID = $(this).parent().parent().find("TD").eq(7).text();
+
+            var currentRow = $(this).closest("tr");
+            var data = $('#example').DataTable().row(currentRow).data();
+            varStateID = (data['StateID']);
+            var varCustomerID = (data['CustomerID']);
 
             $('#txtCustomerName').val(varCustomerName);
             $('#txtCompanyName').val(varCompanyName);
@@ -427,6 +407,8 @@
 
                     if (responseData.Result) {
                         // alert("Result : " + responseData.strMessage);
+                        $('#frmCustomer').trigger("reset");
+
                         $('#example').DataTable().ajax.reload(null, false);
                     }
                     else {

@@ -88,6 +88,7 @@
   <ItemGroup>
     <Content Include="assets\css\bootstrap.min.css" />
     <Content Include="assets\css\jquery-ui.css" />
+    <Content Include="assets\css\MasterFormCSS.css" />
     <Content Include="assets\css\Style.css" />
     <Content Include="assets\img\HomeLogo.jpg" />
     <Content Include="assets\img\Loading.gif" />
