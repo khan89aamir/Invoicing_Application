@@ -89,6 +89,7 @@
     <Content Include="assets\css\bootstrap.min.css" />
     <Content Include="assets\css\jquery-ui.css" />
     <Content Include="assets\css\MasterFormCSS.css" />
+    <Content Include="assets\css\select2.css" />
     <Content Include="assets\css\Style.css" />
     <Content Include="assets\img\HomeLogo.jpg" />
     <Content Include="assets\img\Loading.gif" />
@@ -100,6 +101,7 @@
     <Content Include="assets\js\jquery-ui.js" />
     <Content Include="assets\js\mindmup-editabletable.js" />
     <Content Include="assets\js\popper.min.js" />
+    <Content Include="assets\js\select2.js" />
     <Content Include="Service\Invoicing_Service.asmx" />
     <Content Include="Web.config" />
     <Content Include="Webs\Customer.aspx" />
@@ -109,6 +111,7 @@
     <Content Include="Webs\MyProfile.aspx" />
     <Content Include="Webs\PaymentInfo.aspx" />
     <Content Include="Webs\Products.aspx" />
+    <Content Include="Service\RequestHandler.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Invoicing.Master.cs">
@@ -173,6 +176,13 @@
     </Compile>
     <Compile Include="Webs\Products.aspx.designer.cs">
       <DependentUpon>Products.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Service\RequestHandler.aspx.cs">
+      <DependentUpon>RequestHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Service\RequestHandler.aspx.designer.cs">
+      <DependentUpon>RequestHandler.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

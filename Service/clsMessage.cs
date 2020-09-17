@@ -10,5 +10,7 @@ namespace Invoicing_Application.Service
         public string strMessage { get; set; }
 
         public bool Result { get; set; }
+
+        public int Value { get; set; }
     }
 }

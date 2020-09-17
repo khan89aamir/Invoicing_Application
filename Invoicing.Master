@@ -162,14 +162,14 @@
                         <a id="btnP" class="nav-link " href="PaymentInfo.aspx"><i class="fa fa-credit-card mr-1" aria-hidden="true"></i>Payment Info</a>
                     </li>
                 </ul>
-                <div id="pnlProfile" class="dropdown" visible="false" runat="server">
-                    <button class="btn btn-primary dropdown-toggle" style="background-color: #06456f; color: white; font-family: 'Times New Roman'" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div id="pnlProfile" class="dropdown d-none"  runat="server">
+                    <button class="btn btn-primary btn-outline-info dropdown-toggle" style="background-color: #0a1348; color: white; font-family: 'Times New Roman'" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Login By : Admin
                     </button>
                     <div class="dropdown-menu" style="font-family: 'Times New Roman'" aria-labelledby="dropdownMenuButton">
-                        <a id="btnMyProfile" class="dropdown-item" href="MyProfile.aspx">Settings</a>
-                        <a id="btnLogout" class="dropdown-item" href="RequestHandler.aspx?action=logout">Logout</a>
-
+                        <a id="btnMyProfile" class="dropdown-item" href="MyProfile.aspx"><i class="fa fa-user mr-1" aria-hidden="true"></i>My Profile</a>
+                       <a id="btnLogout" class="dropdown-item" href='#'"><i class="fa fa-sign-out mr-1" aria-hidden="true"></i>Logout</a>
+                       
                     </div>
                 </div>
 
@@ -186,9 +186,47 @@
 
 
     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+
     </asp:ContentPlaceHolder>
      
     <script>
+
+
+        $(document).ready(function () {
+
+            var sessionValue =  <% 
+
+        if (Session["UserName"]!=null)
+        {
+            Response.Write("'True'");
+        }
+        else
+        {
+              Response.Write("'False'");
+        }
+
+
+        %>;
+
+                 if (sessionValue == "True") {
+
+
+
+                     $('#pnlProfile').removeClass("d-none");
+                     $('#pnlProfile').addClass("d-block");
+
+
+                 }
+                 else {
+                     $('#pnlLogin').show();
+
+                     // show back pannel
+                     $('#pnlBack').removeClass("d-block");
+                     $('#pnlBack').addClass("d-none");
+                 }
+
+
+             });
 
         // When the user clicks on the button, scroll to the top of the document
         function topFunction() {
@@ -226,6 +264,47 @@
                 document.getElementById("myBtn").style.display = "none";
             }
         }
+
+        $("#btnLogout").click(function (event) {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+
+            LogOut();
+
+
+
+        });
+        function LogOut() {
+
+           
+            // calling asp.net page method [Session should be maintain by page NOT by web service.]
+            $.ajax({
+                type: "POST",
+                url: "../Service/RequestHandler.aspx/LogOut",
+                data: '',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+                    window.location.replace("Home.aspx");
+                   
+                },
+                error: function (xhr, status, error) {
+
+                   
+                    alert("Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
+
+
+                },
+                failure: function (r) {
+                    alert("Error : " + r);
+                }
+            });
+        }  
+
     </script>
  <!-- Footer -->
     <footer class="fixed-bottom  font-small mdb-color  bg-dark Zfooter text-center" style="font-family:'Times New Roman'">

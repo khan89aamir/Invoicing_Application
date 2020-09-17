@@ -144,6 +144,10 @@
     <br />
 
     <script>
+
+
+   
+
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function () {
             'use strict';
@@ -184,7 +188,7 @@
 
         $(document).ready(function () {
 
-            //var ObjMyData = { Age: "27", Gender: "Male" };
+          
             // drop down------
             $.ajax({
                 type: "POST",

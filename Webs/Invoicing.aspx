@@ -1,13 +1,21 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Invoicing.aspx.cs" Inherits="Invoicing_Application.Webs.Invoicing" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Invoicing.aspx.cs" Inherits="Invoicing_Application.Webs.Invoicing" ClientIDMode="Static" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <style>
+   
+     
+    <script src="../assets/js/select2.js"></script>
+    <link href="../assets/css/select2.css" rel="stylesheet" />
+
+     <style>
         h5 {
             background-color: #f7f7f7;
             border-radius: 6px;
             padding: 5px;
         }
+      
     </style>
+    
+   
 
     <div class="container">
         <div class="container d-flex justify-content-start">
@@ -23,7 +31,7 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">Invoice No : </label>
-                                    <input type="text" class="form-control text " autocomplete="off" id="txtFullName" placeholder="Enter Your Name" required>
+                                    <input type="text" class="form-control text " autocomplete="off" id="txtInvoiceNumber" name="txtInvoiceNumber" placeholder="Enter Invoice Number" required>
                                     <div class="invalid-feedback text-left">
                                         Please Enter Invoice No
                                     </div>
@@ -35,7 +43,7 @@
                                 <div class="form-group">
 
                                     <label for="txtMail">Invoice Date: </label>
-                                    <input type="text" class="form-control text " id="datepicker" required>
+                                    <input type="text" class="form-control text " autocomplete="off" id="datepicker" name="datepicker" placeholder="Enter Invoice Date" required>
                                     <div class="invalid-feedback text-left">
                                         Enter Invoice Date
                                     </div>
@@ -47,8 +55,8 @@
                             <div class="col-md-4">
                                 <div class="form-row">
 
-                                    <label for="cmbProduct">State :</label>
-                                    <asp:DropDownList ID="cmbProduct" class="custom-select" name="cmdProducts" runat="server" required="true">
+                                    <label for="cmdState">State :</label>
+                                    <asp:DropDownList ID="cmdState" class="custom-select" name="cmdState" runat="server" required="true">
                                     </asp:DropDownList>
 
                                     <div class="invalid-feedback">
@@ -66,11 +74,12 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">Bill To : </label>
-
-                                    <input type="text" class="form-control text " id="txtFullName" placeholder="Enter Your Name" required>
+                                    <select id='cmbCustomer'  class="custom-select">
+                                        </select>
+                                 
                                     <a href="Customer.aspx">Add New Customer</a>
                                     <div class="invalid-feedback text-left">
-                                        Please Enter Invoice No
+                                        Please Enter Party Name
                                     </div>
                                 </div>
 
@@ -83,9 +92,9 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">GST No </label>
-                                    <input type="text" class="form-control text " id="txtFullName" placeholder="Enter Your Name" required>
+                                    <input type="text" class="form-control text " autocomplete="off" id="txtGSTNo" name="txtGSTNo" placeholder="Enter GST Number" required>
                                     <div class="invalid-feedback text-left">
-                                        Please Enter Invoice No
+                                        Please Enter GST No
                                     </div>
                                 </div>
 
@@ -94,9 +103,9 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">Address </label>
-                                    <input type="text" class="form-control text " id="txtFullName" placeholder="Enter Your Name" required>
+                                    <input type="text" class="form-control text " id="txtAddress" name="txtAddress" autocomplete="off" placeholder="Enter Address" required>
                                     <div class="invalid-feedback text-left">
-                                        Please Enter Invoice No
+                                        Please Enter Address 
                                     </div>
                                 </div>
 
@@ -105,9 +114,9 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">State </label>
-                                    <input type="text" class="form-control text " id="txtFullName" placeholder="Enter Your Name" required>
+                                    <input type="text" class="form-control text " id="txtPartyState" name="txtPartyState" autocomplete="off" placeholder="Enter Your State" required>
                                     <div class="invalid-feedback text-left">
-                                        Please Enter Invoice No
+                                        Please Enter State 
                                     </div>
                                 </div>
 
@@ -125,9 +134,9 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">Enter SKU : </label>
-                                    <input type="text" class="form-control text " id="txtFullName" placeholder="Enter Your Name" required>
+                                    <input type="text" class="form-control text " id="txtSKU" name="txtSKU" autocomplete="off" placeholder="Enter SKU" required>
                                     <div class="invalid-feedback text-left">
-                                        Please Enter Invoice No
+                                        Please Enter SKU.
                                     </div>
                                 </div>
 
@@ -140,9 +149,9 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">Product Name </label>
-                                    <input type="text" class="form-control text " id="txtFullName" placeholder="Enter Your Name" required>
+                                    <input type="text" class="form-control text " id="txtProductName" name="txtProductName" autocomplete="off" placeholder="Enter Product Name" required>
                                     <div class="invalid-feedback text-left">
-                                        Please Enter Invoice No
+                                        Please Enter Product Name
                                     </div>
                                 </div>
 
@@ -151,9 +160,9 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">QTY </label>
-                                    <input type="text" class="form-control text " id="txtFullName" placeholder="Enter Your Name" required>
+                                    <input type="number" class="form-control text " id="txtQTY" name="txtQTY" required>
                                     <div class="invalid-feedback text-left">
-                                        Please Enter Invoice No
+                                        Please Enter QTY
                                     </div>
                                 </div>
 
@@ -162,9 +171,9 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">Rate </label>
-                                    <input type="text" class="form-control text " id="txtFullName" placeholder="Enter Your Name" required>
+                                    <input type="text" class="form-control text " id="txtRate" name="txtRate" placeholder="Enter Rate" required>
                                     <div class="invalid-feedback text-left">
-                                        Please Enter Invoice No
+                                        Rate is missing
                                     </div>
                                 </div>
 
@@ -173,9 +182,9 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">Total </label>
-                                    <input type="text" class="form-control text " id="txtFullName" placeholder="Enter Your Name" required>
+                                    <input type="text" class="form-control text " id="txtTotal" name="txtTotal" autocomplete="off" placeholder="Enter Total Amount" required>
                                     <div class="invalid-feedback text-left">
-                                        Please Enter Invoice No
+                                        Total Value Missing
                                     </div>
                                 </div>
 
@@ -227,7 +236,7 @@
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Total Amount Before Tax :</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" id="colFormLabel" placeholder="">
+                                <input type="text" class="form-control form-control-sm" id="txtAmountBeforeTax">
                             </div>
 
 
@@ -238,7 +247,7 @@
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Discount Amount (%) :</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" id="colFormLabel" placeholder="">
+                                <input type="text" class="form-control form-control-sm" id="txtDiscountAmt" placeholder="">
                             </div>
 
 
@@ -249,7 +258,7 @@
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Add: CGST : </label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" id="colFormLabel" placeholder="">
+                                <input type="text" class="form-control form-control-sm" id="txtCGST" placeholder="">
                             </div>
 
 
@@ -260,7 +269,7 @@
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Add: SGST : </label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" id="colFormLabel" placeholder="">
+                                <input type="text" class="form-control form-control-sm" id="txtSGST" placeholder="">
                             </div>
 
 
@@ -272,7 +281,7 @@
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Add: IGST : </label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" id="colFormLabel" placeholder="">
+                                <input type="text" class="form-control form-control-sm" id="txtIGST" placeholder="">
                             </div>
 
 
@@ -285,7 +294,7 @@
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Tax Amount: GST : </label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" id="colFormLabel" placeholder="">
+                                <input type="text" class="form-control form-control-sm" id="txtGST" placeholder="">
                             </div>
 
 
@@ -296,7 +305,7 @@
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Total Amount After Tax : </label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" id="colFormLabel" placeholder="">
+                                <input type="text" class="form-control form-control-sm" id="txtAmountafterTax" placeholder="">
                             </div>
 
 
@@ -331,5 +340,122 @@
         $(function () {
             $("#datepicker").datepicker();
         });
+
+        $("#cmdState").change(function () {
+            var selectedText = $(this).find("option:selected").text();
+            var selectedValue = $(this).val();
+            //alert("Selected Text: " + selectedText + " Value: " + selectedValue);
+        });
+
+        //$("#txtPartyName").autocomplete({
+        //    source: function (request, response) {
+        //        $.ajax({
+        //            url: "../Service/Invoicing_Service.asmx/GetCustomerAutoPopulate",
+        //            data: "{ 'prefix': '" + request.term + "'}",
+        //            dataType: "json",
+        //            type: "POST",
+                    
+        //            success: function (data) {
+
+        //                response($.map(data, function (item) {
+
+        //                    return {
+
+        //                        label: item.CustomerName,
+        //                        val: item.CustomerID
+        //                    }
+        //                }))
+        //            },
+        //            error: function (xhr, status, error) {
+        //                alert(error);
+        //                alert(xhr.responseText);
+
+
+        //            },
+        //            failure: function (response) {
+        //                alert(response.responseText);
+        //            }
+        //        });
+        //    },
+        //    select: function (e, i) {
+        //        $("#txtPartyName").val(i.item.val);
+        //    },
+        //    minLength: 1
+        //});
+
+        $(document).ready(function () {
+
+            BindCustomer();
+            // drop down------
+            $.ajax({
+                type: "POST",
+                url: "../Service/Invoicing_Service.asmx/BindState",
+                dataType: "json",
+                //data: JSON.stringify(ObjMyData),
+                contentType: "application/json",
+                success: function (res) {
+
+                    $("#cmdState").append($("<option selected='selected' disabled='disabled'></option>").val('').html('Select State'));
+                    $.each(res, function (data, value) {
+
+                        $("#cmdState").append($("<option></option>").val(value.StateID).html(value.StateName));
+                    })
+
+                    // set the deafult state from session
+                    var DefaultState = '<%  Response.Write(Session["DefaultValue"].ToString()); %>';
+
+                    $("#cmdState").val(DefaultState)
+
+
+                    $("#cmdState").prop("disabled", true);
+
+                },
+                error: function (xhr, status, error) {
+
+                    alert("Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
+                },
+                failure: function (r) {
+                    alert("Fail:" + r.responseText);
+                }
+            });
+
+            
+        });
+
+        function BindCustomer() {
+
+            // drop down------
+            $.ajax({
+                type: "POST",
+                url: "../Service/Invoicing_Service.asmx/BindCustomer",
+                dataType: "json",
+                //data: JSON.stringify(ObjMyData),
+                contentType: "application/json",
+                success: function (res) {
+
+                    $("#cmbCustomer").append($("<option selected='selected' disabled='disabled'></option>").val('').html('Select Customer'));
+                    $.each(res, function (data, value) {
+
+                        $("#cmbCustomer").append($("<option></option>").val(value.CustomerID).html(value.CustomerName));
+                    })
+
+                    // set the deafult state from session
+                    // Initialize select2
+                    $("#cmbCustomer").select2();
+
+                },
+                error: function (xhr, status, error) {
+
+                    alert("Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
+                },
+                failure: function (r) {
+                    alert("Fail:" + r.responseText);
+                }
+            });
+
+        }
+
     </script>
 </asp:Content>

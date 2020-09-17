@@ -146,6 +146,66 @@ public class clsMySQLCoreApp
 
         return result;
     }
+    public object ExecuteScalarQuery(string query)
+    {
+        object result  = 0;
+        try
+        {
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+            using (MySqlConnection con = new MySqlConnection(constr))
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    result = cmd.ExecuteScalar();
+
+
+                    con.Close();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            strErrorText = ex.ToString();
+        }
+
+        return result;
+    }
+
+    public int ExecuteScalarInt(string query)
+    {
+        int result = 0;
+        try
+        {
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+            using (MySqlConnection con = new MySqlConnection(constr))
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    if (cmd.ExecuteScalar()!=null)
+                    {
+                        result = Convert.ToInt32(cmd.ExecuteScalar());
+                    }
+                    else
+                    {
+                        result = 0;
+                    }
+
+
+                    con.Close();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            strErrorText = ex.ToString();
+        }
+
+        return result;
+    }
     private void InitOutputTable()
     {
         if (dtOutputParm.Columns.Count == 0)

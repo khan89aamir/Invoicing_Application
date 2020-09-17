@@ -220,5 +220,120 @@ namespace Invoicing_Application.Service
             Context.Response.ContentType = "application/json";
             Context.Response.Write(js.Serialize(message));
         }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void Login(string UserName, string Password)
+        {
+            clsMessage message = new clsMessage();
+
+            object result = ObjDAL.ExecuteScalarQuery("Select count(*) from ztech.tblMyProfile where UserName='"+UserName+"' AND Password='"+Password+"'");
+            if (result!=null)
+            {
+                if (Convert.ToInt32(result) > 0)
+                {
+                    message.Result = true;
+                    message.strMessage = "User Found.";
+                    message.Value = GetDefaultState();
+                }
+                else
+                {
+                    message.Result = false;
+                    message.strMessage = "Incorrect Username or Password.";
+                }
+            }
+            else
+            {
+                message.Result = false;
+                message.strMessage = "Incorrect Username or Password.";
+            }
+
+
+            string strResponse = JsonConvert.SerializeObject(message);
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+
+            Context.Response.Write(strResponse);
+            Context.Response.Flush();
+        }
+
+        public int GetDefaultState()
+        {
+          int state=  ObjDAL.ExecuteScalarInt("select State from  ztech.tblMyProfile where profileID=1");
+            return state;
+
+
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void GetCustomerAutoPopulate()
+        {
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT CustomerID, CustomerName FROM ztech.tblCustomerMaster");
+            if (dataTable.Rows.Count > 0)
+            {
+                var NameList = (from r in dataTable.AsEnumerable()
+                                select new
+                                {
+                                    CustomerID = r.Field<int>("CustomerID"),
+                                    CustomerName = r.Field<string>("CustomerName"),
+
+                                });
+
+                Context.Response.Write(JsonConvert.SerializeObject(NameList));
+
+            }
+            else
+            {
+                clsMessage message = new clsMessage();
+
+                message.strMessage = "No records found";
+                message.Result = true;
+
+                this.Context.Response.ContentType = "application/json; charset=utf-8";
+                this.Context.Response.Write(JsonConvert.SerializeObject(message));
+            }
+
+
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void BindCustomer()
+        {
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT CustomerID,CustomerName FROM ztech.tblCustomerMaster");
+            if (dataTable != null && dataTable.Rows.Count > 0)
+            {
+                var NameList = (from r in dataTable.AsEnumerable()
+                                select new
+                                {
+                                    CustomerID = r.Field<int>("CustomerID"),
+                                    CustomerName = r.Field<string>("CustomerName"),
+                                });
+                string strResponse = JsonConvert.SerializeObject(NameList);
+                Context.Response.ContentType = "application/json";
+                Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+                Context.Response.Write(strResponse);
+                Context.Response.Flush();
+                //  Context.Response.Write(JsonConvert.SerializeObject(NameList));
+            }
+            else
+            {
+                clsMessage message = new clsMessage();
+
+                message.strMessage = "No records found";
+                message.Result = true;
+
+                this.Context.Response.ContentType = "application/json; charset=utf-8";
+                this.Context.Response.Write(JsonConvert.SerializeObject(message));
+            }
+        }
+
+
+
+
+
+
     }
 }
