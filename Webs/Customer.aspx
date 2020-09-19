@@ -30,7 +30,7 @@
 
                                 <label for="txtCustomerName">Customer Name : </label>
 
-                                <input type="text" runat="server" class="form-control text" id="txtCustomerName" placeholder="Enter Your Name" required>
+                                <input type="text" runat="server" class="form-control text" id="txtCustomerName" placeholder="Enter Your Name" autocomplete="off" required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter Your Name.
                                 </div>
@@ -41,7 +41,7 @@
 
                                 <label for="txtCompanyName">Company : </label>
 
-                                <input type="text" runat="server" class="form-control text" id="txtCompanyName" placeholder="Enter Customer's Company Name" required>
+                                <input type="text" runat="server" class="form-control text" id="txtCompanyName" placeholder="Enter Customer's Company Name" autocomplete="off" required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter Company Name
                                 </div>
@@ -53,7 +53,7 @@
 
                                 <label for="txtGSTNo">GST No : </label>
 
-                                <input type="text" runat="server" class="form-control text" id="txtGSTNo" placeholder="Enter GST No" required>
+                                <input type="text" runat="server" class="form-control text" id="txtGSTNo" placeholder="Enter GST No" autocomplete="off" required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter GST No
                                 </div>
@@ -63,7 +63,7 @@
                             <div class="form-group">
 
                                 <label for="txtEmail">E-Mail : </label>
-                                <input runat="server" type="email" class="form-control" id="txtEmail" name="Email" placeholder="Enter Email Address" required>
+                                <input runat="server" type="email" class="form-control" id="txtEmail" name="Email" placeholder="Enter Email Address" autocomplete="off" required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter Email.
                                 </div>

@@ -623,14 +623,19 @@ namespace Invoicing_Application.Service
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void GetPartPaymentDetails()
+        public void GetPartPaymentDetails(string InvoiceNo)
         {
             // System.Threading.Thread.Sleep(2000);
             string jsonData = "{}";
-            DataTable dataTable = ObjDAL.ExecuteSelectStatement("CALL ztech.SPR_GetPartPaymentDetails()");
-            if (dataTable != null && dataTable.Rows.Count > 0)
+            //ObjDAL.SetStoreProcedureData("ParmInvoiceNo", MySqlConnector.MySqlDbType.VarChar, InvoiceNo, clsMySQLCoreApp.ParamType.Input);
+            
+            DataTable dt = ObjDAL.ExecuteSelectStatement("CALL ztech.SPR_GetPartPaymentDetails('"+ InvoiceNo + "')");
+
+            //DataSet ds = ObjDAL.ExecuteStoreProcedure_Get("ztech.SPR_GetPartPaymentDetails");
+            //if (ds != null && ds.Tables.Count > 0)
+            if (dt != null && dt.Rows.Count > 0)
             {
-                jsonData = DataTableToJSONWithJSONNet(dataTable);
+                jsonData = JsonConvert.SerializeObject(dt);
             }
             //Context.Response.ContentType = "application/json";
             //Context.Response.Write(jsonData);

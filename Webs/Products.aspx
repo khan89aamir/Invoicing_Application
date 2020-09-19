@@ -27,7 +27,7 @@ rel = "Stylesheet" type="text/css" />
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="txtSkuCode">SKU Code : </label>
-                                <input type="text" runat="server" class="form-control text" id="txtSkuCode" placeholder="Enter SKU Code">
+                                <input type="text" runat="server" class="form-control text" id="txtSkuCode" placeholder="Enter SKU Code" autocomplete="off">
                             </div>
                         </div>
 
@@ -35,7 +35,7 @@ rel = "Stylesheet" type="text/css" />
                             <div class="form-group">
                                 <label for="txtSkuName">SKU Name : </label>
 
-                                <input type="text" runat="server" class="form-control text" id="txtSkuName" placeholder="Enter SKU Name" required>
+                                <input type="text" runat="server" class="form-control text" id="txtSkuName" placeholder="Enter SKU Name" autocomplete="off" required>
                                 <div class="invalid-feedback text-left">
                                     Enter SKU Name.
                                 </div>
@@ -46,7 +46,7 @@ rel = "Stylesheet" type="text/css" />
                             <div class="form-group">
 
                                 <label for="txtRate">Rate : </label>
-                                <input runat="server" type="text" class="form-control" id="txtRate" name="Rate" placeholder="Enter Rate" required>
+                                <input runat="server" type="text" class="form-control" id="txtRate" name="Rate" placeholder="Enter Rate" autocomplete="off" required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter Rate.
                                 </div>
