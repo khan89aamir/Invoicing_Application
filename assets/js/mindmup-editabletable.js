@@ -1,5 +1,7 @@
 ﻿/*global $, window*/
 $.fn.editableTableWidget = function (options) {
+
+	
 	'use strict';
 	return $(this).each(function () {
 		var buildDefaultOptions = function () {
@@ -10,10 +12,19 @@ $.fn.editableTableWidget = function (options) {
 			activeOptions = $.extend(buildDefaultOptions(), options),
 			ARROW_LEFT = 37, ARROW_UP = 38, ARROW_RIGHT = 39, ARROW_DOWN = 40, ENTER = 13, ESC = 27, TAB = 9,
 			element = $(this),
-			editor = activeOptions.editor.css('position', 'absolute').hide().appendTo(element.parent()),
+			editor = activeOptions.editor.css('position', 'absolute').addClass('lnkChange').hide().appendTo(element.parent()),
 			active,
 			showEditor = function (select) {
 				active = element.find('td:focus');
+
+				var col = $(active).parent().children().index($(active));
+				//alert("Col : " + col);
+				// if the column is QTY then dont edit it.
+				if (col!=1) {
+					return;
+                }
+				$(active).addClass("lnkQTY");
+
 				if (active.length) {
 					editor.val(active.text())
 						.removeClass('error')
@@ -54,6 +65,12 @@ $.fn.editableTableWidget = function (options) {
 				return [];
 			};
 		editor.blur(function () {
+
+			
+			
+			//editor.addClass("lnkQTY");
+
+
 			setActiveText();
 			editor.hide();
 		}).keydown(function (e) {

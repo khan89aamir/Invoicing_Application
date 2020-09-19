@@ -222,6 +222,10 @@ public class clsMySQLCoreApp
 
         dtOutputParm.Rows.Add(dataRow);
     }
+    public DataTable GetOutputParmData()
+    {
+        return dtOutputParm;
+    }
     /// <summary>
     /// Execute the store Procedure for DML operation and  and returns true or false
     /// </summary>
