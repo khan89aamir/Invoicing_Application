@@ -24,7 +24,14 @@ rel = "Stylesheet" type="text/css" />
                     <input type="text" runat="server" class="form-control text" id="txtProductID" value="0" hidden>
                     <div class="form-row">
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="txtSkuCode">SKU Code : </label>
+                                <input type="text" runat="server" class="form-control text" id="txtSkuCode" placeholder="Enter SKU Code">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="txtSkuName">SKU Name : </label>
 
@@ -35,10 +42,10 @@ rel = "Stylesheet" type="text/css" />
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
 
-                                <label for="txtRate">Rate : </label><%--pattern="[0-9]*"--%>
+                                <label for="txtRate">Rate : </label>
                                 <input runat="server" type="text" class="form-control" id="txtRate" name="Rate" placeholder="Enter Rate" required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter Rate.
@@ -88,6 +95,7 @@ rel = "Stylesheet" type="text/css" />
                         <tr>
                             <th>Select</th>
                             <th>SKUID</th>
+                            <th>SKU Code</th>
                             <th>SKU Name</th>
                             <th>Rate</th>
                             <th>Description</th>
@@ -163,6 +171,7 @@ rel = "Stylesheet" type="text/css" />
                 // let request_method = $("#frmaccount").attr("method"); //get form GET/POST method
                 // let form_data = $("#frmaccount").serialize(); //Encode form elements for submission	
 
+                var SkuCode = $('#txtSkuCode').val();
                 var SkuName = $('#txtSkuName').val();
                 var Rate = $('#txtRate').val();
                 var description = $('#txtDescription').val();
@@ -171,7 +180,7 @@ rel = "Stylesheet" type="text/css" />
 
                 // Create an object:
                 var ProductData = {
-                    SKUName: SkuName, Rate: Rate, Description: description, ProudctID: productid, UserID: varUserID
+                    SKUCode: SkuCode, SKUName: SkuName, Rate: Rate, Description: description, ProudctID: productid, UserID: varUserID
                 };
                 //alert(JSON.stringify(ProductData));
 
@@ -261,6 +270,7 @@ rel = "Stylesheet" type="text/css" />
                         }
                     },
                     { 'data': 'SKUID' },
+                    { 'data': 'SKUCode' },
                     { 'data': 'SKUName' },
                     { 'data': 'Rate' },
                     { 'data': 'Description' },
@@ -319,10 +329,12 @@ rel = "Stylesheet" type="text/css" />
             var currentRow = $(this).closest("tr");
             var data = $('#example').DataTable().row(currentRow).data();
 
+            var varSKUCode = (data['SKUCode']);
             var varSKUName = (data['SKUName']);
             var varRate = (data['Rate']);
             var varDescription = (data['Description']);
 
+            $('#txtSkuCode').val(varSKUCode);
             $('#txtSkuName').val(varSKUName);
             $('#txtRate').val(varRate);
             $('#txtDescription').val(varDescription);

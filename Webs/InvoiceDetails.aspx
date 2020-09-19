@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="InvoiceDetails.aspx.cs" Inherits="Invoicing_Application.Webs.InvoiceDetails" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
+    <br />
     <div class="container">
         <div class="container d-flex justify-content-start">
             <div class="card border-info" style="width: 100%">
@@ -46,16 +46,12 @@
                                 <thead>
 
                                     <tr>
-
                                         <th>Select</th>
-
                                         <th>Invoice No</th>
                                         <th>Invoice Date</th>
                                         <th>Customer Name</th>
                                         <th>Total QTY</th>
                                         <th>Total Amount</th>
-
-
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -33,6 +33,15 @@ namespace Invoicing_Application.Webs
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtProductID;
 
         /// <summary>
+        /// txtSkuCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtSkuCode;
+
+        /// <summary>
         /// txtSkuName control.
         /// </summary>
         /// <remarks>

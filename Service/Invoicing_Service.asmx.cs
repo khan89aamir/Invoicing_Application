@@ -56,12 +56,13 @@ namespace Invoicing_Application.Service
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void ManageProducts(string SKUName, decimal Rate, string Description, int ProudctID, int UserID)
+        public void ManageProducts(string SKUCode, string SKUName, decimal Rate, string Description, int ProudctID, int UserID)
         {
             clsMessage message = new clsMessage();
 
             Description = Description.Length == 0 ? "0" : Description;
 
+            ObjDAL.SetStoreProcedureData("ParmSKUCode", MySqlConnector.MySqlDbType.VarChar, SKUCode, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("ParmSKUName", MySqlConnector.MySqlDbType.VarChar, SKUName, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("ParmRate", MySqlConnector.MySqlDbType.Decimal, Rate, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("ParmDescription", MySqlConnector.MySqlDbType.VarChar, Description, clsMySQLCoreApp.ParamType.Input);
@@ -239,7 +240,7 @@ namespace Invoicing_Application.Service
         {
             clsMessage message = new clsMessage();
 
-            object result = ObjDAL.ExecuteScalarQuery("SELECT ProfileID FROM ztech.tblMyProfile WHERE UserName='" + UserName + "' AND Password='" + Password + "'");
+            object result = ObjDAL.ExecuteScalarQuery("SELECT ProfileID FROM ztech.tblMyProfile WHERE UserName='" + UserName + "' AND CAST(AES_DECRYPT(Password, 'UserNameEmailID') AS CHAR(255))='" + Password + "'");
             if (result != null)
             {
                 if (Convert.ToInt32(result) > 0)
