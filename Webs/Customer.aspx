@@ -9,7 +9,7 @@
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
         rel="Stylesheet" type="text/css" />
     
-    <link href="../assets/css/MasterFormCSS.css" rel="stylesheet" />
+    <%--<link href="../assets/css/MasterFormCSS.css" rel="stylesheet" />--%>
 
     <br />
 
@@ -122,15 +122,15 @@
 
                         <tr>
                             <th>Select</th>
-                            <th>Delete</th>
                             <th>CustomerID</th>
                             <th>Name</th>
                             <th>Company</th>
-                            <th>GST NO</th>
+                            <th>GST No</th>
                             <th>Email</th>
                             <th>Address</th>
                             <th>StateID</th>
                             <th>State</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -144,10 +144,6 @@
     <br />
 
     <script>
-
-
-   
-
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function () {
             'use strict';
@@ -168,7 +164,7 @@
                                 event.preventDefault();
                                 event.stopPropagation();
 
-                                SaveCustomerDetails();
+                                $.ManageCustomers();
                             }
                         }
                         form.classList.add('was-validated');
@@ -177,18 +173,8 @@
             }, false);
         })();
 
-        $("#btnok").click(function () {
-            alert('ok clicked');
-        });
-
-        function SaveCustomerDetails() {
-            $.ManageCustomers();
-            //$('#example').DataTable().ajax.reload(null, false);
-        }
-
         $(document).ready(function () {
 
-          
             // drop down------
             $.ajax({
                 type: "POST",
@@ -229,11 +215,12 @@
             var stateid = $('#cmdState').val();
             var address = $('#txtAddress').val();
             var customerid = $('#txtCustomerID').val();
+            var varUserID = <%= Session["UserID"] %>;
 
             // Create an object:
             var CustomerData = {
                 CustomerName: customername, CompanyName: companyname, GSTNo: gstno, EmailID: email
-                , Address: address, StateID: stateid, CustomerID: customerid
+                , Address: address, StateID: stateid, CustomerID: customerid, UserID: varUserID
             };
             //alert(JSON.stringify(CustomerData));
 
@@ -322,13 +309,6 @@
                             return "<a class='lnkSelect btn btn btn-primary' href='" + data + "'>Select</a>";
                         }
                     },
-                    {
-                        data: 'Delete',
-                        render: function (data, type, row) {
-
-                            return "<a class='lnkDelete btn btn btn-primary' href='" + data + "'>Delete</a>";
-                        }
-                    },
                     { 'data': 'CustomerID' },
                     { 'data': 'CustomerName' },
                     { 'data': 'CompanyName' },
@@ -336,7 +316,14 @@
                     { 'data': 'EmailID' },
                     { 'data': 'Address' },
                     { 'data': 'StateID' },
-                    { 'data': 'State' }
+                    { 'data': 'State' },
+                    {
+                        data: 'Delete',
+                        render: function (data, type, row) {
+
+                            return "<a class='lnkDelete btn btn btn-primary' href='" + data + "'>Delete</a>";
+                        }
+                    }
                 ],
             }); // table ends here
 
@@ -353,7 +340,7 @@
 
             //to invisble multipe columns
             // table.columns([1, 2]).visible(false);
-            table.columns([2, 8]).visible(false);
+            table.columns([1,6,7]).visible(false);
         };
 
         //   attaching event on table , then on link ( to be pricese)
@@ -373,20 +360,26 @@
             //var varCustomerID = $(this).attr("href");
 
             // CustomerName column
-            var varCustomerName = $(this).parent().parent().find("TD").eq(2).text();
+            //var varCustomerName = $(this).parent().parent().find("TD").eq(2).text();
 
             // CompanyName
-            var varCompanyName = $(this).parent().parent().find("TD").eq(3).text();
+            //var varCompanyName = $(this).parent().parent().find("TD").eq(3).text();
 
             // GSTNo Colmn
-            var varGSTNo = $(this).parent().parent().find("TD").eq(4).text();
-            var varEmailID = $(this).parent().parent().find("TD").eq(5).text();
-            var varAddress = $(this).parent().parent().find("TD").eq(6).text();
+            //var varGSTNo = $(this).parent().parent().find("TD").eq(4).text();
+            //var varEmailID = $(this).parent().parent().find("TD").eq(5).text();
+            //var varAddress = $(this).parent().parent().find("TD").eq(6).text();
             //var varStateID = $(this).parent().parent().find("TD").eq(7).text();
 
             var currentRow = $(this).closest("tr");
             var data = $('#example').DataTable().row(currentRow).data();
-            varStateID = (data['StateID']);
+
+            var varCustomerName = (data['CustomerName']);
+            var varCompanyName = (data['CompanyName']);
+            var varGSTNo = (data['GSTNo']);
+            var varEmailID = (data['EmailID']);
+            var varAddress = (data['Address']);
+            var varStateID = (data['StateID']);
             var varCustomerID = (data['CustomerID']);
 
             $('#txtCustomerName').val(varCustomerName);

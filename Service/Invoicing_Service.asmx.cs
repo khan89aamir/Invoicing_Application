@@ -56,15 +56,17 @@ namespace Invoicing_Application.Service
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void ManageProducts(string SKUName, decimal Rate, string Description, int ProudctID)
+        public void ManageProducts(string SKUName, decimal Rate, string Description, int ProudctID, int UserID)
         {
             clsMessage message = new clsMessage();
+
+            Description = Description.Length == 0 ? "0" : Description;
 
             ObjDAL.SetStoreProcedureData("ParmSKUName", MySqlConnector.MySqlDbType.VarChar, SKUName, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("ParmRate", MySqlConnector.MySqlDbType.Decimal, Rate, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("ParmDescription", MySqlConnector.MySqlDbType.VarChar, Description, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("ParmProductID", MySqlConnector.MySqlDbType.Int32, ProudctID, clsMySQLCoreApp.ParamType.Input);
-            ObjDAL.SetStoreProcedureData("ParmCreatedBy", MySqlConnector.MySqlDbType.Int32, 1, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmCreatedBy", MySqlConnector.MySqlDbType.Int32, UserID, clsMySQLCoreApp.ParamType.Input);
 
             bool result = ObjDAL.ExecuteStoreProcedure_DML("ztech.SPR_Insert_SKUDetails");
             if (result)
@@ -82,14 +84,13 @@ namespace Invoicing_Application.Service
             else
             {
                 message.Result = false;
-                message.strMessage = "Failed to Insert SKU " + SKUName + ". Error : " + ObjDAL.strErrorText;
+                message.strMessage = "Failed to Save SKU " + SKUName + ". Error : " + ObjDAL.strErrorText;
             }
             string strResponse = JsonConvert.SerializeObject(message);
 
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.AddHeader("content-length", strResponse.Length.ToString());
-
             Context.Response.Write(strResponse);
             Context.Response.Flush();
         }
@@ -105,8 +106,14 @@ namespace Invoicing_Application.Service
             {
                 jsonData = DataTableToJSONWithJSONNet(dataTable);
             }
+            //Context.Response.ContentType = "application/json";
+            //Context.Response.Write(jsonData);
+
+            Context.Response.Clear();
             Context.Response.ContentType = "application/json";
+            Context.Response.AddHeader("content-length", jsonData.Length.ToString());
             Context.Response.Write(jsonData);
+            Context.Response.Flush();
         }
 
         public string DataTableToJSONWithJSONNet(DataTable table)
@@ -142,7 +149,7 @@ namespace Invoicing_Application.Service
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void ManageCustomers(string CustomerName, string CompanyName, string GSTNo, string EmailID
-            , string Address, int StateID, int CustomerID)
+            , string Address, int StateID, int CustomerID, int UserID)
         {
             clsMessage message = new clsMessage();
 
@@ -153,7 +160,7 @@ namespace Invoicing_Application.Service
             ObjDAL.SetStoreProcedureData("ParmAddress", MySqlConnector.MySqlDbType.VarChar, Address, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("ParmCustomerID", MySqlConnector.MySqlDbType.Int32, CustomerID, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("ParmStateID", MySqlConnector.MySqlDbType.Int32, StateID, clsMySQLCoreApp.ParamType.Input);
-            ObjDAL.SetStoreProcedureData("ParmCreatedBy", MySqlConnector.MySqlDbType.Int32, 1, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmCreatedBy", MySqlConnector.MySqlDbType.Int32, UserID, clsMySQLCoreApp.ParamType.Input);
 
             bool result = ObjDAL.ExecuteStoreProcedure_DML("ztech.SPR_Insert_CustomerDetails");
             if (result)
@@ -171,14 +178,13 @@ namespace Invoicing_Application.Service
             else
             {
                 message.Result = false;
-                message.strMessage = "Failed to Insert Customer Name " + CustomerName + ". Error : " + ObjDAL.strErrorText;
+                message.strMessage = "Failed to Save Customer Name " + CustomerName + ". Error : " + ObjDAL.strErrorText;
             }
             string strResponse = JsonConvert.SerializeObject(message);
 
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.AddHeader("content-length", strResponse.Length.ToString());
-
             Context.Response.Write(strResponse);
             Context.Response.Flush();
         }
@@ -194,8 +200,14 @@ namespace Invoicing_Application.Service
             {
                 jsonData = DataTableToJSONWithJSONNet(dataTable);
             }
+            //Context.Response.ContentType = "application/json";
+            //Context.Response.Write(jsonData);
+
+            Context.Response.Clear();
             Context.Response.ContentType = "application/json";
+            Context.Response.AddHeader("content-length", jsonData.Length.ToString());
             Context.Response.Write(jsonData);
+            Context.Response.Flush();
         }
 
         [WebMethod]
@@ -227,14 +239,15 @@ namespace Invoicing_Application.Service
         {
             clsMessage message = new clsMessage();
 
-            object result = ObjDAL.ExecuteScalarQuery("Select count(*) from ztech.tblMyProfile where UserName='"+UserName+"' AND Password='"+Password+"'");
-            if (result!=null)
+            object result = ObjDAL.ExecuteScalarQuery("SELECT ProfileID FROM ztech.tblMyProfile WHERE UserName='" + UserName + "' AND Password='" + Password + "'");
+            if (result != null)
             {
                 if (Convert.ToInt32(result) > 0)
                 {
                     message.Result = true;
                     message.strMessage = "User Found.";
-                    message.Value = GetDefaultState();
+                    message.UserID = Convert.ToInt32(result);
+                    message.Value = GetDefaultState(message.UserID);
                 }
                 else
                 {
@@ -248,7 +261,6 @@ namespace Invoicing_Application.Service
                 message.strMessage = "Incorrect Username or Password.";
             }
 
-
             string strResponse = JsonConvert.SerializeObject(message);
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";
@@ -258,12 +270,10 @@ namespace Invoicing_Application.Service
             Context.Response.Flush();
         }
 
-        public int GetDefaultState()
+        public int GetDefaultState(int UserID)
         {
-          int state=  ObjDAL.ExecuteScalarInt("select State from  ztech.tblMyProfile where profileID=1");
+            int state = ObjDAL.ExecuteScalarInt("SELECT StateID from ztech.tblMyProfile WHERE ProfileID="+ UserID);
             return state;
-
-
         }
 
         [WebMethod]
@@ -271,18 +281,16 @@ namespace Invoicing_Application.Service
         public void GetCustomerAutoPopulate()
         {
             DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT CustomerID, CustomerName FROM ztech.tblCustomerMaster");
-            if (dataTable.Rows.Count > 0)
+            if (dataTable!=null && dataTable.Rows.Count > 0)
             {
                 var NameList = (from r in dataTable.AsEnumerable()
                                 select new
                                 {
                                     CustomerID = r.Field<int>("CustomerID"),
                                     CustomerName = r.Field<string>("CustomerName"),
-
                                 });
 
                 Context.Response.Write(JsonConvert.SerializeObject(NameList));
-
             }
             else
             {
@@ -294,8 +302,6 @@ namespace Invoicing_Application.Service
                 this.Context.Response.ContentType = "application/json; charset=utf-8";
                 this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
-
-
         }
 
         [WebMethod]
@@ -330,10 +336,92 @@ namespace Invoicing_Application.Service
             }
         }
 
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void ManageMyProfile(int UserID, string OwnerName, string CompanyName, string GSTNo, string EmailID
+          , string Address, int StateID, string Password, string MobileNo, string TNC, string BankName, string AccountNo, string IFSCCode, string BranchName)
+        {
+            clsMessage message = new clsMessage();
 
+            Password = Password.Length == 0 ? "0" : Password;
 
+            ObjDAL.SetStoreProcedureData("ParmOwnerName", MySqlConnector.MySqlDbType.VarChar, OwnerName, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmCompanyName", MySqlConnector.MySqlDbType.VarChar, CompanyName, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmGSTNo", MySqlConnector.MySqlDbType.VarChar, GSTNo, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmEmailID", MySqlConnector.MySqlDbType.VarChar, EmailID, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmAddress", MySqlConnector.MySqlDbType.VarChar, Address, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmStateID", MySqlConnector.MySqlDbType.Int32, StateID, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmPassword", MySqlConnector.MySqlDbType.VarChar, Password, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmMobileNo", MySqlConnector.MySqlDbType.VarChar, MobileNo, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmTNC", MySqlConnector.MySqlDbType.VarChar, TNC, clsMySQLCoreApp.ParamType.Input);
 
+            ObjDAL.SetStoreProcedureData("ParmBankName", MySqlConnector.MySqlDbType.VarChar, BankName, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmAccountNo", MySqlConnector.MySqlDbType.VarChar, AccountNo, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmIFSCCode", MySqlConnector.MySqlDbType.VarChar, IFSCCode, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmBranchName", MySqlConnector.MySqlDbType.VarChar, BranchName, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmCreatedBy", MySqlConnector.MySqlDbType.Int32, UserID, clsMySQLCoreApp.ParamType.Input);
 
+            bool result = ObjDAL.ExecuteStoreProcedure_DML("ztech.SPR_Update_MyProfile");
+            if (result)
+            {
+                message.Result = true;
 
+                message.strMessage = "Customer Name [" + OwnerName + "] has been Updated successfully";
+            }
+            else
+            {
+                message.Result = false;
+                message.strMessage = "Failed to Insert Customer Name " + OwnerName + ". Error : " + ObjDAL.strErrorText;
+            }
+            string strResponse = JsonConvert.SerializeObject(message);
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+
+            Context.Response.Write(strResponse);
+            Context.Response.Flush();
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void GetMyProfile(int UserID)
+        {
+            // System.Threading.Thread.Sleep(2000);
+            string strResponse = "{}";
+            //DataTable dataTable = ObjDAL.ExecuteSelectStatement("CALL ztech.SPR_GetMyProfile()");
+            ObjDAL.SetStoreProcedureData("ParmUserID", MySqlConnector.MySqlDbType.Int32, UserID, clsMySQLCoreApp.ParamType.Input);
+            DataSet ds= ObjDAL.ExecuteStoreProcedure_Get("ztech.SPR_GetMyProfile");
+            if (ds != null && ds.Tables.Count > 0)
+            {
+                 strResponse = JsonConvert.SerializeObject(ds);
+            }
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+            Context.Response.Write(strResponse);
+            Context.Response.Flush();
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void GetPartPaymentDetails()
+        {
+            // System.Threading.Thread.Sleep(2000);
+            string jsonData = "{}";
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement("CALL ztech.SPR_GetPartPaymentDetails()");
+            if (dataTable != null && dataTable.Rows.Count > 0)
+            {
+                jsonData = DataTableToJSONWithJSONNet(dataTable);
+            }
+            //Context.Response.ContentType = "application/json";
+            //Context.Response.Write(jsonData);
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.AddHeader("content-length", jsonData.Length.ToString());
+            Context.Response.Write(jsonData);
+            Context.Response.Flush();
+        }
     }
 }

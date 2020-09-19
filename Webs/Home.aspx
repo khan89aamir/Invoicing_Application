@@ -119,8 +119,6 @@
                         <button class="btn btn-primary" type="submit">Submit</button>
                     </form>
 
-
-
                 </div>
 
             </div>
@@ -153,13 +151,11 @@
         })();
 
 
-
-
         $(document).ready(function () {
 
-            var sessionValue =  <% 
+            var sessionValue =  <%
 
-        if (Session["UserName"]!=null)
+        if (Session["UserID"]!=null)
         {
             Response.Write("'True'");
         }
@@ -167,8 +163,6 @@
         {
               Response.Write("'False'");
         }
-
-
         %>;
               
             if (sessionValue == "True") {
@@ -183,8 +177,6 @@
 
                 $('#pnlProfile').removeClass("d-none");
                 $('#pnlProfile').addClass("d-block");
-
-
             }
             else {
                 $('#pnlLogin').show();
@@ -193,29 +185,19 @@
                 $('#pnlBack').removeClass("d-block");
                 $('#pnlBack').addClass("d-none");
             }
-
-
         });
-
-
 
 
         $.DoLogin = function () {
 
-
             var val_user = $('#txtUserName').val();
             var val_pass = $('#txtPassword').val();
 
-
             // Create an object:
             var AccountData = {
-
                 UserName: val_user,
                 Password: val_pass
-
             };
-
-
 
             $.ajax({
                 url: "../Service/Invoicing_Service.asmx/Login",
@@ -236,15 +218,14 @@
 
                 success: function (responseData) {
 
-
                     // parse it to java script object so that you can access property
                     // data = $.parseJSON(responseData.d);
 
                     if (responseData.Result) {
 
-                     
                         // set the login session for the user.
-                        SetLoginSession(responseData.Value);
+                        //SetLoginSession(responseData.Value);
+                        SetLoginSession(responseData);
 
                         // hide the login panel
                         $('#pnlLogin').hide();
@@ -256,15 +237,11 @@
                         $('#pnlProfile').removeClass("d-none");
                         $('#pnlProfile').addClass("d-block");
 
-
-
                         $('#frmaccount').trigger("reset");
 
                         // after reset remove the class else it will show validtion message.
                         let jsContactForm = document.getElementById('frmaccount');                   // <=== 
                         jsContactForm.classList.remove('was-validated');
-
-
 
                     }
                     else {
@@ -275,18 +252,13 @@
 
                         $('#spnLoading').removeClass("d-block");
                         $('#spnLoading').addClass("d-none");
-
                     }
-
-
                 },
                 error: function (xhr, status, error) {
 
                     $('#loadingBox').modal('hide');
                     //alert("Error : " + error);
                     //alert("Error Text: " + xhr.responseText);
-
-
                 },
                 failure: function (r) {
                     alert("Fail:" + r.responseText);
@@ -295,16 +267,15 @@
 
                 // alert("Done : " + response);
             });
-
-
         };
 
-        function SetLoginSession(stateValue) {
+        function SetLoginSession(result) {
 
             var varUserName = $('#txtUserName').val();
-            var DefaultState = stateValue;
-
-            var objData = { UserName: varUserName, DefaulStatetValue: DefaultState };
+            var DefaultState = result.Value;
+            var varUserID = result.UserID;
+            
+            var objData = { UserName: varUserName, DefaulStatetValue: DefaultState, UserID: varUserID};
             // calling asp.net page method [Session should be maintain by page NOT by web service.]
             $.ajax({
                 type: "POST",
@@ -313,14 +284,12 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    alert(response.d);
+                    //alert(response.d);
                 },
                 error: function (xhr, status, error) {
 
-
                  //   alert("Error : " + error);
                   //  alert("Error Text: " + xhr.responseText);
-
 
                 },
                 failure: function (r) {

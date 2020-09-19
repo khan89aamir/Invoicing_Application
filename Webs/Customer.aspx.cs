@@ -11,7 +11,7 @@ namespace Invoicing_Application.Webs
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(Session["UserName"]==null)
+            if(Session["UserID"]==null)
             {
                 Response.Redirect("Home.aspx");
             }

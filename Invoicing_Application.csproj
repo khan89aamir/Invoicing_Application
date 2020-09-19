@@ -87,6 +87,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\bootstrap.min.css" />
+    <Content Include="assets\css\datatables.min.css" />
+    <Content Include="assets\css\datatables.min.js" />
+    <Content Include="assets\css\font-awesome.min.css" />
     <Content Include="assets\css\jquery-ui.css" />
     <Content Include="assets\css\MasterFormCSS.css" />
     <Content Include="assets\css\select2.css" />
@@ -105,6 +108,7 @@
     <Content Include="Service\Invoicing_Service.asmx" />
     <Content Include="Web.config" />
     <Content Include="Webs\Customer.aspx" />
+    <Content Include="Webs\Global.asax" />
     <Content Include="Webs\Home.aspx" />
     <Content Include="Webs\InvoiceDetails.aspx" />
     <Content Include="Webs\Invoicing.aspx" />
@@ -134,6 +138,9 @@
     </Compile>
     <Compile Include="Webs\Customer.aspx.designer.cs">
       <DependentUpon>Customer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Webs\Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Webs\Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>

@@ -7,15 +7,25 @@
     <title>Invoicing Application</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link href="http://localhost:15464/assets/css/Style.css" rel="stylesheet" />
-    <link href="http://localhost:15464/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="http://localhost:15464/assets/js/jquery-3.5.1.min.js"></script>
+    <%--<link href="assets/css/font-awesome.min.css" rel="stylesheet" />--%>
+
+    <%--<link href="http://localhost:15464/assets/css/Style.css" rel="stylesheet" />--%>
+    <link href=<%=ConfigurationManager.AppSettings["host"]%>/assets/css/Style.css rel="stylesheet"/>
+    <link href=<%=ConfigurationManager.AppSettings["host"]%>/assets/css/bootstrap.min.css rel="stylesheet" />
+    <link href="assets/css/MasterFormCSS.css" rel="stylesheet" />
+
+    <script src=<%=ConfigurationManager.AppSettings["host"]%>/assets/js/jquery-3.5.1.min.js></script>
+
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/b-1.6.3/b-html5-1.6.3/fh-3.1.7/r-2.2.5/datatables.min.js"></script>
+    <%--<script src="assets/css/datatables.min.js"></script>--%>
+
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/b-1.6.3/b-html5-1.6.3/fh-3.1.7/r-2.2.5/datatables.min.css" />
+    <%--<link href="assets/css/datatables.min.css" rel="stylesheet" />--%>
 
-    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
-    <script src="http://localhost:15464/assets/js/jquery-ui.js"></script>
+    <%--<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />--%>
+    <link href="assets/css/jquery-ui.css" rel="stylesheet" />
 
+    <script src=<%=ConfigurationManager.AppSettings["host"]%>/assets/js/jquery-ui.js></script>
 
     <link rel="icon" type="image/x-icon" sizes="32x32" href="assets/img/logo.jpg" />
 
@@ -46,16 +56,13 @@
 
                         <div class="spinner-border " style="width: 3rem; height: 3rem;" role="status">
                         </div>
-
-
-
                     </div>
+
                     <div class="text-center text-dark m-2">
                         <span id="lblLoadingtxt" style="font-family: 'Times New Roman'; font-size: large"></span>
                     </div>
 
                 </div>
-
 
             </div>
 
@@ -113,8 +120,6 @@
                         <i id="iconMsg" class="fa fa-check-circle fa-2x" style="color: green" runat="server"></i>
                         <span id="lblMessage" class="text-center " runat="server"></span>
 
-
-
                     </div>
                     <div class="modal-footer">
                         <button id="btnCloseMsg" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -137,7 +142,6 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-
             <div class="navbar-collapse collapse justify-content-between align-items-center w-100 " id="collapsingNavbar2">
 
                 <ul class="navbar-nav mx-auto text-md-center text-left MyMenu">
@@ -146,7 +150,6 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link  mr-4"  href="Customer.aspx"><i class="fa fa-user mr-1" aria-hidden="true"></i>Customer</a>
-
 
                     </li>
                     <li class="nav-item mr-4">
@@ -177,13 +180,12 @@
 
         </div>
 
-
     </nav>
 
 </div>
     
-    <img src="http://localhost:15464/assets/img/scrollTop.png" id="myBtn" onclick="topFunction()" width="50" height="50" />
-
+    <%--<img src="http://localhost:15464/assets/img/scrollTop.png" id="myBtn" onclick="topFunction()" width="50" height="50" />--%>
+    <img src=<%=ConfigurationManager.AppSettings["host"]%>/assets/img/scrollTop.png id="myBtn" onclick="topFunction()" width="50" height="50" />
 
     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
 
@@ -191,42 +193,33 @@
      
     <script>
 
-
         $(document).ready(function () {
 
             var sessionValue =  <% 
-
-        if (Session["UserName"]!=null)
+        if (Session["UserID"] != null)
         {
             Response.Write("'True'");
         }
         else
         {
-              Response.Write("'False'");
+            Response.Write("'False'");
         }
-
 
         %>;
 
-                 if (sessionValue == "True") {
+            if (sessionValue == "True") {
 
+                $('#pnlProfile').removeClass("d-none");
+                $('#pnlProfile').addClass("d-block");
+            }
+            else {
+                $('#pnlLogin').show();
 
-
-                     $('#pnlProfile').removeClass("d-none");
-                     $('#pnlProfile').addClass("d-block");
-
-
-                 }
-                 else {
-                     $('#pnlLogin').show();
-
-                     // show back pannel
-                     $('#pnlBack').removeClass("d-block");
-                     $('#pnlBack').addClass("d-none");
-                 }
-
-
-             });
+                // show back pannel
+                $('#pnlBack').removeClass("d-block");
+                $('#pnlBack').addClass("d-none");
+            }
+        });
 
         // When the user clicks on the button, scroll to the top of the document
         function topFunction() {
@@ -242,16 +235,12 @@
         function myFunction() {
             if (window.pageYOffset > sticky) {
 
-
                 if (screen.width > 1000) {
                     header.classList.add("sticky");
                     header.classList.add("MyHeader2");
-
                 }
 
-
                 document.getElementById("myBtn").style.display = "block";
-
 
             } else {
 
@@ -259,7 +248,6 @@
                     header.classList.remove("sticky");
                     header.classList.remove("MyHeader2");
                 }
-
 
                 document.getElementById("myBtn").style.display = "none";
             }
@@ -270,15 +258,10 @@
             event.preventDefault();
             event.stopPropagation();
 
-
             LogOut();
-
-
-
         });
         function LogOut() {
 
-           
             // calling asp.net page method [Session should be maintain by page NOT by web service.]
             $.ajax({
                 type: "POST",
@@ -289,21 +272,17 @@
                 success: function (response) {
 
                     window.location.replace("Home.aspx");
-                   
                 },
                 error: function (xhr, status, error) {
 
-                   
                     alert("Error : " + error);
                     alert("Error Text: " + xhr.responseText);
-
-
                 },
                 failure: function (r) {
                     alert("Error : " + r);
                 }
             });
-        }  
+        }
 
     </script>
  <!-- Footer -->
@@ -317,7 +296,7 @@
                Version : 1.2.3.2
           </div>
            <div class="col-md-4 col-sm-4">
-               Reg Date : 23-3-2020
+               Reg Date : 23-03-2020
           </div>
       </div>
         </div>
@@ -326,9 +305,11 @@
     </footer>
     <!-- Footer -->
    
-    <script src="http://localhost:15464/assets/js/popper.min.js"></script>
-    <script src="http://localhost:15464/assets/js/bootstrap.min.js"></script>
-</body>
+    <script src=<%=ConfigurationManager.AppSettings["host"]%>/assets/js/popper.min.js></script>
+    <script src=<%=ConfigurationManager.AppSettings["host"]%>/assets/js/bootstrap.min.js></script>
 
+    <%--<script src="http://localhost:15464/assets/js/popper.min.js"></script>
+    <script src="http://localhost:15464/assets/js/bootstrap.min.js"></script>--%>
+</body>
 
 </html>

@@ -9,7 +9,8 @@ type = "text/javascript"></script>
 
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
 rel = "Stylesheet" type="text/css" />
-    <link href="../assets/css/MasterFormCSS.css" rel="stylesheet" />
+
+    <%--<link href="../assets/css/MasterFormCSS.css" rel="stylesheet" />--%>
 
     <br />
     <div class="container d-flex justify-content-center">
@@ -37,7 +38,7 @@ rel = "Stylesheet" type="text/css" />
                         <div class="col-md-6">
                             <div class="form-group">
 
-                                <label for="txtEmail">Rate : </label>
+                                <label for="txtRate">Rate : </label><%--pattern="[0-9]*"--%>
                                 <input runat="server" type="text" class="form-control" id="txtRate" name="Rate" placeholder="Enter Rate" required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter Rate.
@@ -49,10 +50,10 @@ rel = "Stylesheet" type="text/css" />
                             <div class="form-group">
 
                                 <label for="txtMobile">Description : </label>
-                                <textarea runat="server" class="form-control" id="txtDescription" name="Description" placeholder="Enter Description" required></textarea>
-                                <div class="invalid-feedback text-left">
+                                <textarea runat="server" class="form-control" id="txtDescription" name="Description" placeholder="Enter Description"></textarea>
+                                <%--<div class="invalid-feedback text-left">
                                     Please Enter Description.
-                                </div>
+                                </div>--%>
                             </div>
 
                         </div>
@@ -86,11 +87,11 @@ rel = "Stylesheet" type="text/css" />
 
                         <tr>
                             <th>Select</th>
-                            <th>Delete</th>
                             <th>SKUID</th>
                             <th>SKU Name</th>
                             <th>Rate</th>
                             <th>Description</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -125,7 +126,7 @@ rel = "Stylesheet" type="text/css" />
                                 event.preventDefault();
                                 event.stopPropagation();
 
-                                SaveSKUDetails();
+                                $.ManageProducts();
                             }
                         }
                         form.classList.add('was-validated');
@@ -134,11 +135,24 @@ rel = "Stylesheet" type="text/css" />
             }, false);
         })();
 
-        function SaveSKUDetails() {
-            $.ManageProducts();
+        function isNumeric(evt, element) {
+
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            //alert('event '+charCode);
+            if (
+                //(charCode != 45 || $(element).val().indexOf('-') != -1) &&      // “-” CHECK MINUS, AND ONLY ONE.
+                (charCode != 46 || $(element).val().indexOf('.') != -1) &&      // “.” CHECK DOT, AND ONLY ONE.
+                (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
         }
 
         $(document).ready(function () {
+
+            $("#txtRate").keypress(function (event) {
+                return isNumeric(event, this);
+            });
 
             $.GetSKUDetails();
         });
@@ -153,9 +167,12 @@ rel = "Stylesheet" type="text/css" />
                 var Rate = $('#txtRate').val();
                 var description = $('#txtDescription').val();
                 var productid = $('#txtProductID').val();
+                var varUserID = <%= Session["UserID"] %>;
 
                 // Create an object:
-                var ProductData = { SKUName: SkuName, Rate: Rate, Description: description, ProudctID: productid };
+                var ProductData = {
+                    SKUName: SkuName, Rate: Rate, Description: description, ProudctID: productid, UserID: varUserID
+                };
                 //alert(JSON.stringify(ProductData));
 
                 $.ajax({
@@ -243,17 +260,17 @@ rel = "Stylesheet" type="text/css" />
                             return "<a class='lnkSelect btn btn btn-primary' href='" + data + "'>Select</a>";
                         }
                     },
+                    { 'data': 'SKUID' },
+                    { 'data': 'SKUName' },
+                    { 'data': 'Rate' },
+                    { 'data': 'Description' },
                     {
                         data: 'Delete',
                         render: function (data, type, row) {
 
                             return "<a class='lnkDelete btn btn btn-primary' href='" + data + "'>Delete</a>";
                         }
-                    },
-                    { 'data': 'SKUID' },
-                    { 'data': 'SKUName' },
-                    { 'data': 'Rate' },
-                    { 'data': 'Description' }
+                    }
                 ],
             }); // table ends here
 
@@ -271,7 +288,7 @@ rel = "Stylesheet" type="text/css" />
             //to invisble multipe columns
             // table.columns([1, 2]).visible(false);
 
-            table.columns([2]).visible(false);
+            table.columns([1]).visible(false);
         };
 
         //   attaching event on table , then on link ( to be pricese)
@@ -291,13 +308,20 @@ rel = "Stylesheet" type="text/css" />
             var varSKUID = $(this).attr("href");
 
             // SKUName column
-            var varSKUName = $(this).parent().parent().find("TD").eq(2).text();
+            //var varSKUName = $(this).parent().parent().find("TD").eq(2).text();
 
             // Rate Colmn
-            var varRate = $(this).parent().parent().find("TD").eq(3).text();
+            //var varRate = $(this).parent().parent().find("TD").eq(3).text();
 
             // Description Colmn
-            var varDescription = $(this).parent().parent().find("TD").eq(4).text();
+            //var varDescription = $(this).parent().parent().find("TD").eq(4).text();
+
+            var currentRow = $(this).closest("tr");
+            var data = $('#example').DataTable().row(currentRow).data();
+
+            var varSKUName = (data['SKUName']);
+            var varRate = (data['Rate']);
+            var varDescription = (data['Description']);
 
             $('#txtSkuName').val(varSKUName);
             $('#txtRate').val(varRate);
