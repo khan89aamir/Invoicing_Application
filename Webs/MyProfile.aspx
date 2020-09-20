@@ -365,7 +365,7 @@
         $.GetMyProfile = function () {
 
             var varUserID = <%= Session["UserID"] %>;
-            UserIDData = { UserID: varUserID };
+            var UserIDData = { UserID: varUserID };
             $.ajax({
                 url: "../Service/Invoicing_Service.asmx/GetMyProfile",
                 type: 'POST',

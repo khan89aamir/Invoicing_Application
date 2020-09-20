@@ -26,7 +26,7 @@ namespace Invoicing_Application.Service
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void BindState()
         {
-            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT StateID,StateName FROM ztech.tblStateMaster");
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT StateID,StateName FROM anjacreation.tblStateMaster");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 var NameList = (from r in dataTable.AsEnumerable()
@@ -69,7 +69,7 @@ namespace Invoicing_Application.Service
             ObjDAL.SetStoreProcedureData("ParmProductID", MySqlConnector.MySqlDbType.Int32, ProudctID, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("ParmCreatedBy", MySqlConnector.MySqlDbType.Int32, UserID, clsMySQLCoreApp.ParamType.Input);
 
-            bool result = ObjDAL.ExecuteStoreProcedure_DML("ztech.SPR_Insert_SKUDetails");
+            bool result = ObjDAL.ExecuteStoreProcedure_DML("anjacreation.SPR_Insert_SKUDetails");
             if (result)
             {
                 message.Result = true;
@@ -102,7 +102,7 @@ namespace Invoicing_Application.Service
         {
             // System.Threading.Thread.Sleep(2000);
             string jsonData = "{}";
-            DataTable dataTable = ObjDAL.ExecuteSelectStatement("CALL ztech.SPR_GetSKUDetails()");
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement("CALL anjacreation.SPR_GetSKUDetails()");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 jsonData = DataTableToJSONWithJSONNet(dataTable);
@@ -130,7 +130,7 @@ namespace Invoicing_Application.Service
         {
             clsMessage message = new clsMessage();
 
-            int result = ObjDAL.ExecuteNonQuery("DELETE from ztech.tblSKUMaster WHERE SKUID=" + SKUID);
+            int result = ObjDAL.ExecuteNonQuery("DELETE from anjacreation.tblSKUMaster WHERE SKUID=" + SKUID);
             if (result > 0)
             {
                 message.Result = true;
@@ -163,7 +163,7 @@ namespace Invoicing_Application.Service
             ObjDAL.SetStoreProcedureData("ParmStateID", MySqlConnector.MySqlDbType.Int32, StateID, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("ParmCreatedBy", MySqlConnector.MySqlDbType.Int32, UserID, clsMySQLCoreApp.ParamType.Input);
 
-            bool result = ObjDAL.ExecuteStoreProcedure_DML("ztech.SPR_Insert_CustomerDetails");
+            bool result = ObjDAL.ExecuteStoreProcedure_DML("anjacreation.SPR_Insert_CustomerDetails");
             if (result)
             {
                 message.Result = true;
@@ -196,7 +196,7 @@ namespace Invoicing_Application.Service
         {
             // System.Threading.Thread.Sleep(2000);
             string jsonData = "{}";
-            DataTable dataTable = ObjDAL.ExecuteSelectStatement("CALL ztech.SPR_GetCustomerDetails()");
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement("CALL anjacreation.SPR_GetCustomerDetails()");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 jsonData = DataTableToJSONWithJSONNet(dataTable);
@@ -217,7 +217,7 @@ namespace Invoicing_Application.Service
         {
             clsMessage message = new clsMessage();
 
-            int result = ObjDAL.ExecuteNonQuery("DELETE FROM ztech.tblCustomerMaster WHERE CustomerID=" + CustomerID);
+            int result = ObjDAL.ExecuteNonQuery("DELETE FROM anjacreation.tblCustomerMaster WHERE CustomerID=" + CustomerID);
             if (result > 0)
             {
                 message.Result = true;
@@ -240,7 +240,7 @@ namespace Invoicing_Application.Service
         {
             clsMessage message = new clsMessage();
 
-            object result = ObjDAL.ExecuteScalarQuery("SELECT ProfileID FROM ztech.tblMyProfile WHERE UserName='" + UserName + "' AND CAST(AES_DECRYPT(Password, 'UserNameEmailID') AS CHAR(255))='" + Password + "'");
+            object result = ObjDAL.ExecuteScalarQuery("SELECT ProfileID FROM anjacreation.tblMyProfile WHERE UserName='" + UserName + "' AND CAST(AES_DECRYPT(Password, 'UserNameEmailID') AS CHAR(255))='" + Password + "'");
             if (result != null)
             {
                 if (Convert.ToInt32(result) > 0)
@@ -273,7 +273,7 @@ namespace Invoicing_Application.Service
 
         public int GetDefaultState(int UserID)
         {
-            int state = ObjDAL.ExecuteScalarInt("SELECT StateID from ztech.tblMyProfile WHERE ProfileID="+ UserID);
+            int state = ObjDAL.ExecuteScalarInt("SELECT StateID from anjacreation.tblMyProfile WHERE ProfileID=" + UserID);
             return state;
         }
 
@@ -281,8 +281,8 @@ namespace Invoicing_Application.Service
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void GetCustomerAutoPopulate()
         {
-            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT CustomerID, CustomerName FROM ztech.tblCustomerMaster");
-            if (dataTable!=null && dataTable.Rows.Count > 0)
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT CustomerID, CustomerName FROM anjacreation.tblCustomerMaster");
+            if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 var NameList = (from r in dataTable.AsEnumerable()
                                 select new
@@ -309,7 +309,7 @@ namespace Invoicing_Application.Service
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void BindCustomer()
         {
-            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT CustomerID,CustomerName FROM ztech.tblCustomerMaster");
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT CustomerID,CustomerName FROM anjacreation.tblCustomerMaster");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 var NameList = (from r in dataTable.AsEnumerable()
@@ -342,8 +342,8 @@ namespace Invoicing_Application.Service
         public void GetSelectedCustomer(int CustomerID)
         {
 
-            string strQ = "SELECT GSTNo,Address,c1.StateID, s1.StateName FROM ztech.tblCustomerMaster c1 inner join " +
-                        " ztech.tblStateMaster s1 on c1.StateID = s1.StateID where CustomerID="+CustomerID;
+            string strQ = "SELECT GSTNo,Address,c1.StateID, s1.StateName FROM anjacreation.tblCustomerMaster c1 inner join " +
+                        " anjacreation.tblStateMaster s1 on c1.StateID = s1.StateID where CustomerID=" + CustomerID;
 
             DataTable dataTable = ObjDAL.ExecuteSelectStatement(strQ);
             if (dataTable != null && dataTable.Rows.Count > 0)
@@ -379,7 +379,7 @@ namespace Invoicing_Application.Service
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void BindProduct()
         {
-            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT SKUID,SKUName FROM ztech.tblSKUMaster;");
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT SKUID,SKUName FROM anjacreation.tblSKUMaster;");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 var NameList = (from r in dataTable.AsEnumerable()
@@ -411,7 +411,7 @@ namespace Invoicing_Application.Service
         public void GetSelectedProduct(int ProductID)
         {
 
-            string strQ = "SELECT SKUID,SKUName,Rate FROM ztech.tblSKUMaster where SKUID=" + ProductID;
+            string strQ = "SELECT SKUID,SKUName,Rate FROM anjacreation.tblSKUMaster where SKUID=" + ProductID;
 
             DataTable dataTable = ObjDAL.ExecuteSelectStatement(strQ);
             if (dataTable != null && dataTable.Rows.Count > 0)
@@ -422,7 +422,7 @@ namespace Invoicing_Application.Service
                                     SKUID = r.Field<int>("SKUID"),
                                     SKUName = r.Field<string>("SKUName"),
                                     Rate = r.Field<decimal>("Rate")
-                                   
+
                                 });
                 string strResponse = JsonConvert.SerializeObject(NameList);
                 Context.Response.ContentType = "application/json";
@@ -472,7 +472,7 @@ namespace Invoicing_Application.Service
             ObjDAL.SetStoreProcedureData("parmPartyID", MySqlConnector.MySqlDbType.Int32, parmPartyID, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("parmTotalAmtBeforeTax", MySqlConnector.MySqlDbType.Decimal, parmTotalAmtBeforeTax, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("parmDiscountAmount", MySqlConnector.MySqlDbType.Decimal, parmDiscountAmount, clsMySQLCoreApp.ParamType.Input);
-           
+
             ObjDAL.SetStoreProcedureData("parmIGST", MySqlConnector.MySqlDbType.Decimal, parmIGST, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("parmCGST", MySqlConnector.MySqlDbType.Decimal, parmCGST, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("parmSGST", MySqlConnector.MySqlDbType.Decimal, parmSGST, clsMySQLCoreApp.ParamType.Input);
@@ -486,14 +486,14 @@ namespace Invoicing_Application.Service
             ObjDAL.SetStoreProcedureData("parmAutoInvoiceID", MySqlConnector.MySqlDbType.Int32, 0, clsMySQLCoreApp.ParamType.Output);
 
 
-            bool result = ObjDAL.ExecuteStoreProcedure_DML("ztech.SPR_Insert_SalesInvoiceMaster");
-           
+            bool result = ObjDAL.ExecuteStoreProcedure_DML("anjacreation.SPR_Insert_SalesInvoiceMaster");
+
             if (result)
             {
                 // get the output value.
                 DataTable dtOutput = ObjDAL.GetOutputParmData();
-                DataRow [] dRow= dtOutput.Select("ParmName='parmAutoInvoiceID'");
-                if (dRow.Length>0)
+                DataRow[] dRow = dtOutput.Select("ParmName='parmAutoInvoiceID'");
+                if (dRow.Length > 0)
                 {
                     int AutoInVoiceID = Convert.ToInt32(dRow[0]["Value"]);
 
@@ -505,12 +505,12 @@ namespace Invoicing_Application.Service
                     message.Result = false;
                     message.strMessage = "Data might be inserted but couldnt get the output value for aut ID.";
                 }
-               
+
             }
             else
             {
                 message.Result = false;
-               // message.strMessage = "Failed to Insert Customer Name " + CustomerName + ". Error : " + ObjDAL.strErrorText;
+                // message.strMessage = "Failed to Insert Customer Name " + CustomerName + ". Error : " + ObjDAL.strErrorText;
             }
             string strResponse = JsonConvert.SerializeObject(message);
 
@@ -534,7 +534,7 @@ namespace Invoicing_Application.Service
             //ObjDAL.SetStoreProcedureData("parmCreatedBy", MySqlConnector.MySqlDbType.Int32, parmCreatedBy);
             //ObjDAL.SetStoreProcedureData("parmUpdateBy", MySqlConnector.MySqlDbType.Int32, parmUpdateBy);
 
-            //bool result = ObjDAL.ExecuteStoreProcedure_DML("ztech.SPR_Insert_SalesDetails");
+            //bool result = ObjDAL.ExecuteStoreProcedure_DML("anjacreation.SPR_Insert_SalesDetails");
 
             //if (result)
             //{
@@ -554,6 +554,7 @@ namespace Invoicing_Application.Service
 
             //}
         }
+
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void ManageMyProfile(int UserID, string OwnerName, string CompanyName, string GSTNo, string EmailID
@@ -579,7 +580,7 @@ namespace Invoicing_Application.Service
             ObjDAL.SetStoreProcedureData("ParmBranchName", MySqlConnector.MySqlDbType.VarChar, BranchName, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("ParmCreatedBy", MySqlConnector.MySqlDbType.Int32, UserID, clsMySQLCoreApp.ParamType.Input);
 
-            bool result = ObjDAL.ExecuteStoreProcedure_DML("ztech.SPR_Update_MyProfile");
+            bool result = ObjDAL.ExecuteStoreProcedure_DML("anjacreation.SPR_Update_MyProfile");
             if (result)
             {
                 message.Result = true;
@@ -607,12 +608,12 @@ namespace Invoicing_Application.Service
         {
             // System.Threading.Thread.Sleep(2000);
             string strResponse = "{}";
-            //DataTable dataTable = ObjDAL.ExecuteSelectStatement("CALL ztech.SPR_GetMyProfile()");
+            //DataTable dataTable = ObjDAL.ExecuteSelectStatement("CALL anjacreation.SPR_GetMyProfile()");
             ObjDAL.SetStoreProcedureData("ParmUserID", MySqlConnector.MySqlDbType.Int32, UserID, clsMySQLCoreApp.ParamType.Input);
-            DataSet ds= ObjDAL.ExecuteStoreProcedure_Get("ztech.SPR_GetMyProfile");
+            DataSet ds = ObjDAL.ExecuteStoreProcedure_Get("anjacreation.SPR_GetMyProfile");
             if (ds != null && ds.Tables.Count > 0)
             {
-                 strResponse = JsonConvert.SerializeObject(ds);
+                strResponse = JsonConvert.SerializeObject(ds);
             }
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";
@@ -623,27 +624,58 @@ namespace Invoicing_Application.Service
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void GetPartPaymentDetails(string InvoiceNo)
+        public void GetPartPaymentDetails(string InvoiceNo)//string InvoiceNo
         {
             // System.Threading.Thread.Sleep(2000);
             string jsonData = "{}";
-            //ObjDAL.SetStoreProcedureData("ParmInvoiceNo", MySqlConnector.MySqlDbType.VarChar, InvoiceNo, clsMySQLCoreApp.ParamType.Input);
-            
-            DataTable dt = ObjDAL.ExecuteSelectStatement("CALL ztech.SPR_GetPartPaymentDetails('"+ InvoiceNo + "')");
+            ObjDAL.SetStoreProcedureData("ParmInvoiceNo", MySqlConnector.MySqlDbType.VarChar, InvoiceNo, clsMySQLCoreApp.ParamType.Input);
 
-            //DataSet ds = ObjDAL.ExecuteStoreProcedure_Get("ztech.SPR_GetPartPaymentDetails");
-            //if (ds != null && ds.Tables.Count > 0)
-            if (dt != null && dt.Rows.Count > 0)
+            //DataTable dataTable = ObjDAL.ExecuteSelectStatement("CALL anjacreation.SPR_GetPartPaymentDetails('" + InvoiceNo + "')");
+
+            DataSet ds = ObjDAL.ExecuteStoreProcedure_Get("anjacreation.SPR_GetPartPaymentDetails");
+            if (ds != null && ds.Tables.Count > 0)
+            //if (dataTable != null && dataTable.Rows.Count > 0)
             {
-                jsonData = JsonConvert.SerializeObject(dt);
+                DataTable dataTable = ds.Tables[0];
+                jsonData = JsonConvert.SerializeObject(dataTable);
+                //jsonData = DataTableToJSONWithJSONNet(dataTable);
             }
-            //Context.Response.ContentType = "application/json";
-            //Context.Response.Write(jsonData);
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(jsonData);
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void InsertPartPayment(string InvoiceNo, int InvoiceID, int CustomerID, string PaymentMode, string ChequeNo,
+            DateTime TransactionDate, decimal PayAmount, int UserID)
+        {
+            clsMessage message = new clsMessage();
+
+            ObjDAL.SetStoreProcedureData("ParmInvoiceID", MySqlConnector.MySqlDbType.Int32, InvoiceID, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmCustomerID", MySqlConnector.MySqlDbType.Int32, CustomerID, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmPaymentMode", MySqlConnector.MySqlDbType.VarChar, PaymentMode, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmChequeNo", MySqlConnector.MySqlDbType.VarChar, ChequeNo, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmTransactionDate", MySqlConnector.MySqlDbType.Date, TransactionDate, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmPayAmount", MySqlConnector.MySqlDbType.Decimal, PayAmount, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmCreatedBy", MySqlConnector.MySqlDbType.Int32, UserID, clsMySQLCoreApp.ParamType.Input);
+
+            bool result = ObjDAL.ExecuteStoreProcedure_DML("anjacreation.SPR_Insert_PartPayment");
+            if (result)
+            {
+                message.Result = true;
+                message.strMessage = "Partial Payment for [" + InvoiceNo + "] has been Save successfully";
+            }
+            else
+            {
+                message.Result = false;
+                message.strMessage = "Failed to Save Partial Payment for " + InvoiceNo + ". Error : " + ObjDAL.strErrorText;
+            }
+            string strResponse = JsonConvert.SerializeObject(message);
 
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";
-            Context.Response.AddHeader("content-length", jsonData.Length.ToString());
-            Context.Response.Write(jsonData);
+            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+            Context.Response.Write(strResponse);
             Context.Response.Flush();
         }
     }

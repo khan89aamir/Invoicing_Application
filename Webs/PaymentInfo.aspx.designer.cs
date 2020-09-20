@@ -15,6 +15,24 @@ namespace Invoicing_Application.Webs
     {
 
         /// <summary>
+        /// txtSaleInvoiceID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtSaleInvoiceID;
+
+        /// <summary>
+        /// txtCustomerID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtCustomerID;
+
+        /// <summary>
         /// frmPaymentInfo control.
         /// </summary>
         /// <remarks>
@@ -24,13 +42,13 @@ namespace Invoicing_Application.Webs
         protected global::System.Web.UI.HtmlControls.HtmlForm frmPaymentInfo;
 
         /// <summary>
-        /// txtSaleInvoiceID control.
+        /// txtInvoiceNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtSaleInvoiceID;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtInvoiceNo;
 
         /// <summary>
         /// txtCustomerName control.
@@ -51,12 +69,30 @@ namespace Invoicing_Application.Webs
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtCompanyName;
 
         /// <summary>
-        /// txtGrandTotal control.
+        /// txtRemainingAmt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtGrandTotal;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtRemainingAmt;
+
+        /// <summary>
+        /// txtChequeNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtChequeNo;
+
+        /// <summary>
+        /// txtPayAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtPayAmount;
     }
 }
