@@ -526,8 +526,25 @@ namespace Invoicing_Application.Service
         public void InsertUpdateSalesDetails(string PostedData)
         {
             clsMessage message = new clsMessage();
+
+            var SalesDetailsObj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<clsSalesDetails>>(PostedData);
+
+
+            foreach (var item in SalesDetailsObj)
+            {
+                string parmInvoiceID = item.InvID;
+                string parmProductID = item.ProductID;
+           
+            
+            
+            }
+
+
+
             //ObjDAL.SetStoreProcedureData("parmInvoiceID", MySqlConnector.MySqlDbType.Int32, parmInvoiceID);
             //ObjDAL.SetStoreProcedureData("parmProductID", MySqlConnector.MySqlDbType.Int32, parmProductID);
+            //ObjDAL.SetStoreProcedureData("parmSKU_Code", MySqlConnector.MySqlDbType.VarChar, parmSKU_Code);
+            //ObjDAL.SetStoreProcedureData("parmHSN", MySqlConnector.MySqlDbType.VarChar, parmHSN);
             //ObjDAL.SetStoreProcedureData("parmRate", MySqlConnector.MySqlDbType.Decimal, parmRate);
             //ObjDAL.SetStoreProcedureData("parmQTY", MySqlConnector.MySqlDbType.Int32, parmQTY);
             //ObjDAL.SetStoreProcedureData("parmCreatedBy", MySqlConnector.MySqlDbType.Int32, parmCreatedBy);
@@ -552,6 +569,12 @@ namespace Invoicing_Application.Service
             //    message.Result = false;
 
             //}
+
+            message.Result = true;
+            string strResponse = JsonConvert.SerializeObject(message);
+
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(strResponse);
         }
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -640,5 +663,37 @@ namespace Invoicing_Application.Service
             Context.Response.Write(jsonData);
             Context.Response.Flush();
         }
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void BINDSKU_Code()
+        {
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT SKUID,SKUCode FROM ztech.tblSKUMaster;");
+            if (dataTable != null && dataTable.Rows.Count > 0)
+            {
+                var NameList = (from r in dataTable.AsEnumerable()
+                                select new
+                                {
+                                    SKUID = r.Field<int>("SKUID"),
+                                    SKUName = r.Field<string>("SKUCode"),
+                                });
+                string strResponse = JsonConvert.SerializeObject(NameList);
+                Context.Response.ContentType = "application/json";
+                Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+                Context.Response.Write(strResponse);
+                Context.Response.Flush();
+                //  Context.Response.Write(JsonConvert.SerializeObject(NameList));
+            }
+            else
+            {
+                clsMessage message = new clsMessage();
+
+                message.strMessage = "No records found";
+                message.Result = true;
+
+                this.Context.Response.ContentType = "application/json; charset=utf-8";
+                this.Context.Response.Write(JsonConvert.SerializeObject(message));
+            }
+        }
+
     }
 }

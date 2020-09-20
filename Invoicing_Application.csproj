@@ -128,6 +128,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\clsMessage.cs" />
+    <Compile Include="Service\clsSalesDetails.cs" />
     <Compile Include="Service\DAL\clsMySQLCoreApp.cs" />
     <Compile Include="Service\Invoicing_Service.asmx.cs">
       <DependentUpon>Invoicing_Service.asmx</DependentUpon>

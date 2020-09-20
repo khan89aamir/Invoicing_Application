@@ -36,7 +36,7 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">Invoice No : </label>
-                                    <input type="text" id="txtInvoiceID" value="0"  hidden/>
+                                    <input type="text" id="txtInvoiceID" value="0" hidden />
                                     <input type="text" class="form-control text " autocomplete="off" id="txtInvoiceNumber" name="txtInvoiceNumber" value="INV-{AUTO}" placeholder="Enter Invoice Number" disabled required>
                                     <div class="invalid-feedback text-left">
                                         Please Enter Invoice No
@@ -85,7 +85,7 @@
 
                                     <a href="Customer.aspx" target="_blank"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add New Customer</a>
                                     <br />
-                                      <a id="lnkRefresh"  href="#" target="_blank"><i class="fa fa-refresh mr-1" aria-hidden="true"></i>Refresh</a>
+                                    <a id="lnkRefresh" href="#" target="_blank"><i class="fa fa-refresh mr-1" aria-hidden="true"></i>Refresh</a>
                                     <div class="invalid-feedback text-left">
                                         Please Enter Party Name
                                     </div>
@@ -145,8 +145,22 @@
 
                                 <div class="form-group">
 
-                                    <label for="cmbProduct">Select SKU: </label>
+                                    <label for="cmbProduct">Select Product: </label>
                                     <select id='cmbProduct' class="custom-select" required>
+                                    </select>
+
+                                    <div class="invalid-feedback text-left">
+                                        Please Enter SKU.
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+
+                                <div class="form-group">
+
+                                    <label for="cmbSKU">Select SKU No: </label>
+                                    <select id='cmbSKU' class="custom-select" required>
                                     </select>
 
                                     <div class="invalid-feedback text-left">
@@ -225,7 +239,9 @@
 
 
                                             <th>ProductID</th>
+                                            <th>SKU_No</th>
                                             <th>Product_Name</th>
+                                            <th>HSN_No</th>
                                             <th>QTY</th>
                                             <th>Rate</th>
                                             <th>Total</th>
@@ -242,7 +258,7 @@
                             </div>
                         </div>
 
-                       
+
                         <div class="form-group row">
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
@@ -251,10 +267,6 @@
                             <div class="col-sm-2">
                                 <input type="text" class="form-control form-control-sm disableValue" id="txtAmountBeforeTax" value="0.00">
                             </div>
-
-
-                        </div>
-                        <div class="form-group row">
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
@@ -262,10 +274,6 @@
                             <div class="col-sm-2">
                                 <input type="text" class="form-control form-control-sm " id="txtDiscountAmt" placeholder="0.00" onfocus="OnDiscountFocus()" onchange="MasterCalculation()">
                             </div>
-
-
-                        </div>
-                        <div class="form-group row">
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
@@ -273,10 +281,6 @@
                             <div class="col-sm-2">
                                 <input type="text" class="form-control form-control-sm " id="txtCGST" placeholder="0.00" onchange="MasterCalculation()">
                             </div>
-
-
-                        </div>
-                        <div class="form-group row">
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
@@ -285,10 +289,6 @@
                                 <input type="text" class="form-control form-control-sm" id="txtSGST" placeholder="0.00" onchange="MasterCalculation()">
                             </div>
 
-
-                        </div>
-
-                        <div class="form-group row">
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
@@ -296,12 +296,6 @@
                             <div class="col-sm-2">
                                 <input type="text" class="form-control form-control-sm" id="txtIGST" placeholder="0.00" onchange="MasterCalculation()">
                             </div>
-
-
-                        </div>
-
-
-                        <div class="form-group row">
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
@@ -309,10 +303,6 @@
                             <div class="col-sm-2">
                                 <input type="text" class="form-control form-control-sm disableValue" id="txtGST" placeholder="0.00">
                             </div>
-
-
-                        </div>
-                        <div class="form-group row">
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
@@ -324,6 +314,73 @@
 
                         </div>
 
+
+
+
+                        <a class="btn btn-info mb-2 w-100 " data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Other Details <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                        </a>
+                        <div class="collapse" id="collapseExample">
+                            <h5 >Other Details</h5>
+                            <div class="form-group row">
+
+                                <label for="colFormLabel" class="col-sm-3 col-form-label ">Reverse Charge: </label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control form-control-sm disableValue" id="txtReverseCharge" placeholder="0.00">
+                                </div>
+
+                                <label for="colFormLabel" class="col-sm-3 col-form-label ">Transportation Mode: </label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control form-control-sm disableValue" id="txtTransportationMode">
+                                </div>
+
+                                <label for="colFormLabel" class="col-sm-3 col-form-label ">Vehicle Number: </label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control form-control-sm disableValue" id="txtVehicle Number">
+                                </div>
+
+
+                                <label for="colFormLabel" class="col-sm-3 col-form-label ">Date of Supply: </label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control form-control-sm disableValue" id="txtDateofSupply">
+                                </div>
+
+
+                            </div>
+                            <h5>Details of Consignee | Shipped to :</h5>
+                            <div class="form-group row">
+
+                                <div class="col-md-4">
+                                    <label for="txtFullName"> Name : </label>
+                                    <input type="text" class="form-control text form-control-sm" id="txtConsigneeName" >
+                                   
+                                </div>
+                                 <div class="col-md-4">
+                                    <label for="txtFullName"> GST No : </label>
+                                    <input type="text" class="form-control text form-control-sm " id="txtConsigneeGST" >
+                                   
+                                </div>
+                                <div class="col-md-4">
+                                   
+                                     <label for="cmdConsigneeState">State :</label>
+                                    <select ID="cmdConsigneeState" class="custom-select form-control-sm" name="cmdConsigneeState"  >
+                                    </select>
+                                    
+                                       
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="txtFullName"> Address : </label>
+                                    <input type="text" class="form-control text form-control-sm" id="txtConsigneeAddress" >
+                                   
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+
+
                         <div class="form-row">
                             <div class="col-md-12 mb-1 text-right">
                                 <button id="btnPrint" type="submit" class="btn btn-primary"><i class="fa fa-print mr-1" aria-hidden="true"></i>Print Invoice</button>
@@ -332,6 +389,10 @@
                             </div>
 
                         </div>
+
+
+
+
                     </form>
 
 
@@ -345,7 +406,7 @@
         </div>
     </div>
     <button id="btnTest" class="mb-4" onclick="PostSalesInvioceDetails(1)">Test</button>
-   
+
     <script>
 
 
@@ -368,7 +429,7 @@
                 parmCreatedBy: "1",
                 parmModifiedBy: "1"
 
-                
+
             }
 
 
@@ -439,8 +500,6 @@
         }
         function PostSalesInvioceDetails(InvoiceID) {
 
-           
-            return;
             var lstSalesDetails = new Array();
 
 
@@ -449,12 +508,13 @@
                 var row = $(this);
 
                 var objSales = {};
+                var temp = $('#tblProduct').DataTable().row(row).data();
 
-                objSales.ProductID = row.find("TD").eq(0).html();
-              
-                objSales.QTY = row.find("TD").eq(2).html();
-                objSales.Rate = row.find("TD").eq(3).html();
-                objSales.Total = row.find("TD").eq(4).html();
+                objSales.ProductID = temp[0];
+
+                objSales.QTY = row.find("TD").eq(1).html();
+                objSales.Rate = row.find("TD").eq(2).html();
+                objSales.Total = row.find("TD").eq(3).html();
                 objSales.InvID = InvoiceID;
 
 
@@ -468,8 +528,8 @@
             $.ajax({
                 url: "../Service/Invoicing_Service.asmx/InsertUpdateSalesDetails",
                 type: 'POST',
-                data: JSON.stringify(lstSalesDetails),
-                contentType: "application/json",
+                data: { PostedData: JSON.stringify(lstSalesDetails) },
+
                 dataType: "json",
                 beforeSend: function () {
 
@@ -580,7 +640,7 @@
         });
 
         $("#btnCancel").click(function () {
-         
+
             $("#txtProductName").val("");
             $("#txtQTY").val("");
             $("#txtRate").val("");
@@ -648,7 +708,7 @@
                 DoBillCalculation(PTotal);
 
             }
-      
+
             // QTY Column is Editable only , rest of the columns are read only . this is done inside js file.
             $('#tblProduct').editableTableWidget();
 
@@ -681,7 +741,7 @@
 
             });
 
-           
+
             HideProductIDColumn();
         });
 
@@ -700,13 +760,13 @@
 
             $("#tblProduct TBODY TR").each(function () {
                 var row = $(this);
-               
+
                 var amtTotal = row.find("TD").eq(3).html();
-                SubTotal = parseFloat(SubTotal) + parseFloat(amtTotal) ;
-                
+                SubTotal = parseFloat(SubTotal) + parseFloat(amtTotal);
+
             });
-        
-           
+
+
             var NewTotal = parseFloat(SubTotal).toFixed(2);
             $('#txtAmountBeforeTax').val(NewTotal);
 
@@ -872,10 +932,11 @@
 
 
             // dont hide the column if you are gona use it as Auto ID
-           table.column(0).visible(false);
+            table.column(0).visible(false);
 
             BindCustomer();
             BindProducts();
+            BindSKUCode();
             // drop down------
             $.ajax({
                 type: "POST",
@@ -912,7 +973,7 @@
 
 
             HideProductIDColumn();
-           
+
 
         });
 
@@ -971,6 +1032,38 @@
                     // set the deafult state from session
                     // Initialize select2
                     $("#cmbProduct").select2();
+
+                },
+                error: function (xhr, status, error) {
+
+                    alert("Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
+                },
+                failure: function (r) {
+                    alert("Fail:" + r.responseText);
+                }
+            });
+        }
+        function BindSKUCode() {
+
+            // drop down------
+            $.ajax({
+                type: "POST",
+                url: "../Service/Invoicing_Service.asmx/BINDSKU_Code",
+                dataType: "json",
+                //data: JSON.stringify(ObjMyData),
+                contentType: "application/json",
+                success: function (res) {
+
+                    $("#cmbSKU").append($("<option selected='selected' disabled='disabled'></option>").val('').html('Select SKU'));
+                    $.each(res, function (data, value) {
+
+                        $("#cmbSKU").append($("<option></option>").val(value.SKUID).html(value.SKUName));
+                    })
+
+                    // set the deafult state from session
+                    // Initialize select2
+                    $("#cmbSKU").select2();
 
                 },
                 error: function (xhr, status, error) {
@@ -1054,7 +1147,7 @@
 
         }
 
-      
+
 
     </script>
 </asp:Content>
