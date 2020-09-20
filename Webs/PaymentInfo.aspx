@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="PaymentInfo.aspx.cs" Inherits="Invoicing_Application.Webs.PaymentInfo" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="PaymentInfo.aspx.cs" Inherits="Invoicing_Application.Webs.PaymentInfo" ClientIDMode="Static" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <style>
@@ -18,13 +18,13 @@
             <div class="card-body">
                 <h5>Search Filter :</h5>
                 <form id="frmPaymentInfo" class="needs-validation" novalidate runat="server">
-                    <input type="text" runat="server" class="form-control text" id="txtCustomerID" value="0" hidden>
+                    <input type="text" runat="server" class="form-control text" id="txtSaleInvoiceID" value="0" hidden>
                     <div class="form-row">
                         <div class="col-md-4">
 
                             <div class="form-group">
-                                <label for="txtCustomerName">Customer Name </label>
-                                <input type="text" class="form-control text " id="txtCustomerName" placeholder="Enter Customer Name">
+                                <label for="txtSearchCustomerName">Customer Name </label>
+                                <input type="text" class="form-control text " id="txtSearchCustomerName" placeholder="Enter Customer Name">
                                 <div class="invalid-feedback text-left">
                                     Please Enter Customer Name.
                                 </div>
@@ -34,8 +34,8 @@
                         <div class="col-md-4">
 
                             <div class="form-group">
-                                <label for="txtInvoiceNo">Invoice No </label>
-                                <input type="text" class="form-control text " id="txtInvoiceNo" placeholder="Enter Invoice No." required>
+                                <label for="txtSearchInvoiceNo">Invoice No </label>
+                                <input type="text" class="form-control text " id="txtSearchInvoiceNo" placeholder="Enter Invoice No." required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter Invoice No.
                                 </div>
@@ -45,7 +45,7 @@
                         <div class="col-md-4">
 
                             <div class="form-group">
-                                <label for="cmdInvoiceStatus">Option :</label>
+                                <label for="cmdInvoiceStatus">Invoice Status :</label>
                                 <select id="cmdInvoiceStatus" class="custom-select">
                                     <option selected='selected' disabled='disabled'>Please Select</option>
                                     <option>Paid Invoice</option>
@@ -54,7 +54,7 @@
 
                                 </select>
                                 <div class="invalid-feedback">
-                                    Please select your product.
+                                    Please select Invoice Status.
                                 </div>
                             </div>
 
@@ -64,7 +64,7 @@
                     <div class="form-row">
                         <div class="col-md-12 mb-2  text-right">
                             <button id="btnSearch" type="submit" class="btn btn-primary"><i class="fa fa-search mr-1" aria-hidden="true"></i>Search</button>
-                            <button id="btnCancel" type="reset" class="btn btn-secondary" onclick="return confirm_reset();">Cancel</button>
+                            <button id="btnCancel" type="reset" class="btn btn-secondary" onclick="return confirm_reset();"><i class="fa fa-times mr-1" aria-hidden="true"></i>Cancel</button>
 
                         </div>
 
@@ -80,6 +80,7 @@
                                         <th>Customer Name</th>
                                         <th>Company</th>
                                         <th>Invoice No</th>
+                                        <th>Invoice Date</th>
                                         <th>Bill Amount</th>
                                         <th>Total Amount Paid</th>
                                         <th>Remaining Amount</th>
@@ -97,7 +98,56 @@
         </div>
 
     </div>
+    <br />
+    <div id="ptdetail" class="container d-flex justify-content-center">
+        <div class="card border-info" style="width: 100%;">
+            <div class="card-header">
+                <h5>Partial Payment Details</h5>
+            </div>
+            <div class="card-body">
 
+                <div class="form-row">
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="txtCustomerName">Customer Name : </label>
+                            <input type="text" runat="server" class="form-control text" id="txtCustomerName" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="txtCompanyName">Company Name : </label>
+
+                            <input type="text" runat="server" class="form-control text" id="txtCompanyName" autocomplete="off">
+                            
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+
+                            <label for="txtGrandTotal">Grand Total : </label>
+                            <input runat="server" type="text" class="form-control" id="txtGrandTotal" name="txtGrandTotal" autocomplete="off">
+                            
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row">
+
+                    <div class="col-md-12  text-right">
+                        <button id="btnSave" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o mr-1" aria-hidden="true"></i>Save</button>
+                        <button id="btnCancel1" type="reset" formnovalidate="formnovalidate" class="btn btn-secondary"><i class="fa fa-times mr-1" aria-hidden="true"></i>Cancel</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <br/>
     <script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function () {
@@ -129,12 +179,18 @@
         })();
 
         $(document).ready(function () {
-            
+
             //$.GetPartPaymentDetails();
         });
 
         $.GetPartPaymentDetails = function () {
 
+            //$("#ptdetail").attr('disabled', 'disabled');
+            //$("#ptdetail").prop('disabled', true);
+
+            var varInvoiceNo = $('#txtInvoiceNo').val();
+
+            InvoiceData = { InvoiceNo: varInvoiceNo };
             var table = $('#example').DataTable({
                 fixedHeader: true,
                 processing: true,
@@ -148,7 +204,9 @@
 
                     url: "../Service/Invoicing_Service.asmx/GetPartPaymentDetails",
                     type: 'POST',
-
+                    data: JSON.stringify(InvoiceData),
+                    contentType: "application/json",
+                    dataType: 'json',
                     dataSrc: function (d) {
                         return d
                     }
@@ -161,16 +219,64 @@
                             return "<a class='lnkSelect btn btn btn-primary' href='" + data + "'>Select</a>";
                         }
                     },
-                    { 'data': 'CustomerID' },
+                    { 'data': 'SaleInvoiceID' },
                     { 'data': 'CustomerName' },
                     { 'data': 'CompanyName' },
-                    { 'data': 'GSTNo' },
-                    { 'data': 'EmailID' },
-                    { 'data': 'Address' },
-                    { 'data': 'StateID' },
-                    { 'data': 'State' }
+                    { 'data': 'InvoiceNumber' },
+                    { 'data': 'InvoiceDate' },
+                    { 'data': 'PartyID' },
+                    { 'data': 'AmountAfterGST' },
+                    { 'data': 'TotalPaid' },
+                    { 'data': 'RemaningAmount' }
                 ],
             }); // table ends here
+
+            $('#example tbody').on('click', 'tr', function () {
+
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+            //to invisble multipe columns
+            // table.columns([1, 2]).visible(false);
+
+            table.columns([1, 6]).visible(false);
+
+            //   attaching event on table , then on link ( to be pricese)
+            $("#example").on("click", ".lnkSelect", function () {
+
+                event.preventDefault(); // <---------you may want this to stop the link
+
+                // get the link value
+                //var addressValue = $(this).attr("href");
+
+                //remove all other selected rows..
+                $('#example tr.selected2').removeClass('selected2');
+
+                // set the selected rows.
+                $(this).parent().parent().addClass('selected2');
+
+                var currentRow = $(this).closest("tr");
+                var data = $('#example').DataTable().row(currentRow).data();
+
+                var varCustomerName = (data['CustomerName']);
+                var varCompanyName = (data['CompanyName']);
+                var varGrandTotal = (data['AmountAfterGST']);
+                var varSaleInvoiceID = (data['SaleInvoiceID']);
+
+                $('#txtCustomerName').val(varCustomerName);
+                $('#txtCompanyName').val(varCompanyName);
+                $('#txtGSTNo').val(varGrandTotal);
+                $('#txtSaleInvoiceID').val(varSaleInvoiceID);
+
+                return false; // <---------or this if you want to prevent bubbling as well
+            });
+        };
 
     </script>
 

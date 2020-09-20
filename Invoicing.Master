@@ -149,7 +149,7 @@
                         <a id="btnHome" class="nav-link mr-4" href="Home.aspx"><i class="fa fa-home mr-1" aria-hidden="true"></i>Home</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link  mr-4"  href="Customer.aspx"><i class="fa fa-user mr-1" aria-hidden="true"></i>Customer</a>
+                        <a class="nav-link  mr-4"  href="Customer.aspx"><i class="fa fa-user mr-1" aria-hidden="true"></i>Customers</a>
 
                     </li>
                     <li class="nav-item mr-4">

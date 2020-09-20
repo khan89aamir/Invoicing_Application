@@ -19,8 +19,7 @@
         }
     </style>
 
-
-
+    <br />
     <div class="container">
         <div class="container d-flex justify-content-start">
             <div class="card border-info" style="width: 100%">
@@ -235,9 +234,6 @@
                                     <thead>
 
                                         <tr>
-
-
-
                                             <th>ProductID</th>
                                             <th>SKU_No</th>
                                             <th>Product_Name</th>
@@ -245,10 +241,7 @@
                                             <th>QTY</th>
                                             <th>Rate</th>
                                             <th>Total</th>
-
                                             <th>Delete</th>
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -426,10 +419,9 @@
                 parmSGST: $("#txtSGST").val(),
                 parmGST: $("#txtGST").val(),
                 parmAmountAfterGST: $("#txtAmountafterTax").val(),
-                parmCreatedBy: "1",
-                parmModifiedBy: "1"
-
-
+                parmCreatedBy: <%= Session["UserID"] %>,
+                parmModifiedBy: <%= Session["UserID"] %>
+ 
             }
 
 
@@ -454,7 +446,6 @@
 
                 success: function (responseData) {
 
-
                     // parse it to java script object so that you can access property
                     // data = $.parseJSON(responseData.d);
 
@@ -465,7 +456,6 @@
 
                         // post the product details in another request
                         PostSalesInvioceDetails(InvoiceID);
-
                     }
                     else {
 
@@ -475,19 +465,13 @@
 
                         $('#iconMsg').css('color', 'red');
                         $('#mdlNormalMessage').modal('show');
-
-
                     }
-
-
                 },
                 error: function (xhr, status, error) {
 
                     $('#loadingBox').modal('hide');
                     alert("Error : " + error);
                     alert("Error Text: " + xhr.responseText);
-
-
                 },
                 failure: function (r) {
                     alert("Fail:" + r.responseText);
@@ -501,7 +485,6 @@
         function PostSalesInvioceDetails(InvoiceID) {
 
             var lstSalesDetails = new Array();
-
 
             //Loop through the Table rows and build a JSON array.
             $("#tblProduct TBODY TR").each(function () {
@@ -517,13 +500,10 @@
                 objSales.Total = row.find("TD").eq(3).html();
                 objSales.InvID = InvoiceID;
 
-
                 lstSalesDetails.push(objSales);
             });
 
             alert(JSON.stringify(lstSalesDetails));
-
-
 
             $.ajax({
                 url: "../Service/Invoicing_Service.asmx/InsertUpdateSalesDetails",
@@ -532,7 +512,6 @@
 
                 dataType: "json",
                 beforeSend: function () {
-
 
                     $('#lblLoadingtxt').text("Creating account please wait....");
                     $('#loadingBox').modal('show');
@@ -543,7 +522,6 @@
                 },
 
                 success: function (responseData) {
-
 
                     // parse it to java script object so that you can access property
                     // data = $.parseJSON(responseData.d);
@@ -562,9 +540,6 @@
                         let jsContactForm = document.getElementById('frmaccount');                   // <=== 
                         jsContactForm.classList.remove('was-validated');
                         //
-
-
-
                     }
                     else {
 
@@ -574,19 +549,13 @@
 
                         $('#iconMsg').css('color', 'red');
                         $('#mdlNormalMessage').modal('show');
-
-
                     }
-
-
                 },
                 error: function (xhr, status, error) {
 
                     $('#loadingBox').modal('hide');
                     alert("Error : " + error);
                     alert("Error Text: " + xhr.responseText);
-
-
                 },
                 failure: function (r) {
                     alert("Fail:" + r.responseText);
@@ -595,11 +564,7 @@
 
                 // alert("Done : " + response);
             });
-
-
-
         }
-
 
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function () {
@@ -626,11 +591,9 @@
         })();
 
 
-
         $(function () {
             $("#datepicker").datepicker();
         });
-
 
         $("#lnkRefresh").click(function () {
             event.preventDefault();
@@ -645,11 +608,7 @@
             $("#txtQTY").val("");
             $("#txtRate").val("");
             $("#txtProductID").val("");
-
             $("#txtTotal").val("");
-
-
-
 
         });
 
@@ -669,13 +628,10 @@
 
                 // add new record
 
-
                 $('#tblProduct').DataTable().row.add([
-
                     PID,
                     PName,
                     PQTY,
-
                     PRate,
                     PTotal,
                     "<a class='lnkDelete btn btn btn-primary btn-sm' href='" + PID + "'>Delete</a>"
@@ -715,8 +671,6 @@
             // very important event, the QTY gets changed this fires..
             $(".lnkChange").change(function () {
 
-
-
                 // get the Total amount value before you delete
                 var temp = $('#tblProduct').DataTable().row(RowNumber).data();
 
@@ -728,7 +682,6 @@
                 // you can get the rate from data table.
                 var rate = temp[3];
                 var Totalamt = QTY * rate;
-
 
                 temp[4] = Number(Totalamt).toFixed(2);
 
@@ -744,7 +697,6 @@
 
             HideProductIDColumn();
         });
-
 
 
         function HideProductIDColumn() {
@@ -801,17 +753,13 @@
 
         function CalculateDiscount() {
 
-
-
             var numVal1 = Number(document.getElementById("txtAmountBeforeTax").value);
             var numVal2 = Number(Percent) / 100;
             var totalValue = numVal1 - (numVal1 * numVal2)
 
-
             document.getElementById("txtAmountafterTax").value = totalValue.toFixed(2);
 
             $('#txtDiscountAmt').val(Percent + "%");
-
         }
 
         function OnDiscountFocus() {
@@ -826,7 +774,6 @@
 
             event.preventDefault(); // <---------you may want this to stop the link
 
-
             // get the Total amount value before you delete
             var temp = $('#tblProduct').DataTable().row($(this).parents('tr')).data();
 
@@ -840,14 +787,11 @@
 
             MasterCalculation();
 
-
             // get the column value (QTY)
             var ExistingQTY = temp[2];
             $('#tblProduct').DataTable().row($(this).parents('tr'))
                 .remove()
                 .draw();
-
-
 
             // if row count is zero then make everything zero
             var length = $('#tblProduct').DataTable().page.info().recordsTotal;
@@ -858,16 +802,10 @@
                 $('#txtGST').val("");
                 $('#txtIGST').val("");
                 $('#txttxtAmountafterTaxIGST').val("");
-
-
-
             }
 
             return false; // <---------or this if you want to prevent bubbling as well
-
         });
-
-
 
         // attaching event on table , then on link ( to be pricese)
         // fire the event when QTY Changes
@@ -876,9 +814,6 @@
             var col = $(this).parent().children().index($(this));
 
             RowNumber = $(this).parent().parent().children().index($(this).parent());
-
-
-
         });
 
         function OnQTYChange() {
@@ -891,8 +826,6 @@
         function GetSelectedTextValue(ddlFruits) {
             var selectedText = ddlFruits.options[ddlFruits.selectedIndex].innerHTML;
             var selectedValue = ddlFruits.value;
-
-
 
             alert("Selected Text: " + selectedText + " Value: " + selectedValue);
         }
@@ -916,7 +849,6 @@
 
         $(document).ready(function () {   // dynamic Table
 
-
             var table = $('#tblProduct').DataTable({
                 responsive: true,
                 fixedHeader: true,
@@ -926,10 +858,7 @@
                 stateSave: true,
                 responsive: true
 
-
-
             });
-
 
             // dont hide the column if you are gona use it as Auto ID
             table.column(0).visible(false);
@@ -957,9 +886,7 @@
 
                     $("#cmdState").val(DefaultState)
 
-
                     $("#cmdState").prop("disabled", true);
-
                 },
                 error: function (xhr, status, error) {
 
@@ -970,7 +897,6 @@
                     alert("Fail:" + r.responseText);
                 }
             });
-
 
             HideProductIDColumn();
 
@@ -1009,7 +935,6 @@
                     alert("Fail:" + r.responseText);
                 }
             });
-
         }
 
         function BindProducts() {
@@ -1091,14 +1016,10 @@
 
                     // single row would come
 
-
-
                     $("#txtPartyState").val(res[0].StateName);
                     $("#txtAddress").val(res[0].Address);
                     $("#txtGSTNo").val(res[0].GSTNo);
                     $("#txtPartyStateID").val(res[0].StateID);
-
-
                 },
                 error: function (xhr, status, error) {
 
@@ -1109,7 +1030,6 @@
                     alert("Fail:" + r.responseText);
                 }
             });
-
         }
 
         function GetSelectedProduct(PID) {
@@ -1125,8 +1045,6 @@
                 success: function (res) {
 
                     // single row would come
-
-
 
                     $("#txtProductName").val(res[0].SKUName);
                     $("#txtQTY").val("1");
@@ -1144,7 +1062,6 @@
                     alert("Fail:" + r.responseText);
                 }
             });
-
         }
 
 

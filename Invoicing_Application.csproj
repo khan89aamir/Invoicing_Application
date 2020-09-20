@@ -87,9 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\bootstrap.min.css" />
-    <Content Include="assets\css\datatables.min.css" />
-    <Content Include="assets\css\datatables.min.js" />
-    <Content Include="assets\css\font-awesome.min.css" />
     <Content Include="assets\css\jquery-ui.css" />
     <Content Include="assets\css\MasterFormCSS.css" />
     <Content Include="assets\css\select2.css" />
