@@ -17,6 +17,9 @@ namespace Invoicing_Application.Service
 
         public string HSN_NO { get; set; }
 
+        public string SKU_Code { get; set; }
+
+
 
     }
 }

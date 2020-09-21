@@ -27,7 +27,7 @@
                     <h5>Invoice </h5>
                 </div>
                 <div class="card-body">
-                    <form class="needs-validation" novalidate runat="server">
+                    <form id="frmInvoice" class="needs-validation" novalidate runat="server">
 
                         <h5>Invoice Header</h5>
                         <div class="form-row">
@@ -79,15 +79,16 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">Bill To : </label>
-                                    <select id='cmbCustomer' class="custom-select" required>
+                                    <%--this has custome validtion--%>
+                                    <select id='cmbCustomer' class="custom-select">
                                     </select>
-
+                                     <div class="invalid-feedback text-left">
+                                        Please Enter Party Name
+                                    </div>
                                     <a href="Customer.aspx" target="_blank"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add New Customer</a>
                                     <br />
                                     <a id="lnkRefresh" href="#" target="_blank"><i class="fa fa-refresh mr-1" aria-hidden="true"></i>Refresh</a>
-                                    <div class="invalid-feedback text-left">
-                                        Please Enter Party Name
-                                    </div>
+                                   
                                 </div>
 
                             </div>
@@ -97,7 +98,7 @@
                                     <input type="text" class="form-control text " autocomplete="off" id="txtPartyStateID" name="txtPartyStateID" placeholder="Enter GST Number" hidden>
 
                                     <label for="txtFullName">GST No </label>
-                                    <input type="text" class="form-control text " autocomplete="off" id="txtGSTNo" name="txtGSTNo" placeholder="Enter GST Number" required>
+                                    <input type="text" class="form-control text " autocomplete="off" id="txtGSTNo" name="txtGSTNo" placeholder="Enter GST Number" >
 
                                     <div class="invalid-feedback text-left">
                                         Please Enter GST No
@@ -110,7 +111,7 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">State </label>
-                                    <input type="text" class="form-control text " id="txtPartyState" name="txtPartyState" autocomplete="off" placeholder="Enter Your State" required>
+                                    <input type="text" class="form-control text " id="txtPartyState" name="txtPartyState" autocomplete="off" placeholder="Enter Your State" >
                                     <div class="invalid-feedback text-left">
                                         Please Enter State 
                                     </div>
@@ -126,7 +127,7 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">Address </label>
-                                    <input type="text" class="form-control text " id="txtAddress" name="txtAddress" autocomplete="off" placeholder="Enter Address" required>
+                                    <input type="text" class="form-control text " id="txtAddress" name="txtAddress" autocomplete="off" placeholder="Enter Address" >
                                     <div class="invalid-feedback text-left">
                                         Please Enter Address 
                                     </div>
@@ -145,11 +146,11 @@
                                 <div class="form-group">
 
                                     <label for="cmbProduct">Select Product: </label>
-                                    <select id='cmbProduct' class="custom-select" required>
+                                    <select id='cmbProduct' class="custom-select">
                                     </select>
 
                                     <div class="invalid-feedback text-left">
-                                        Please Enter SKU.
+                                        Please Select your product.
                                     </div>
                                 </div>
 
@@ -159,7 +160,7 @@
                                 <div class="form-group">
 
                                     <label for="cmbSKU">Select SKU No: </label>
-                                    <select id='cmbSKU' class="custom-select" required>
+                                    <select id='cmbSKU' class="custom-select">
                                     </select>
 
                                     <div class="invalid-feedback text-left">
@@ -176,7 +177,7 @@
                                 <input type="text" class="form-control text " id="txtProductID" name="txtProductID" hidden>
                                 <div class="form-group">
                                     <label for="txtFullName">Product Name </label>
-                                    <input type="text" class="form-control text disableValue " id="txtProductName" name="txtProductName" autocomplete="off" placeholder="Enter Product Name" required>
+                                    <input type="text" class="form-control text disableValue " id="txtProductName" name="txtProductName" autocomplete="off" placeholder="Enter Product Name" >
                                     <div class="invalid-feedback text-left">
                                         Please Enter Product Name
                                     </div>
@@ -187,7 +188,7 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">QTY </label>
-                                    <input type="number" class="form-control text  " id="txtQTY" onchange="OnQTYChange()" name="txtQTY" required>
+                                    <input type="number" class="form-control text  " id="txtQTY" onchange="OnQTYChange()" name="txtQTY" >
                                     <div class="invalid-feedback text-left">
                                         Please Enter QTY
                                     </div>
@@ -217,6 +218,8 @@
 
                             </div>
 
+                            <input type="text" class="form-control text disableValue " id="txtSKUNumber" name="txtSKUNumber" placeholder="0.00" hidden>
+                            <input type="text" class="form-control text disableValue" id="txtHSN_No" name="txtHSN_No" placeholder="0.00" hidden>
                         </div>
                         <div class="form-row">
                             <div class="col-md-12 mb-2  text-right">
@@ -308,33 +311,31 @@
                         </div>
 
 
-
-
                         <a class="btn btn-info mb-2 w-100 " data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Other Details <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
                         </a>
                         <div class="collapse" id="collapseExample">
-                            <h5 >Other Details</h5>
+                            <h5>Other Details</h5>
                             <div class="form-group row">
 
                                 <label for="colFormLabel" class="col-sm-3 col-form-label ">Reverse Charge: </label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm disableValue" id="txtReverseCharge" placeholder="0.00">
+                                    <input type="text" class="form-control form-control-sm " id="txtReverseCharge" placeholder="0.00">
                                 </div>
 
                                 <label for="colFormLabel" class="col-sm-3 col-form-label ">Transportation Mode: </label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm disableValue" id="txtTransportationMode">
+                                    <input type="text" class="form-control form-control-sm " id="txtTransportationMode">
                                 </div>
 
                                 <label for="colFormLabel" class="col-sm-3 col-form-label ">Vehicle Number: </label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm disableValue" id="txtVehicle Number">
+                                    <input type="text" class="form-control form-control-sm " id="txtVehicleNumber">
                                 </div>
 
 
                                 <label for="colFormLabel" class="col-sm-3 col-form-label ">Date of Supply: </label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm disableValue" id="txtDateofSupply">
+                                    <input type="text" class="form-control form-control-sm " id="txtDateofSupply">
                                 </div>
 
 
@@ -343,36 +344,29 @@
                             <div class="form-group row">
 
                                 <div class="col-md-4">
-                                    <label for="txtFullName"> Name : </label>
-                                    <input type="text" class="form-control text form-control-sm" id="txtConsigneeName" >
-                                   
-                                </div>
-                                 <div class="col-md-4">
-                                    <label for="txtFullName"> GST No : </label>
-                                    <input type="text" class="form-control text form-control-sm " id="txtConsigneeGST" >
-                                   
+                                    <label for="txtFullName">Name : </label>
+                                    <input type="text" class="form-control text form-control-sm" id="txtConsigneeName" autocomplete="off">
                                 </div>
                                 <div class="col-md-4">
-                                   
-                                     <label for="cmdConsigneeState">State :</label>
-                                    <select ID="cmdConsigneeState" class="custom-select form-control-sm" name="cmdConsigneeState"  >
+                                    <label for="txtFullName">GST No : </label>
+                                    <input type="text" class="form-control text form-control-sm " id="txtConsigneeGST" autocomplete="off">
+                                </div>
+                                <div class="col-md-4">
+
+                                    <label for="cmdConsigneeState">State :</label>
+                                    <select id="cmdConsigneeState" class="form-control form-control-sm" name="cmdConsigneeState">
                                     </select>
-                                    
-                                       
+
+
                                 </div>
                                 <div class="col-md-12">
-                                    <label for="txtFullName"> Address : </label>
-                                    <input type="text" class="form-control text form-control-sm" id="txtConsigneeAddress" >
-                                   
+                                    <label for="txtFullName">Address : </label>
+                                    <input type="text" class="form-control text form-control-sm" id="txtConsigneeAddress" autocomplete="off">
                                 </div>
 
                             </div>
 
                         </div>
-
-
-
-
 
                         <div class="form-row">
                             <div class="col-md-12 mb-1 text-right">
@@ -383,7 +377,7 @@
 
                         </div>
 
-
+                        <asp:Button ID="Button1" runat="server" Text="Button" />
 
 
                     </form>
@@ -398,10 +392,49 @@
         <div class="container">
         </div>
     </div>
-    <button id="btnTest" class="mb-4" onclick="PostSalesInvioceDetails(1)">Test</button>
-
+    <button id="btnTest" class="mb-4" onclick="SaveOtherInvoiceDetials(1)">Test</button>
+    <button id="btnReport" type="submit">Report</button>
     <script>
 
+        // for manual validtion
+        function CustomValidation() {
+
+            var result = false;
+
+
+            var custValue = $("#cmbCustomer").val();
+            var ProductValue = $("#cmbProduct").val();
+            var SKUValue = $("#cmbSKU").val();
+
+            //console.log(custValue);
+            //console.log(ProductValue);
+            //console.log(SKUValue);
+
+            if (custValue==null) {
+                $("#cmbCustomer").addClass("is-invalid");
+
+                result = false;
+            }
+            else {
+                $("#cmbCustomer").removeClass("is-invalid");
+                $("#cmbCustomer").addClass("is-valid")
+                result = true;
+            }
+
+
+            if (ProductValue ==null && SKUValue==null) {
+                $("#cmbProduct").addClass("is-invalid");
+                result = false;
+            }
+            else {
+                $("#cmbProduct").removeClass("is-invalid");
+                $("#cmbProduct").addClass("is-valid")
+                result = true;
+            }
+           // console.log(result);
+           
+            return result; 
+        }
 
         function PostSalesInvoiceMaster() {
 
@@ -425,7 +458,7 @@
             }
 
 
-            alert(JSON.stringify(ObjInvoiceMaster))
+            //alert(JSON.stringify(ObjInvoiceMaster))
 
             $.ajax({
                 url: "../Service/Invoicing_Service.asmx/InsertUpdateSaleInvoiceMaster",
@@ -441,7 +474,8 @@
                 },
                 complete: function () {
 
-                    $('#loadingBox').modal('hide');
+                    //$('#loadingBox').modal('hide');
+                 // dont hide here as we have many other chain methods to call
                 },
 
                 success: function (responseData) {
@@ -451,11 +485,18 @@
 
                     if (responseData.Result) {
 
+
+                        $('#lblLoadingtxt').text("Master Data saved..");
+
+
                         // get the auto Invoice ID which is generated
                         var InvoiceID = responseData.Value;
+                        
+
 
                         // post the product details in another request
                         PostSalesInvioceDetails(InvoiceID);
+
                     }
                     else {
 
@@ -482,6 +523,7 @@
             });
 
         }
+
         function PostSalesInvioceDetails(InvoiceID) {
 
             var lstSalesDetails = new Array();
@@ -495,15 +537,19 @@
 
                 objSales.ProductID = temp[0];
 
-                objSales.QTY = row.find("TD").eq(1).html();
-                objSales.Rate = row.find("TD").eq(2).html();
-                objSales.Total = row.find("TD").eq(3).html();
+                objSales.QTY = temp[0];
+                objSales.Rate = temp[0];
+                objSales.Total = temp[0];
+                bjSales.SKU_Code = temp[0];
+                bjSales.HSN_NO = temp[0];
+
                 objSales.InvID = InvoiceID;
+
 
                 lstSalesDetails.push(objSales);
             });
 
-            alert(JSON.stringify(lstSalesDetails));
+            //alert(JSON.stringify(lstSalesDetails));
 
             $.ajax({
                 url: "../Service/Invoicing_Service.asmx/InsertUpdateSalesDetails",
@@ -513,12 +559,12 @@
                 dataType: "json",
                 beforeSend: function () {
 
-                    $('#lblLoadingtxt').text("Creating account please wait....");
-                    $('#loadingBox').modal('show');
+                    $('#lblLoadingtxt').text("Saving product details...");
+                   // $('#loadingBox').modal('show');
                 },
                 complete: function () {
 
-                    $('#loadingBox').modal('hide');
+                    //$('#loadingBox').modal('hide');
                 },
 
                 success: function (responseData) {
@@ -528,18 +574,21 @@
 
                     if (responseData.Result) {
 
-                        $('#loadingBox').modal('hide');
+                      //  $('#loadingBox').modal('hide');
 
-                        $('#lblMessage').text(responseData.strMessage);
+                        $('#lblLoadingtxt').text("Product Details saved.");
 
-                        $('#mdlNormalMessage').modal('show');
+                      //  $('#lblMessage').text(responseData.strMessage);
 
-                        $('#frmaccount').trigger("reset");
+                      //  $('#mdlNormalMessage').modal('show');
 
-                        // after reset remove the class else it will show validtion message.
-                        let jsContactForm = document.getElementById('frmaccount');                   // <=== 
-                        jsContactForm.classList.remove('was-validated');
-                        //
+
+
+                        // save other invoice details
+                        SaveOtherInvoiceDetials(InvoiceID);
+
+                     
+                     
                     }
                     else {
 
@@ -576,23 +625,189 @@
                 var validation = Array.prototype.filter.call(forms, function (form) {
                     form.addEventListener('submit', function (event) {
                         if (form.checkValidity() === false) {
+                           
                             event.preventDefault();
                             event.stopPropagation();
+                            CustomValidation();
+                            form.classList.add('was-validated');
                         }
                         else {
-                            PostSalesInvoiceMaster();
-                            event.preventDefault();
-                            event.stopPropagation();
+
+                            // perform custom validtion
+                            if (CustomValidation()) {
+                              
+                                event.preventDefault();
+                                event.stopPropagation();
+
+
+                                PostSalesInvoiceMaster();
+                            }
+                           
                         }
-                        form.classList.add('was-validated');
+                      
                     }, false);
                 });
             }, false);
         })();
 
+        function SaveOtherInvoiceDetials(InvoiceID) {
+
+
+            var flag = false;
+
+            // if any of the following fields are set then go ahead and save the data.
+            if (document.getElementById("txtReverseCharge").value != "") {
+                flag = true;
+            }
+
+            if (document.getElementById("txtTransportationMode").value != "") {
+                flag = true;
+            }
+
+
+            if (document.getElementById("txtDateofSupply").value != "") {
+                flag = true;
+            }
+
+            if (document.getElementById("txtConsigneeName").value != "") {
+                flag = true;
+            }
+
+
+            if (document.getElementById("txtConsigneeGST").value != "") {
+                flag = true;
+            }
+
+            console.log("cmdConsigneeState :"+document.getElementById("cmdConsigneeState").value);
+
+            if (document.getElementById("cmdConsigneeState").value != "-1") {
+                flag = true;
+            }
+
+
+            if (flag){
+                var ReverseCharge = $("#txtReverseCharge").val();
+                var TransportationMode = $("#txtTransportationMode").val();
+                var VehicleNumber = $("#txtVehicleNumber").val();
+                var DateofSupply = $("#txtDateofSupply").val();
+                var ConsigneeName = $("#txtConsigneeName").val();
+                var ConsigneeGST = $("#txtConsigneeGST").val();
+                var ConsigneeState = $("#cmdConsigneeState").val();
+                var ConsigneeAddress = $("#txtConsigneeAddress").val();
+
+
+                var ObjOtherInvoiceData = {
+                    parmInvoiceID: InvoiceID,
+                    parmReverseCharge: ReverseCharge,
+                    parmTransportation_Mode: TransportationMode,
+                    parmVehicle_Number: VehicleNumber,
+                    parmConsignee_Name: ConsigneeName,
+                    parmConsignee_GST: ConsigneeGST,
+                    parmConsignee_StateID: ConsigneeState,
+                    parmConsignee_Address: ConsigneeAddress,
+                    parmSupplyDate: DateofSupply,
+                    parmConsignee_PAN: "NA"
+                };
+
+
+                alert(JSON.stringify(ObjOtherInvoiceData));
+
+                $.ajax({
+                    url: "../Service/Invoicing_Service.asmx/SaveOtherInfoiceDetails",
+                    type: 'POST',
+                    data: JSON.stringify(ObjOtherInvoiceData),
+                    contentType: "application/json",
+                    dataType: "json",
+                    beforeSend: function () {
+
+
+                        $('#lblLoadingtxt').text("Saving Other details....");
+                      
+                    },
+                    complete: function () {
+
+
+                        $('#loadingBox').modal('hide');
+                    },
+
+                    success: function (responseData) {
+
+
+                        // parse it to java script object so that you can access property
+                        // data = $.parseJSON(responseData.d);
+
+                        if (responseData.Result) {
+
+                            $('#loadingBox').modal('hide');
+
+                            $('#lblMessage').text("Invoice have been created successfully.");
+
+                            $('#mdlNormalMessage').modal('show');
+
+                            $('#frmInvoice').trigger("reset");
+                            // after reset remove the class else it will show validtion message.
+                            let jsContactForm = document.getElementById('frmInvoice');                   // <=== 
+                            jsContactForm.classList.remove('was-validated');  
+
+                            // clear the data table
+                            $('#tblProduct').DataTable().clear().draw();
+
+                           
+
+                        }
+                        else {
+
+                            $('#lblMessage').text(responseData.strMessage);
+
+                            $('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
+
+                            $('#iconMsg').css('color', 'red');
+                            $('#mdlNormalMessage').modal('show');
+
+
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+
+                        $('#loadingBox').modal('hide');
+                        alert("Error : " + error);
+                        alert("Error Text: " + xhr.responseText);
+
+
+                    },
+                    failure: function (r) {
+                        alert("Fail:" + r.responseText);
+                    }
+                }).done(function (response) { //
+
+                    // alert("Done : " + response);
+                });
+            }
+            else {
+
+                $('#loadingBox').modal('hide');
+
+                $('#lblMessage').text("Invoice have been created successfully.");
+
+                $('#mdlNormalMessage').modal('show');
+
+                $('#frmInvoice').trigger("reset");
+                // after reset remove the class else it will show validtion message.
+                let jsContactForm = document.getElementById('frmInvoice');                   // <=== 
+                jsContactForm.classList.remove('was-validated');  
+            }
+
+
+
+        }
+
+
 
         $(function () {
             $("#datepicker").datepicker();
+            $("#txtDateofSupply").datepicker();
         });
 
         $("#lnkRefresh").click(function () {
@@ -620,6 +835,8 @@
             var PRate = $("#txtRate").val();
             var PTotal = $("#txtTotal").val();
             var PID = $("#txtProductID").val();
+            var SKUNumber = $("#txtSKUNumber").val();
+            var HSN_No = $("#txtHSN_No").val();
 
             // if product ID already exists
             var rowId = $('#tblProduct').dataTable().fnFindCellRowIndexes(PID, 0);
@@ -630,7 +847,9 @@
 
                 $('#tblProduct').DataTable().row.add([
                     PID,
+                    SKUNumber,
                     PName,
+                    HSN_No,
                     PQTY,
                     PRate,
                     PTotal,
@@ -680,10 +899,11 @@
                 var QTY = $(this).val();
 
                 // you can get the rate from data table.
-                var rate = temp[3];
+                var rate = temp[5];
+
                 var Totalamt = QTY * rate;
 
-                temp[4] = Number(Totalamt).toFixed(2);
+                temp[6] = Number(Totalamt).toFixed(2);
 
                 //   var rowId = $(this).parent().parent().children().index($(this).parent());
 
@@ -713,7 +933,14 @@
             $("#tblProduct TBODY TR").each(function () {
                 var row = $(this);
 
-                var amtTotal = row.find("TD").eq(3).html();
+                // get the Total amount value before you delete
+                var temp = $('#tblProduct').DataTable().row(row).data();
+
+                // get the total amount of current row
+                var amtTotal = temp[6];
+
+                // alert("Tot : " + amtTotal);
+
                 SubTotal = parseFloat(SubTotal) + parseFloat(amtTotal);
 
             });
@@ -839,7 +1066,7 @@
             //alert("Selected Text: " + selectedText + " Value: " + selectedValue);
         });
 
-        $("#cmbProduct").change(function () {
+        $("#cmbProduct, #cmbSKU").change(function () {
             var selectedText = $(this).find("option:selected").text();
             var selectedValue = $(this).val();
 
@@ -875,7 +1102,7 @@
                 contentType: "application/json",
                 success: function (res) {
 
-                    $("#cmdState").append($("<option selected='selected' disabled='disabled'></option>").val('').html('Select State'));
+                    $("#cmdState").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select State'));
                     $.each(res, function (data, value) {
 
                         $("#cmdState").append($("<option></option>").val(value.StateID).html(value.StateName));
@@ -887,6 +1114,21 @@
                     $("#cmdState").val(DefaultState)
 
                     $("#cmdState").prop("disabled", true);
+
+
+                    // Bind consignee state
+
+                    $("#cmdConsigneeState").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select State'));
+                    $.each(res, function (data, value) {
+
+                        $("#cmdConsigneeState").append($("<option></option>").val(value.StateID).html(value.StateName));
+                    })
+
+
+
+
+
+
                 },
                 error: function (xhr, status, error) {
 
@@ -915,7 +1157,7 @@
                 contentType: "application/json",
                 success: function (res) {
 
-                    $("#cmbCustomer").append($("<option selected='selected' disabled='disabled'></option>").val('').html('Select Customer'));
+                    $("#cmbCustomer").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select Customer'));
                     $.each(res, function (data, value) {
 
                         $("#cmbCustomer").append($("<option></option>").val(value.CustomerID).html(value.CustomerName));
@@ -948,14 +1190,14 @@
                 contentType: "application/json",
                 success: function (res) {
 
-                    $("#cmbProduct").append($("<option selected='selected' disabled='disabled'></option>").val('').html('Select SKU'));
+                    $("#cmbProduct").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select SKU'));
                     $.each(res, function (data, value) {
 
                         $("#cmbProduct").append($("<option></option>").val(value.SKUID).html(value.SKUName));
                     })
 
                     // set the deafult state from session
-                    // Initialize select2
+                    // Initialize select2 : this makes auto popupate
                     $("#cmbProduct").select2();
 
                 },
@@ -980,7 +1222,7 @@
                 contentType: "application/json",
                 success: function (res) {
 
-                    $("#cmbSKU").append($("<option selected='selected' disabled='disabled'></option>").val('').html('Select SKU'));
+                    $("#cmbSKU").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select SKU'));
                     $.each(res, function (data, value) {
 
                         $("#cmbSKU").append($("<option></option>").val(value.SKUID).html(value.SKUName));
@@ -1052,6 +1294,11 @@
                     $("#txtProductID").val(res[0].SKUID);
 
                     $("#txtTotal").val(res[0].Rate);
+
+                    $("#txtSKUNumber").val(res[0].SKUNumber);
+                    $("#txtHSN_No").val(res[0].HSN_No);
+
+
                 },
                 error: function (xhr, status, error) {
 

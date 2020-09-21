@@ -411,7 +411,9 @@ namespace Invoicing_Application.Service
         public void GetSelectedProduct(int ProductID)
         {
 
-            string strQ = "SELECT SKUID,SKUName,Rate FROM ztech.tblSKUMaster where SKUID=" + ProductID;
+            string strQ = "SELECT SKUID,SKUName,Rate, SKUCode, (select HSNCode from tblHSNMaster  where HSNID=tb.HSNID ) as HSN_No   FROM ztech.tblSKUMaster as tb " +
+                            "where SKUID = "+ ProductID;
+
 
             DataTable dataTable = ObjDAL.ExecuteSelectStatement(strQ);
             if (dataTable != null && dataTable.Rows.Count > 0)
@@ -421,8 +423,9 @@ namespace Invoicing_Application.Service
                                 {
                                     SKUID = r.Field<int>("SKUID"),
                                     SKUName = r.Field<string>("SKUName"),
-                                    Rate = r.Field<decimal>("Rate")
-                                   
+                                    Rate = r.Field<decimal>("Rate"),
+                                     SKUNumber = r.Field<string>("SKUCode"),
+                                    HSN_No= r.Field<string>("HSN_No")
                                 });
                 string strResponse = JsonConvert.SerializeObject(NameList);
                 Context.Response.ContentType = "application/json";
@@ -530,48 +533,54 @@ namespace Invoicing_Application.Service
 
             var SalesDetailsObj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<clsSalesDetails>>(PostedData);
 
+            bool result = false;
 
             foreach (var item in SalesDetailsObj)
             {
                 string parmInvoiceID = item.InvID;
                 string parmProductID = item.ProductID;
-           
-            
-            
+                string parmSKU_Code = item.SKU_Code;
+                string parmHSN = item.HSN_NO;
+                string parmRate = item.Rate;
+                string parmQTY = item.QTY;
+
+
+                ObjDAL.SetStoreProcedureData("parmInvoiceID", MySqlConnector.MySqlDbType.Int32, parmInvoiceID);
+                ObjDAL.SetStoreProcedureData("parmProductID", MySqlConnector.MySqlDbType.Int32, parmProductID);
+                ObjDAL.SetStoreProcedureData("parmSKU_Code", MySqlConnector.MySqlDbType.VarChar, parmSKU_Code);
+                ObjDAL.SetStoreProcedureData("parmHSN", MySqlConnector.MySqlDbType.VarChar, parmHSN);
+                ObjDAL.SetStoreProcedureData("parmRate", MySqlConnector.MySqlDbType.Decimal, parmRate);
+                ObjDAL.SetStoreProcedureData("parmQTY", MySqlConnector.MySqlDbType.Int32, parmQTY);
+                ObjDAL.SetStoreProcedureData("parmCreatedBy", MySqlConnector.MySqlDbType.Int32, 1);
+                ObjDAL.SetStoreProcedureData("parmUpdateBy", MySqlConnector.MySqlDbType.Int32, 1);
+
+                 result = ObjDAL.ExecuteStoreProcedure_DML("ztech.SPR_Insert_SalesDetails");
+                if (result == false)
+                {
+                    break;
+                }
+                else
+                {
+                    result = true;
+                }
             }
 
 
 
-            //ObjDAL.SetStoreProcedureData("parmInvoiceID", MySqlConnector.MySqlDbType.Int32, parmInvoiceID);
-            //ObjDAL.SetStoreProcedureData("parmProductID", MySqlConnector.MySqlDbType.Int32, parmProductID);
-            //ObjDAL.SetStoreProcedureData("parmSKU_Code", MySqlConnector.MySqlDbType.VarChar, parmSKU_Code);
-            //ObjDAL.SetStoreProcedureData("parmHSN", MySqlConnector.MySqlDbType.VarChar, parmHSN);
-            //ObjDAL.SetStoreProcedureData("parmRate", MySqlConnector.MySqlDbType.Decimal, parmRate);
-            //ObjDAL.SetStoreProcedureData("parmQTY", MySqlConnector.MySqlDbType.Int32, parmQTY);
-            //ObjDAL.SetStoreProcedureData("parmCreatedBy", MySqlConnector.MySqlDbType.Int32, parmCreatedBy);
-            //ObjDAL.SetStoreProcedureData("parmUpdateBy", MySqlConnector.MySqlDbType.Int32, parmUpdateBy);
 
-            //bool result = ObjDAL.ExecuteStoreProcedure_DML("ztech.SPR_Insert_SalesDetails");
 
-            //if (result)
-            //{
-            //    message.Result = true;
-            //    if (parmInvoiceID == 0)
-            //    {
-            //        message.strMessage = "SalesDetails has been created";
-            //    }
-            //    else
-            //    {
-            //        message.strMessage = "SalesDetails has been update";
-            //    }
-            //}
-            //else
-            //{
-            //    message.Result = false;
+            if (result)
+            {
+                message.Result = true;
+                message.strMessage = "SalesDetails has been created";
+            }
+            else
+            {
+                message.Result = false;
 
-            //}
+            }
 
-            message.Result = true;
+         
             string strResponse = JsonConvert.SerializeObject(message);
 
             Context.Response.ContentType = "application/json";
@@ -699,6 +708,60 @@ namespace Invoicing_Application.Service
                 this.Context.Response.ContentType = "application/json; charset=utf-8";
                 this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void SaveOtherInfoiceDetails(
+            string parmInvoiceID,
+            string parmReverseCharge,
+            string parmTransportation_Mode, 
+            string parmVehicle_Number,
+            string parmConsignee_Name,
+            string parmConsignee_GST,
+            string parmConsignee_StateID,
+            string parmConsignee_Address,
+             string parmConsignee_PAN,
+             string parmSupplyDate
+
+            )
+        {
+            clsMessage message = new clsMessage();
+
+         
+            ObjDAL.SetStoreProcedureData("parmInvoiceID", MySqlConnector.MySqlDbType.VarChar, parmInvoiceID);
+            ObjDAL.SetStoreProcedureData("parmReverseCharge", MySqlConnector.MySqlDbType.VarChar, parmReverseCharge);
+            ObjDAL.SetStoreProcedureData("parmTransportation_Mode", MySqlConnector.MySqlDbType.VarChar, parmTransportation_Mode);
+            ObjDAL.SetStoreProcedureData("parmVehicle_Number", MySqlConnector.MySqlDbType.VarChar, parmVehicle_Number);
+            ObjDAL.SetStoreProcedureData("parmConsignee_GST", MySqlConnector.MySqlDbType.VarChar, parmConsignee_GST);
+            ObjDAL.SetStoreProcedureData("parmConsignee_StateID", MySqlConnector.MySqlDbType.VarChar, parmConsignee_StateID);
+            ObjDAL.SetStoreProcedureData("parmConsignee_Address", MySqlConnector.MySqlDbType.VarChar, parmConsignee_Address);
+            
+            ObjDAL.SetStoreProcedureData("parmConsignee_PAN", MySqlConnector.MySqlDbType.VarChar, parmConsignee_PAN);
+            ObjDAL.SetStoreProcedureData("parmConsignee_Name", MySqlConnector.MySqlDbType.VarChar, parmConsignee_Name);
+            ObjDAL.SetStoreProcedureData("parmSupplyDate", MySqlConnector.MySqlDbType.Date, parmSupplyDate);
+
+
+            bool result = ObjDAL.ExecuteStoreProcedure_DML("ztech.SPR_Insert_OtherInvoiceDetails");
+            if (result)
+            {
+                message.Result = true;
+
+                message.strMessage = "Data saved";
+            }
+            else
+            {
+                message.Result = false;
+                message.strMessage = "Failed to save the dat";
+            }
+            string strResponse = JsonConvert.SerializeObject(message);
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+
+            Context.Response.Write(strResponse);
+            Context.Response.Flush();
         }
 
     }

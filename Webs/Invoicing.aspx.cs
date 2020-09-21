@@ -15,6 +15,10 @@ namespace Invoicing_Application.Webs
             {
                 Response.Redirect("Home.aspx");
             }
+            if (Page.IsPostBack)
+            {
+                Response.Write("Page psoted back");
+            }
         }
     }
 }

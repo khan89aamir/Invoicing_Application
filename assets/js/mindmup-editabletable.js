@@ -20,7 +20,9 @@ $.fn.editableTableWidget = function (options) {
 				var col = $(active).parent().children().index($(active));
 				//alert("Col : " + col);
 				// if the column is QTY then dont edit it.
-				if (col!=1) {
+				// lnkChange class is added in above lines to fire change event.
+				// col no 4
+				if (col!=3) {
 					return;
                 }
 				$(active).addClass("lnkQTY");
