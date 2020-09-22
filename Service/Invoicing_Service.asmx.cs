@@ -584,7 +584,6 @@ namespace Invoicing_Application.Service
             if (result)
             {
                 message.Result = true;
-
                 message.strMessage = "Customer Name [" + OwnerName + "] has been Updated successfully";
             }
             else
@@ -597,7 +596,6 @@ namespace Invoicing_Application.Service
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.AddHeader("content-length", strResponse.Length.ToString());
-
             Context.Response.Write(strResponse);
             Context.Response.Flush();
         }
@@ -608,7 +606,6 @@ namespace Invoicing_Application.Service
         {
             // System.Threading.Thread.Sleep(2000);
             string strResponse = "{}";
-            //DataTable dataTable = ObjDAL.ExecuteSelectStatement("CALL anjacreation.SPR_GetMyProfile()");
             ObjDAL.SetStoreProcedureData("ParmUserID", MySqlConnector.MySqlDbType.Int32, UserID, clsMySQLCoreApp.ParamType.Input);
             DataSet ds = ObjDAL.ExecuteStoreProcedure_Get("anjacreation.SPR_GetMyProfile");
             if (ds != null && ds.Tables.Count > 0)
@@ -624,21 +621,35 @@ namespace Invoicing_Application.Service
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void GetPartPaymentDetails(string InvoiceNo)//string InvoiceNo
+        public void GetPartPaymentList(string InvoiceNo)
         {
             // System.Threading.Thread.Sleep(2000);
             string jsonData = "{}";
             ObjDAL.SetStoreProcedureData("ParmInvoiceNo", MySqlConnector.MySqlDbType.VarChar, InvoiceNo, clsMySQLCoreApp.ParamType.Input);
 
-            //DataTable dataTable = ObjDAL.ExecuteSelectStatement("CALL anjacreation.SPR_GetPartPaymentDetails('" + InvoiceNo + "')");
-
-            DataSet ds = ObjDAL.ExecuteStoreProcedure_Get("anjacreation.SPR_GetPartPaymentDetails");
+            DataSet ds = ObjDAL.ExecuteStoreProcedure_Get("anjacreation.SPR_GetPartPaymentList");
             if (ds != null && ds.Tables.Count > 0)
-            //if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 DataTable dataTable = ds.Tables[0];
                 jsonData = JsonConvert.SerializeObject(dataTable);
-                //jsonData = DataTableToJSONWithJSONNet(dataTable);
+            }
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(jsonData);
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void GetPartPaymentDetails(int InvoiceID, int CustomerID)
+        {
+            // System.Threading.Thread.Sleep(2000);
+            string jsonData = "{}";
+            ObjDAL.SetStoreProcedureData("ParmInvoiceID", MySqlConnector.MySqlDbType.Int32, InvoiceID, clsMySQLCoreApp.ParamType.Input);
+            ObjDAL.SetStoreProcedureData("ParmCustomerID", MySqlConnector.MySqlDbType.Int32, CustomerID, clsMySQLCoreApp.ParamType.Input);
+            DataSet ds = ObjDAL.ExecuteStoreProcedure_Get("anjacreation.SPR_GetPartPaymentDetails");
+            if (ds != null && ds.Tables.Count > 0)
+            {
+                DataTable dataTable = ds.Tables[0];
+                jsonData = JsonConvert.SerializeObject(dataTable);
             }
             Context.Response.ContentType = "application/json";
             Context.Response.Write(jsonData);

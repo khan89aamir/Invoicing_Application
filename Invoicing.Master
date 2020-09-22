@@ -167,7 +167,7 @@
                 </ul>
                 <div id="pnlProfile" class="dropdown d-none"  runat="server">
                     <button class="btn btn-primary btn-outline-info dropdown-toggle" style="background-color: #0a1348; color: white; font-family: 'Times New Roman'" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Login By : Admin
+                        Login By : <%= Session["UserName"] %>
                     </button>
                     <div class="dropdown-menu" style="font-family: 'Times New Roman'" aria-labelledby="dropdownMenuButton">
                         <a id="btnMyProfile" class="dropdown-item" href="MyProfile.aspx"><i class="fa fa-user mr-1" aria-hidden="true"></i>My Profile</a>

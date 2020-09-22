@@ -103,6 +103,43 @@
 
     </div>
     <br />
+
+
+    <div class="container  d-flex justify-content-start">
+        <div class="card border-info" style="width: 100%">
+            <div class="card-header">
+                <h5>Payment Details</h5>
+            </div>
+            <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <table id="paymentdetails" class="table table-hover table-responsive-md" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>SR No.</th>
+                                        <th>SaleInvoiceID</th>
+                                        <th>CustomerID</th>
+                                        <th>Customer Name</th>
+                                        <th>Invoice No</th>
+                                        <th>Payment Mode</th>
+                                        <th>Cheque No</th>
+                                        <th>Payment Date</th>
+                                        <th>Amount Paid</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+
     <div id="ptdetail" class="container d-flex justify-content-center">
         <div class="card border-info" style="width: 100%;">
             <div class="card-header">
@@ -165,6 +202,9 @@
 
                                 <label for="txtChequeNo">Cheque No : </label>
                                 <input runat="server" type="text" class="form-control" id="txtChequeNo" name="txtChequeNo" placeholder="Enter Cheque No" autocomplete="off" disabled="disabled">
+                                <div class="invalid-feedback text-left">
+                                    Please Enter Cheque No.
+                                </div>
                             </div>
                         </div>
 
@@ -173,6 +213,9 @@
 
                                 <label for="dtpTranDate">Transaction Date : </label>
                                 <input type="text" class="form-control text " autocomplete="off" id="dtpTranDate" name="dtpTranDate" placeholder="Select Transaction Date" required>
+                                <div class="invalid-feedback">
+                                    Please Select Transaction Date.
+                                </div>
                             </div>
                         </div>
 
@@ -181,6 +224,9 @@
 
                                 <label for="txtPayAmount">Pay Amount : </label>
                                 <input runat="server" type="text" class="form-control" id="txtPayAmount" name="txtPayAmount" placeholder="Enter Payment Amount" autocomplete="off" required>
+                                <div class="invalid-feedback">
+                                    Please Enter Payment Amount.
+                                </div>
                             </div>
                         </div>
 
@@ -188,7 +234,7 @@
                     <div class="form-row">
 
                         <div class="col-md-12  text-right">
-                            <button id="btnSave" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o mr-1" aria-hidden="true"></i>Save</button>
+                            <button id="btnSave" type="submit" class="btn btn-primary" disabled><i class="fa fa-floppy-o mr-1" aria-hidden="true"></i>Save</button>
                             <button id="btnCancel1" type="reset" formnovalidate="formnovalidate" class="btn btn-secondary" onclick="return ClearPartPayment();"><i class="fa fa-times mr-1" aria-hidden="true"></i>Cancel</button>
                         </div>
 
@@ -239,7 +285,7 @@
 
             $("#txtChequeNo").val("");
             $("#txtPayAmount").val("");
-
+            $("#txtChequeNo").prop("disabled", "disabled");
             return true;
         };
 
@@ -249,7 +295,10 @@
             var paymentValue = $('#cmdPayment').val();
             console.log('paymentValue ' + paymentValue);
             if (paymentValue == -1 || paymentValue == null) {
+
                 $("#cmdPayment").addClass("is-invalid");
+                //let jsContactForm = document.getElementById('frmPaymentInfo');
+                //jsContactForm.classList.remove('was-validated');
                 result = false;
             }
             else {
@@ -257,7 +306,7 @@
                 $("#cmdPayment").addClass("is-valid");
                 result = true;
             }
-            console.log('result ' + result);
+            //console.log('result ' + result);
 
             return result;
         };
@@ -316,14 +365,15 @@
             });
 
             $('#example').DataTable().columns([1, 6]).visible(false);
+            $('#paymentdetails').DataTable().columns([1, 2]).visible(false);
         });
 
         $("#btnSearch").click(function () {
 
-            $.GetPartPaymentDetails();
+            $.GetPartPaymentList();
         });
         var varInvoiceNo
-        $.GetPartPaymentDetails = function () {
+        $.GetPartPaymentList = function () {
 
             //$("#ptdetail").attr('disabled', 'disabled');
             //$("#ptdetail").prop('disabled', true);
@@ -348,7 +398,7 @@
                 ],
                 ajax: {
 
-                    url: "../Service/Invoicing_Service.asmx/GetPartPaymentDetails",
+                    url: "../Service/Invoicing_Service.asmx/GetPartPaymentList",
                     type: 'POST',
                     data: { InvoiceNo: varInvoiceNo },
                     //contentType: "application/json",
@@ -420,8 +470,62 @@
                 $('#txtRemainingAmt').val(varRemainingAmt);
                 $('#txtSaleInvoiceID').val(varSaleInvoiceID);
                 $('#txtCustomerID').val((data['PartyID']));
+
+                $('#btnSave').prop("disabled", "");
+
+                $.GetPartPaymentDetails();
+
                 return false; // <---------or this if you want to prevent bubbling as well
             });
+        };
+
+        $.GetPartPaymentDetails = function () {
+
+            varCustomerID = $('#txtCustomerID').val();
+            varSaleInvoiceID = $('#txtSaleInvoiceID').val();
+
+            // clear first
+            if ($('#paymentdetails').DataTable() != null) {
+
+                //Destroy the old Datatable
+                $('#paymentdetails').DataTable().clear().destroy();
+            }
+
+            var table = $('#paymentdetails').DataTable({
+                fixedHeader: true,
+                processing: true,
+                responsive: true,
+                stateSave: true,
+                aLengthMenu: [
+                    [10, 25, 50, 100, 200, -1],
+                    [10, 25, 50, 100, 200, "All"]
+                ],
+                ajax: {
+
+                    url: "../Service/Invoicing_Service.asmx/GetPartPaymentDetails",
+                    type: 'POST',
+                    data: { InvoiceID: varSaleInvoiceID, CustomerID: varCustomerID},
+                    //contentType: "application/json",
+                    dataType: 'json',
+                    dataSrc: function (d) {
+                        return d
+                    }
+                },
+                columns: [
+                    { 'data': 'SRNo' },
+                    { 'data': 'SaleInvoiceID' },
+                    { 'data': 'CustomerID' },
+                    { 'data': 'CustomerName' },
+                    { 'data': 'InvoiceNumber' },
+                    { 'data': 'PaymentMode' },
+                    { 'data': 'ChequeNo' },
+                    { 'data': 'PaymentDate' },
+                    { 'data': 'PaidAmount' }
+                ],
+            }); // table ends here
+
+            //to invisble multipe columns
+            table.columns([1, 2]).visible(false);
         };
 
         $.InsertPartPayment = function () {
@@ -440,7 +544,7 @@
                 InvoiceNo: varInvoiceNo, InvoiceID: saleInvoiceID, CustomerID: customerID, PaymentMode: cmdpayment
                 , ChequeNo: chequeNo, TransactionDate: TranDate, PayAmount: payAmount, UserID: varUserID
             };
-            alert(JSON.stringify(PartPaymentData));
+            //alert(JSON.stringify(PartPaymentData));
 
             $.ajax({
                 url: "../Service/Invoicing_Service.asmx/InsertPartPayment",
@@ -470,9 +574,10 @@
 
                         $('#frmPaymentInfo').trigger("reset");
 
-                        $.GetPartPaymentDetails();
+                        $('#btnSave').prop("disabled", "disabled");
 
-                        //$('#example').DataTable().ajax.reload(null, false);
+                        $.GetPartPaymentList();
+                        $.GetPartPaymentDetails();
                         // after reset remove the class else it will show validtion message.
                         let jsContactForm = document.getElementById('frmPaymentInfo');// <===
                         jsContactForm.classList.remove('was-validated');
@@ -513,9 +618,11 @@
             else {
 
                 $("#txtChequeNo").prop("disabled", "disabled");
-                $(this).removeClass("is-invalid");
-                $(this).addClass("is-valid");
+                //$(this).removeClass("is-invalid");
+                //$(this).addClass("is-valid");
             }
+            $(this).removeClass("is-invalid");
+            $(this).addClass("is-valid");
         });
 
     </script>
