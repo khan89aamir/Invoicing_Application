@@ -486,7 +486,7 @@
                     if (responseData.Result) {
 
 
-                        $('#lblLoadingtxt').text("Master Data saved..");
+                        $('#lblLoadingtxt').text("Invoice header saved..");
 
 
                         // get the auto Invoice ID which is generated
@@ -536,13 +536,12 @@
                 var temp = $('#tblProduct').DataTable().row(row).data();
 
                 objSales.ProductID = temp[0];
-
-                objSales.QTY = temp[0];
-                objSales.Rate = temp[0];
-                objSales.Total = temp[0];
-                bjSales.SKU_Code = temp[0];
-                bjSales.HSN_NO = temp[0];
-
+                objSales.SKU_Code = temp[1];
+                objSales.HSN_NO = temp[3];
+                objSales.QTY = temp[4];
+                objSales.Rate = temp[5];
+                objSales.Total = temp[6];
+                
                 objSales.InvID = InvoiceID;
 
 
@@ -752,7 +751,7 @@
                             // clear the data table
                             $('#tblProduct').DataTable().clear().draw();
 
-                           
+                            window.location.href = "../Report/Report_Pages/Invoice_Report.aspx";
 
                         }
                         else {
@@ -797,6 +796,8 @@
                 // after reset remove the class else it will show validtion message.
                 let jsContactForm = document.getElementById('frmInvoice');                   // <=== 
                 jsContactForm.classList.remove('was-validated');  
+
+                window.location.href = "../Report/Report_Pages/Invoice_Report.aspx";
             }
 
 

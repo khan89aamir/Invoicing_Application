@@ -98,6 +98,7 @@ public class clsMySQLCoreApp
     public DataTable ExecuteSelectStatement(string query)
     {
         DataTable dtTable = new DataTable();
+        dtTable.TableName = "MyTable";
         try
         {
             string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;

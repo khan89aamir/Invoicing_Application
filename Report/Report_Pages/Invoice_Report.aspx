@@ -3,13 +3,18 @@
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <form runat="server" id="rptForm">
-        <asp:ScriptManager ID="ScriptManager1" runat="server">
-        </asp:ScriptManager>
+    <form id="form1" runat="server">
+          <asp:Button ID="Button1" runat="server" Text="Show Report" OnClick="Button1_Click" /><br />
+         <asp:Button ID="PrintButton" Text="Print" runat="server" OnClientClick="return Print();" />
 
-        <rsweb:ReportViewer runat="server"></rsweb:ReportViewer>
+      
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
+        <rsweb:ReportViewer ID="ReportViewer1" runat="server" Width="800" Height="600"></rsweb:ReportViewer>
+        <br />
+       
+        
     </form>
-
 
 
 </asp:Content>
