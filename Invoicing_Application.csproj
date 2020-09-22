@@ -44,6 +44,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+    </Reference>
     <Reference Include="MySqlConnector, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d33d3e53aa5f8c92, processorArchitecture=MSIL">
       <HintPath>packages\MySqlConnector.1.0.1\lib\net45\MySqlConnector.dll</HintPath>
     </Reference>
@@ -59,6 +68,8 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Threading.Tasks.Extensions.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
@@ -103,6 +114,14 @@
     <Content Include="assets\js\mindmup-editabletable.js" />
     <Content Include="assets\js\popper.min.js" />
     <Content Include="assets\js\select2.js" />
+    <None Include="Connected Services\Invoicing_Service\Invoicing_Service.disco" />
+    <None Include="Connected Services\Invoicing_Service\configuration91.svcinfo" />
+    <None Include="Connected Services\Invoicing_Service\configuration.svcinfo" />
+    <None Include="Connected Services\Invoicing_Service\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Report\Report_Pages\Invoice_Report.aspx" />
     <Content Include="Service\Invoicing_Service.asmx" />
     <Content Include="Web.config" />
     <Content Include="Webs\Customer.aspx" />
@@ -116,6 +135,11 @@
     <Content Include="Service\RequestHandler.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\Invoicing_Service\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Invoicing.Master.cs">
       <DependentUpon>Invoicing.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -124,7 +148,20 @@
       <DependentUpon>Invoicing.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\Report_DataSet\ds_ReportData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ds_ReportData.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Report\Report_Pages\Invoice_Report.aspx.cs">
+      <DependentUpon>Invoice_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\Report_Pages\Invoice_Report.aspx.designer.cs">
+      <DependentUpon>Invoice_Report.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Service\clsMessage.cs" />
+    <Compile Include="Service\clsSalesDetails.cs" />
     <Compile Include="Service\DAL\clsMySQLCoreApp.cs" />
     <Compile Include="Service\Invoicing_Service.asmx.cs">
       <DependentUpon>Invoicing_Service.asmx</DependentUpon>
@@ -192,7 +229,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Invoicing.Master" />
+    <None Include="Connected Services\Invoicing_Service\Invoicing_Service.wsdl" />
     <None Include="packages.config" />
+    <Content Include="Report\Report_DataSet\ds_ReportData.xsc">
+      <DependentUpon>ds_ReportData.xsd</DependentUpon>
+    </Content>
+    <Content Include="Properties\DataSources\System.Data.DataTable.datasource" />
+    <None Include="Report\Report_DataSet\ds_ReportData.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ds_ReportData.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Report\Report_DataSet\ds_ReportData.xss">
+      <DependentUpon>ds_ReportData.xsd</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -200,7 +250,18 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\Invoicing_Service\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Temp\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Report\RDLC_Files\InvoiceReport.rdlc" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

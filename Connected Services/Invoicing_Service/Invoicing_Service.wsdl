@@ -1,0 +1,938 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="BindState">
+        <s:complexType />
+      </s:element>
+      <s:element name="BindStateResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ManageProducts">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SKUCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SKUName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Rate" type="s:decimal" />
+            <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ProudctID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ManageProductsResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetSKUDetails">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetSKUDetailsResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteSKU">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SKUID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteSKUResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ManageCustomers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="GSTNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EmailID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="StateID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="CustomerID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ManageCustomersResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetCustomerDetails">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetCustomerDetailsResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteCustomer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CustomerID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteCustomerResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="Login">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetCustomerAutoPopulate">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetCustomerAutoPopulateResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="BindCustomer">
+        <s:complexType />
+      </s:element>
+      <s:element name="BindCustomerResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetSelectedCustomer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CustomerID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSelectedCustomerResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="BindProduct">
+        <s:complexType />
+      </s:element>
+      <s:element name="BindProductResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetSelectedProduct">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ProductID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSelectedProductResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="InsertUpdateSaleInvoiceMaster">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="parmSaleInvoiceID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmInvoiceNumber" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="parmInvoiceDate" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmStateID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmPartyID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmTotalAmtBeforeTax" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmDiscountAmount" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmIGST" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmCGST" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmSGST" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmGST" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmAmountAfterGST" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmCreatedBy" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmModifiedBy" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertUpdateSaleInvoiceMasterResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="InsertUpdateSalesDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PostedData" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertUpdateSalesDetailsResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ManageMyProfile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="OwnerName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="GSTNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EmailID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="StateID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MobileNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TNC" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BankName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AccountNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="IFSCCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BranchName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ManageMyProfileResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetMyProfile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMyProfileResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetPartPaymentDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InvoiceNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPartPaymentDetailsResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="BINDSKU_Code">
+        <s:complexType />
+      </s:element>
+      <s:element name="BINDSKU_CodeResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SaveOtherInfoiceDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="parmInvoiceID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmReverseCharge" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmTransportation_Mode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmVehicle_Number" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmConsignee_Name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmConsignee_GST" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmConsignee_StateID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmConsignee_Address" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmConsignee_PAN" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="parmSupplyDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveOtherInfoiceDetailsResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetSalesDetails">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetSalesDetailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSalesDetailsResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTaxCalculation">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetTaxCalculationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTaxCalculationResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOwmnerHeaderInfo">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetOwmnerHeaderInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOwmnerHeaderInfoResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="BindStateSoapIn">
+    <wsdl:part name="parameters" element="tns:BindState" />
+  </wsdl:message>
+  <wsdl:message name="BindStateSoapOut">
+    <wsdl:part name="parameters" element="tns:BindStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ManageProductsSoapIn">
+    <wsdl:part name="parameters" element="tns:ManageProducts" />
+  </wsdl:message>
+  <wsdl:message name="ManageProductsSoapOut">
+    <wsdl:part name="parameters" element="tns:ManageProductsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSKUDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSKUDetails" />
+  </wsdl:message>
+  <wsdl:message name="GetSKUDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSKUDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteSKUSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteSKU" />
+  </wsdl:message>
+  <wsdl:message name="DeleteSKUSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteSKUResponse" />
+  </wsdl:message>
+  <wsdl:message name="ManageCustomersSoapIn">
+    <wsdl:part name="parameters" element="tns:ManageCustomers" />
+  </wsdl:message>
+  <wsdl:message name="ManageCustomersSoapOut">
+    <wsdl:part name="parameters" element="tns:ManageCustomersResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCustomerDetails" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCustomerDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCustomerSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteCustomer" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCustomerSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapIn">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerAutoPopulateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCustomerAutoPopulate" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerAutoPopulateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCustomerAutoPopulateResponse" />
+  </wsdl:message>
+  <wsdl:message name="BindCustomerSoapIn">
+    <wsdl:part name="parameters" element="tns:BindCustomer" />
+  </wsdl:message>
+  <wsdl:message name="BindCustomerSoapOut">
+    <wsdl:part name="parameters" element="tns:BindCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSelectedCustomerSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSelectedCustomer" />
+  </wsdl:message>
+  <wsdl:message name="GetSelectedCustomerSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSelectedCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="BindProductSoapIn">
+    <wsdl:part name="parameters" element="tns:BindProduct" />
+  </wsdl:message>
+  <wsdl:message name="BindProductSoapOut">
+    <wsdl:part name="parameters" element="tns:BindProductResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSelectedProductSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSelectedProduct" />
+  </wsdl:message>
+  <wsdl:message name="GetSelectedProductSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSelectedProductResponse" />
+  </wsdl:message>
+  <wsdl:message name="InsertUpdateSaleInvoiceMasterSoapIn">
+    <wsdl:part name="parameters" element="tns:InsertUpdateSaleInvoiceMaster" />
+  </wsdl:message>
+  <wsdl:message name="InsertUpdateSaleInvoiceMasterSoapOut">
+    <wsdl:part name="parameters" element="tns:InsertUpdateSaleInvoiceMasterResponse" />
+  </wsdl:message>
+  <wsdl:message name="InsertUpdateSalesDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:InsertUpdateSalesDetails" />
+  </wsdl:message>
+  <wsdl:message name="InsertUpdateSalesDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:InsertUpdateSalesDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ManageMyProfileSoapIn">
+    <wsdl:part name="parameters" element="tns:ManageMyProfile" />
+  </wsdl:message>
+  <wsdl:message name="ManageMyProfileSoapOut">
+    <wsdl:part name="parameters" element="tns:ManageMyProfileResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMyProfileSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMyProfile" />
+  </wsdl:message>
+  <wsdl:message name="GetMyProfileSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMyProfileResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPartPaymentDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPartPaymentDetails" />
+  </wsdl:message>
+  <wsdl:message name="GetPartPaymentDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPartPaymentDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="BINDSKU_CodeSoapIn">
+    <wsdl:part name="parameters" element="tns:BINDSKU_Code" />
+  </wsdl:message>
+  <wsdl:message name="BINDSKU_CodeSoapOut">
+    <wsdl:part name="parameters" element="tns:BINDSKU_CodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveOtherInfoiceDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveOtherInfoiceDetails" />
+  </wsdl:message>
+  <wsdl:message name="SaveOtherInfoiceDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveOtherInfoiceDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSalesDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSalesDetails" />
+  </wsdl:message>
+  <wsdl:message name="GetSalesDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSalesDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTaxCalculationSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTaxCalculation" />
+  </wsdl:message>
+  <wsdl:message name="GetTaxCalculationSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTaxCalculationResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOwmnerHeaderInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOwmnerHeaderInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetOwmnerHeaderInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOwmnerHeaderInfoResponse" />
+  </wsdl:message>
+  <wsdl:portType name="Invoicing_ServiceSoap">
+    <wsdl:operation name="BindState">
+      <wsdl:input message="tns:BindStateSoapIn" />
+      <wsdl:output message="tns:BindStateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ManageProducts">
+      <wsdl:input message="tns:ManageProductsSoapIn" />
+      <wsdl:output message="tns:ManageProductsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSKUDetails">
+      <wsdl:input message="tns:GetSKUDetailsSoapIn" />
+      <wsdl:output message="tns:GetSKUDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSKU">
+      <wsdl:input message="tns:DeleteSKUSoapIn" />
+      <wsdl:output message="tns:DeleteSKUSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ManageCustomers">
+      <wsdl:input message="tns:ManageCustomersSoapIn" />
+      <wsdl:output message="tns:ManageCustomersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerDetails">
+      <wsdl:input message="tns:GetCustomerDetailsSoapIn" />
+      <wsdl:output message="tns:GetCustomerDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCustomer">
+      <wsdl:input message="tns:DeleteCustomerSoapIn" />
+      <wsdl:output message="tns:DeleteCustomerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:LoginSoapIn" />
+      <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerAutoPopulate">
+      <wsdl:input message="tns:GetCustomerAutoPopulateSoapIn" />
+      <wsdl:output message="tns:GetCustomerAutoPopulateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BindCustomer">
+      <wsdl:input message="tns:BindCustomerSoapIn" />
+      <wsdl:output message="tns:BindCustomerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSelectedCustomer">
+      <wsdl:input message="tns:GetSelectedCustomerSoapIn" />
+      <wsdl:output message="tns:GetSelectedCustomerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BindProduct">
+      <wsdl:input message="tns:BindProductSoapIn" />
+      <wsdl:output message="tns:BindProductSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSelectedProduct">
+      <wsdl:input message="tns:GetSelectedProductSoapIn" />
+      <wsdl:output message="tns:GetSelectedProductSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertUpdateSaleInvoiceMaster">
+      <wsdl:input message="tns:InsertUpdateSaleInvoiceMasterSoapIn" />
+      <wsdl:output message="tns:InsertUpdateSaleInvoiceMasterSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertUpdateSalesDetails">
+      <wsdl:input message="tns:InsertUpdateSalesDetailsSoapIn" />
+      <wsdl:output message="tns:InsertUpdateSalesDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ManageMyProfile">
+      <wsdl:input message="tns:ManageMyProfileSoapIn" />
+      <wsdl:output message="tns:ManageMyProfileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMyProfile">
+      <wsdl:input message="tns:GetMyProfileSoapIn" />
+      <wsdl:output message="tns:GetMyProfileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPartPaymentDetails">
+      <wsdl:input message="tns:GetPartPaymentDetailsSoapIn" />
+      <wsdl:output message="tns:GetPartPaymentDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BINDSKU_Code">
+      <wsdl:input message="tns:BINDSKU_CodeSoapIn" />
+      <wsdl:output message="tns:BINDSKU_CodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveOtherInfoiceDetails">
+      <wsdl:input message="tns:SaveOtherInfoiceDetailsSoapIn" />
+      <wsdl:output message="tns:SaveOtherInfoiceDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSalesDetails">
+      <wsdl:input message="tns:GetSalesDetailsSoapIn" />
+      <wsdl:output message="tns:GetSalesDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaxCalculation">
+      <wsdl:input message="tns:GetTaxCalculationSoapIn" />
+      <wsdl:output message="tns:GetTaxCalculationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOwmnerHeaderInfo">
+      <wsdl:input message="tns:GetOwmnerHeaderInfoSoapIn" />
+      <wsdl:output message="tns:GetOwmnerHeaderInfoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Invoicing_ServiceSoap" type="tns:Invoicing_ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="BindState">
+      <soap:operation soapAction="http://tempuri.org/BindState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManageProducts">
+      <soap:operation soapAction="http://tempuri.org/ManageProducts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSKUDetails">
+      <soap:operation soapAction="http://tempuri.org/GetSKUDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSKU">
+      <soap:operation soapAction="http://tempuri.org/DeleteSKU" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManageCustomers">
+      <soap:operation soapAction="http://tempuri.org/ManageCustomers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerDetails">
+      <soap:operation soapAction="http://tempuri.org/GetCustomerDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCustomer">
+      <soap:operation soapAction="http://tempuri.org/DeleteCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerAutoPopulate">
+      <soap:operation soapAction="http://tempuri.org/GetCustomerAutoPopulate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BindCustomer">
+      <soap:operation soapAction="http://tempuri.org/BindCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSelectedCustomer">
+      <soap:operation soapAction="http://tempuri.org/GetSelectedCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BindProduct">
+      <soap:operation soapAction="http://tempuri.org/BindProduct" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSelectedProduct">
+      <soap:operation soapAction="http://tempuri.org/GetSelectedProduct" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertUpdateSaleInvoiceMaster">
+      <soap:operation soapAction="http://tempuri.org/InsertUpdateSaleInvoiceMaster" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertUpdateSalesDetails">
+      <soap:operation soapAction="http://tempuri.org/InsertUpdateSalesDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManageMyProfile">
+      <soap:operation soapAction="http://tempuri.org/ManageMyProfile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMyProfile">
+      <soap:operation soapAction="http://tempuri.org/GetMyProfile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPartPaymentDetails">
+      <soap:operation soapAction="http://tempuri.org/GetPartPaymentDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BINDSKU_Code">
+      <soap:operation soapAction="http://tempuri.org/BINDSKU_Code" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveOtherInfoiceDetails">
+      <soap:operation soapAction="http://tempuri.org/SaveOtherInfoiceDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSalesDetails">
+      <soap:operation soapAction="http://tempuri.org/GetSalesDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaxCalculation">
+      <soap:operation soapAction="http://tempuri.org/GetTaxCalculation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOwmnerHeaderInfo">
+      <soap:operation soapAction="http://tempuri.org/GetOwmnerHeaderInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="Invoicing_ServiceSoap12" type="tns:Invoicing_ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="BindState">
+      <soap12:operation soapAction="http://tempuri.org/BindState" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManageProducts">
+      <soap12:operation soapAction="http://tempuri.org/ManageProducts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSKUDetails">
+      <soap12:operation soapAction="http://tempuri.org/GetSKUDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSKU">
+      <soap12:operation soapAction="http://tempuri.org/DeleteSKU" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManageCustomers">
+      <soap12:operation soapAction="http://tempuri.org/ManageCustomers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerDetails">
+      <soap12:operation soapAction="http://tempuri.org/GetCustomerDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCustomer">
+      <soap12:operation soapAction="http://tempuri.org/DeleteCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap12:operation soapAction="http://tempuri.org/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerAutoPopulate">
+      <soap12:operation soapAction="http://tempuri.org/GetCustomerAutoPopulate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BindCustomer">
+      <soap12:operation soapAction="http://tempuri.org/BindCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSelectedCustomer">
+      <soap12:operation soapAction="http://tempuri.org/GetSelectedCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BindProduct">
+      <soap12:operation soapAction="http://tempuri.org/BindProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSelectedProduct">
+      <soap12:operation soapAction="http://tempuri.org/GetSelectedProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertUpdateSaleInvoiceMaster">
+      <soap12:operation soapAction="http://tempuri.org/InsertUpdateSaleInvoiceMaster" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertUpdateSalesDetails">
+      <soap12:operation soapAction="http://tempuri.org/InsertUpdateSalesDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManageMyProfile">
+      <soap12:operation soapAction="http://tempuri.org/ManageMyProfile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMyProfile">
+      <soap12:operation soapAction="http://tempuri.org/GetMyProfile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPartPaymentDetails">
+      <soap12:operation soapAction="http://tempuri.org/GetPartPaymentDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BINDSKU_Code">
+      <soap12:operation soapAction="http://tempuri.org/BINDSKU_Code" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveOtherInfoiceDetails">
+      <soap12:operation soapAction="http://tempuri.org/SaveOtherInfoiceDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSalesDetails">
+      <soap12:operation soapAction="http://tempuri.org/GetSalesDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaxCalculation">
+      <soap12:operation soapAction="http://tempuri.org/GetTaxCalculation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOwmnerHeaderInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetOwmnerHeaderInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Invoicing_Service">
+    <wsdl:port name="Invoicing_ServiceSoap" binding="tns:Invoicing_ServiceSoap">
+      <soap:address location="http://localhost:15464/Service/Invoicing_Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="Invoicing_ServiceSoap12" binding="tns:Invoicing_ServiceSoap12">
+      <soap12:address location="http://localhost:15464/Service/Invoicing_Service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
