@@ -1,142 +1,112 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Customer.aspx.cs" Inherits="Invoicing_Application.Webs.Customer" ClientIDMode="Static" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="HSNMaster.aspx.cs" Inherits="Invoicing_Application.Webs.HSNMaster" ClientIDMode="Static" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <script src="../assets/js/mindmup-editabletable.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
-        type="text/javascript"></script>
+    <style>
+        h5 {
+            background-color: #f7f7f7;
+            border-radius: 6px;
+            padding: 5px;
+        }
 
-    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
-        rel="Stylesheet" type="text/css" />
-    
-    <%--<link href="../assets/css/MasterFormCSS.css" rel="stylesheet" />--%>
+        .disableValue {
+            pointer-events: none;
+        }
+    </style>
 
     <br />
 
-    <div class="container d-flex justify-content-start">
+    <div class="container  d-flex justify-content-start">
         <div class="card border-info" style="width: 100%">
             <div class="card-header">
-                <h5>Customer Details</h5>
+                <h5>HSN Details</h5>
             </div>
             <div class="card-body">
+                <form id="frmHSN" class="needs-validation" novalidate>
+                    <input type="text" runat="server" class="form-control text" id="txtHSNID" value="0" hidden>
 
-                <form id="frmCustomer" class="needs-validation" novalidate runat="server">
-
-                    <input type="text" runat="server" class="form-control text" id="txtCustomerID" value="0" hidden>
                     <div class="form-row">
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-
-                                <label for="txtCustomerName">Customer Name : </label>
-
-                                <input type="text" runat="server" class="form-control text" id="txtCustomerName" placeholder="Enter Your Name" autocomplete="off" required>
+                                <label for="txtHSNCode">HSN Code </label>
+                                <input type="text" id="txtHSNCode" class="form-control text " placeholder="Enter HSN Code." required>
                                 <div class="invalid-feedback text-left">
-                                    Please Enter Your Name.
+                                    Please Enter HSN Code.
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+
+                        <div class="col-md-8">
                             <div class="form-group">
-
-                                <label for="txtCompanyName">Company : </label>
-
-                                <input type="text" runat="server" class="form-control text" id="txtCompanyName" placeholder="Enter Customer's Company Name" autocomplete="off" required>
-                                <div class="invalid-feedback text-left">
-                                    Please Enter Company Name
-                                </div>
+                                <label for="txtHSNDescription">HSN Description </label>
+                                <textarea id="txtHSNDescription" class="form-control text " placeholder="Enter HSN Description."></textarea>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-
-                                <label for="txtGSTNo">GST No : </label>
-
-                                <input type="text" runat="server" class="form-control text" id="txtGSTNo" placeholder="Enter GST No" autocomplete="off" required>
+                                <label for="txtCGST">CGST </label>
+                                <input type="text" class="form-control text " id="txtCGST" placeholder="Enter CGST." required>
                                 <div class="invalid-feedback text-left">
-                                    Please Enter GST No
+                                    Please Enter CGST.
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+
+                        <div class="col-md-4">
                             <div class="form-group">
-
-                                <label for="txtEmail">E-Mail : </label>
-                                <input runat="server" type="email" class="form-control" id="txtEmail" name="Email" placeholder="Enter Email Address" autocomplete="off" required>
+                                <label for="txtSGST">SGST </label>
+                                <input type="text" class="form-control text " id="txtSGST" placeholder="Enter SGST." required>
                                 <div class="invalid-feedback text-left">
-                                    Please Enter Email.
+                                    Please Enter SGST.
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-row">
 
-                                <label for="cmdState">State :</label>
-                                <asp:DropDownList ID="cmdState" class="custom-select" name="cmdState" runat="server" required="true">
-                                </asp:DropDownList>
-
-                                <div class="invalid-feedback">
-                                    Please Select State.
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-
-                                <label for="txtAddress">Address </label>
-                                <textarea runat="server" rows="4" class="form-control text" id="txtAddress" placeholder="Enter Address" required></textarea>
-
+                                <label for="txtIGST">IGST </label>
+                                <input type="text" class="form-control text " id="txtIGST" placeholder="Enter IGST." required>
                                 <div class="invalid-feedback text-left">
-                                    Please Enter Address
+                                    Please Enter IGST.
                                 </div>
                             </div>
                         </div>
+
                     </div>
-
                     <div class="form-row">
-
                         <div class="col-md-12  text-right">
                             <button id="btnSave" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o mr-1" aria-hidden="true"></i>Save</button>
                             <button id="btnCancel" type="reset" formnovalidate="formnovalidate" class="btn btn-secondary"><i class="fa fa-times mr-1" aria-hidden="true"></i>Cancel</button>
                         </div>
-
                     </div>
-
                 </form>
-
             </div>
 
-        </div>
+            <div class="container">
+                <h5>HSN Code List</h5>
+                <div class="row">
+                    <div class="col-12">
+                        <table id="example" class="table table-hover table-responsive-md" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>Select</th>
+                                    <th>HSNID</th>
+                                    <th>HSN Code</th>
+                                    <th>HSN Description</th>
+                                    <th>CGST</th>
+                                    <th>SGST</th>
+                                    <th>IGST</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
 
-    </div>
-    <br />
-
-    <div class="container">
-        <h5>Customer List</h5>
-        <div class="row">
-            <div class="col-12">
-                <table id="example" class="table table-hover table-responsive-md" style="width: 100%">
-                    <thead>
-
-                        <tr>
-                            <th>Select</th>
-                            <th>CustomerID</th>
-                            <th>Name</th>
-                            <th>Company</th>
-                            <th>GST No</th>
-                            <th>Email</th>
-                            <th>Address</th>
-                            <th>StateID</th>
-                            <th>State</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-
-                </table>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -159,12 +129,12 @@
                         }
                         else {
                             // if SKU form is submited then call the save  method.
-                            if (form.id == "frmCustomer") {
+                            if (form.id == "frmHSN") {
                                 // dont submit the form which is default behav
                                 event.preventDefault();
                                 event.stopPropagation();
 
-                                $.ManageCustomers();
+                                $.ManageHSNCode();
                             }
                         }
                         form.classList.add('was-validated');
@@ -173,65 +143,75 @@
             }, false);
         })();
 
+        function isNumeric(evt, element) {
+
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            //alert('event '+charCode);
+            if (
+                //(charCode != 45 || $(element).val().indexOf('-') != -1) &&      // “-” CHECK MINUS, AND ONLY ONE.
+                (charCode != 46 || $(element).val().indexOf('.') != -1) &&      // “.” CHECK DOT, AND ONLY ONE.
+                (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        };
+
+        function isINT(evt, element) {
+
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            //alert('event '+charCode);
+            if (
+                (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        };
+
         $(document).ready(function () {
 
-            // drop down------
-            $.ajax({
-                type: "POST",
-                url: "../Service/Invoicing_Service.asmx/BindState",
-                dataType: "json",
-                //data: JSON.stringify(ObjMyData),
-                contentType: "application/json",
-                success: function (res) {
-                    $("#cmdState").append($("<option selected='selected' disabled='disabled'></option>").val('').html('Select State'));
-                    $.each(res, function (data, value) {
-
-                        $("#cmdState").append($("<option></option>").val(value.StateID).html(value.StateName));
-                    })
-                },
-                error: function (xhr, status, error) {
-
-                    alert("Error : " + error);
-                    alert("Error Text: " + xhr.responseText);
-                },
-                failure: function (r) {
-                    alert("Fail:" + r.responseText);
-                }
+            $("#txtCGST,#txtSGST,#txtIGST").keypress(function (event) {
+                return isNumeric(event, this);
             });
 
-            $.GetCustomerDetails();
+            $("#txtHSNCode").keypress(function (event) {
+                return isINT(event, this);
+            });
+
+            //if ($('#example').DataTable() != null) {
+            //    $('#example').DataTable().columns([1]).visible(false);
+            //}
+            $.GetHSNDetails();
         });
 
-        $.ManageCustomers = function () {
+        $.ManageHSNCode = function () {
 
             //  let post_url = $("#frmaccount").attr("action"); //get form action url
             // let request_method = $("#frmaccount").attr("method"); //get form GET/POST method
             // let form_data = $("#frmaccount").serialize(); //Encode form elements for submission	
 
-            var customername = $('#txtCustomerName').val();
-            var companyname = $('#txtCompanyName').val();
-            var gstno = $('#txtGSTNo').val();
-            var email = $('#txtEmail').val();
-            var stateid = $('#cmdState').val();
-            var address = $('#txtAddress').val();
-            var customerid = $('#txtCustomerID').val();
+            var hsncode = $('#txtHSNCode').val();
+            var hsndesc = $('#txtHSNDescription').val();
+            var cgst = $('#txtCGST').val();
+            var sgst = $('#txtSGST').val();
+            var igst = $('#txtIGST').val();
+            var hsnid = $('#txtHSNID').val();
             var varUserID = <%= Session["UserID"] %>;
 
             // Create an object:
-            var CustomerData = {
-                CustomerName: customername, CompanyName: companyname, GSTNo: gstno, EmailID: email
-                , Address: address, StateID: stateid, CustomerID: customerid, UserID: varUserID
+            var HSNData = {
+                HSNCode: hsncode, HSNDescription: hsndesc, CGST: cgst, SGST: sgst
+                , IGST: igst, HSNID: hsnid, UserID: varUserID
             };
-            //alert(JSON.stringify(CustomerData));
+            //alert(JSON.stringify(HSNData));
 
             $.ajax({
-                url: "../Service/Invoicing_Service.asmx/ManageCustomers",
+                url: "../Service/Invoicing_Service.asmx/ManageHSNCode",
                 type: 'POST',
-                data: JSON.stringify(CustomerData),
+                data: JSON.stringify(HSNData),
                 contentType: "application/json",
                 dataType: "json",
                 beforeSend: function () {
-                    $('#lblLoadingtxt').text("Saving Customer Details please wait....");
+                    $('#lblLoadingtxt').text("Saving HSN Details please wait....");
                     $('#loadingBox').modal('show');
                 },
                 complete: function () {
@@ -250,11 +230,11 @@
 
                         $('#mdlNormalMessage').modal('show');
 
-                        $('#frmCustomer').trigger("reset");
+                        $('#frmHSN').trigger("reset");
 
                         $('#example').DataTable().ajax.reload(null, false);
                         // after reset remove the class else it will show validtion message.
-                        let jsContactForm = document.getElementById('frmCustomer');                   // <=== 
+                        let jsContactForm = document.getElementById('frmHSN');                   // <=== 
                         jsContactForm.classList.remove('was-validated');
                         //
                     }
@@ -280,8 +260,7 @@
             });
         };
 
-
-        $.GetCustomerDetails = function () {
+        $.GetHSNDetails = function () {
 
             var table = $('#example').DataTable({
                 fixedHeader: true,
@@ -294,7 +273,7 @@
                 ],
                 ajax: {
 
-                    url: "../Service/Invoicing_Service.asmx/GetCustomerDetails",
+                    url: "../Service/Invoicing_Service.asmx/GetHSNDetails",
                     type: 'POST',
 
                     dataSrc: function (d) {
@@ -309,14 +288,12 @@
                             return "<a class='lnkSelect btn btn btn-primary' href='" + data + "'>Select</a>";
                         }
                     },
-                    { 'data': 'CustomerID' },
-                    { 'data': 'CustomerName' },
-                    { 'data': 'CompanyName' },
-                    { 'data': 'GSTNo' },
-                    { 'data': 'EmailID' },
-                    { 'data': 'Address' },
-                    { 'data': 'StateID' },
-                    { 'data': 'State' },
+                    { 'data': 'HSNID' },
+                    { 'data': 'HSNCode' },
+                    { 'data': 'HSNDescription' },
+                    { 'data': 'CGST' },
+                    { 'data': 'SGST' },
+                    { 'data': 'IGST' },
                     {
                         data: 'Delete',
                         render: function (data, type, row) {
@@ -340,7 +317,7 @@
 
             //to invisble multipe columns
             // table.columns([1, 2]).visible(false);
-            table.columns([1,6,7]).visible(false);
+            table.columns([1]).visible(false);
         };
 
         //   attaching event on table , then on link ( to be pricese)
@@ -359,46 +336,38 @@
 
             //var varCustomerID = $(this).attr("href");
 
-            // CustomerName column
-            //var varCustomerName = $(this).parent().parent().find("TD").eq(2).text();
-
-            // CompanyName
-            //var varCompanyName = $(this).parent().parent().find("TD").eq(3).text();
-
             var currentRow = $(this).closest("tr");
             var data = $('#example').DataTable().row(currentRow).data();
 
-            var varCustomerName = (data['CustomerName']);
-            var varCompanyName = (data['CompanyName']);
-            var varGSTNo = (data['GSTNo']);
-            var varEmailID = (data['EmailID']);
-            var varAddress = (data['Address']);
-            var varStateID = (data['StateID']);
-            var varCustomerID = (data['CustomerID']);
+            var varHSNCode = (data['HSNCode']);
+            var varHSNDescription = (data['HSNDescription']);
+            var varCGST = (data['CGST']);
+            var varSGST = (data['SGST']);
+            var varIGST = (data['IGST']);
+            var varHSNID = (data['HSNID']);
 
-            $('#txtCustomerName').val(varCustomerName);
-            $('#txtCompanyName').val(varCompanyName);
-            $('#txtGSTNo').val(varGSTNo);
-            $('#txtEmail').val(varEmailID);
-            $('#txtAddress').val(varAddress);
-            $('#cmdState').val(varStateID)
-            $('#txtCustomerID').val(varCustomerID);
+            $('#txtHSNCode').val(varHSNCode);
+            $('#txtHSNDescription').val(varHSNDescription);
+            $('#txtCGST').val(varCGST);
+            $('#txtSGST').val(varSGST);
+            $('#txtIGST').val(varIGST);
+            $('#txtHSNID').val(varHSNID);
 
             return false; // <---------or this if you want to prevent bubbling as well
         });
 
-        $.DeletedCustomer = function (id) {
+        $.DeletedHSNCode = function (id) {
             $.ajax({
-                url: "../Service/Invoicing_Service.asmx/DeleteCustomer",
+                url: "../Service/Invoicing_Service.asmx/DeletedHSNCode",
                 type: 'POST',
-                data: { CustomerID: id },
+                data: { HSNID: id },
                 dataType: 'json',
 
                 success: function (responseData) {
 
                     if (responseData.Result) {
                         // alert("Result : " + responseData.strMessage);
-                        $('#frmCustomer').trigger("reset");
+                        $('#frmHSN').trigger("reset");
 
                         $('#example').DataTable().ajax.reload(null, false);
                     }
@@ -437,17 +406,10 @@
         // confrimed to delete
         $('#btnConfirm').click(function () {
 
-            $.DeletedCustomer(deletedID);
+            $.DeletedHSNCode(deletedID);
 
             $('#confirmationModel').modal('hide');
         });
 
-        $("#cmdState").change(function () {
-            var selectedText = $(this).find("option:selected").text();
-            var selectedValue = $(this).val();
-            //alert("Selected Text: " + selectedText + " Value: " + selectedValue);
-        });
-
     </script>
-
 </asp:Content>

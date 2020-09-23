@@ -133,7 +133,7 @@
     </div>
 
      <div id="myHeader">
-    <nav class="navbar   bg-primary navbar-light navbar-expand-md  justify-content-md-center justify-content-start  ">
+    <nav class="navbar bg-primary navbar-light navbar-expand-md  justify-content-md-center justify-content-start  ">
         <h1 class="navbar-brand" style="color: white">Anja Creation</h1>
 
         <div class="container">
@@ -148,13 +148,23 @@
                     <li class="nav-item">
                         <a id="btnHome" class="nav-link mr-4" href="Home.aspx"><i class="fa fa-home mr-1" aria-hidden="true"></i>Home</a>
                     </li>
-                    <li class="nav-item dropdown">
+                   <%-- <li class="nav-item dropdown">
                         <a class="nav-link  mr-4"  href="Customer.aspx"><i class="fa fa-user mr-1" aria-hidden="true"></i>Customers</a>
 
                     </li>
                     <li class="nav-item mr-4">
                         <a id="btnAdminPage" class="nav-link" href="Products.aspx"><i class="fa fa-th-large mr-1" aria-hidden="true"></i>Products</a>
+                    </li>--%>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle mr-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Masters</a>
+                        <div class="dropdown-menu Master">
+                            <a class="dropdown-item mt-1" style="font-size: small" href="Customer.aspx"><i class="fa fa-user mr-1" aria-hidden="true"></i>Customers</a>
+                            <a class="dropdown-item mt-1" style="font-size: small" href="Products.aspx"><i class="fa fa-th-large mr-1" aria-hidden="true"></i>Products</a>
+                            <a class="dropdown-item mt-1" style="font-size: small"  href="HSNMaster.aspx"><i class="fa fa-th-large mr-1" aria-hidden="true"></i>HSN Code</a>
+                        </div>
                     </li>
+
                     <li class="nav-item mr-4">
                         <a id="btnAboutUS" class="nav-link " href="Invoicing.aspx"><i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>Invoicing ( Sales)</a>
                     </li>

@@ -11,16 +11,16 @@ namespace Invoicing_Application.Webs
 {
 
 
-    public partial class InvoiceDetails
+    public partial class HSNMaster
     {
 
         /// <summary>
-        /// frmInvdetails control.
+        /// txtHSNID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm frmInvdetails;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtHSNID;
     }
 }

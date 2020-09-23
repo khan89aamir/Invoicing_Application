@@ -127,6 +127,7 @@
     <Content Include="Webs\Customer.aspx" />
     <Content Include="Webs\Global.asax" />
     <Content Include="Webs\Home.aspx" />
+    <Content Include="Webs\HSNMaster.aspx" />
     <Content Include="Webs\InvoiceDetails.aspx" />
     <Content Include="Webs\Invoicing.aspx" />
     <Content Include="Webs\MyProfile.aspx" />
@@ -183,6 +184,13 @@
     </Compile>
     <Compile Include="Webs\Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Webs\HSNMaster.aspx.cs">
+      <DependentUpon>HSNMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Webs\HSNMaster.aspx.designer.cs">
+      <DependentUpon>HSNMaster.aspx</DependentUpon>
     </Compile>
     <Compile Include="Webs\InvoiceDetails.aspx.cs">
       <DependentUpon>InvoiceDetails.aspx</DependentUpon>
