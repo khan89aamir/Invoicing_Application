@@ -229,6 +229,16 @@
             }, false);
         })();
 
+        function sucess() {
+            $('#iconMsg').css('color', 'green');
+            $('#iconMsg').removeClass('fa-times-circle').addClass('fa-check-circle');
+        };
+
+        function error() {
+            $('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
+            $('#iconMsg').css('color', 'red');
+        };
+
         $(document).ready(function () {
 
             // drop down------
@@ -257,19 +267,6 @@
 
             $.GetMyProfile();
 
-            //var currentRow = $(this).closest("tr");
-            //var data = $('#example').DataTable().data();
-            //console.log('ready '+data);
-            //varStateID = (data['StateID']);
-            //varOwnerName = (data['OwnerName']);
-
-            //$('#txtCustomerName').val(varOwnerName);
-            //$('#txtCompanyName').val(varCompanyName);
-            //$('#txtGSTNo').val(varGSTNo);
-            //$('#txtEmail').val(varEmailID);
-            //$('#txtAddress').val(varAddress);
-            //$('#cmdState').val(varStateID)
-            //$('#txtCustomerID').val(varCustomerID);
         });
 
         $.ManageMyProfile = function () {
@@ -328,7 +325,7 @@
                         $('#loadingBox').modal('hide');
 
                         $('#lblMessage').text(responseData.strMessage);
-
+                        sucess();
                         $('#mdlNormalMessage').modal('show');
 
                         $('#frmMyProfile').trigger("reset");
@@ -342,8 +339,9 @@
                     }
                     else {
                         $('#lblMessage').text(responseData.strMessage);
-                        $('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
-                        $('#iconMsg').css('color', 'red');
+                        //$('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
+                        //$('#iconMsg').css('color', 'red');
+                        error();
                         $('#mdlNormalMessage').modal('show');
                     }
                 },

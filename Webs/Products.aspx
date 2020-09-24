@@ -142,6 +142,8 @@ rel = "Stylesheet" type="text/css" />
                     form.addEventListener('submit', function (event) {
                         if (form.checkValidity() === false) {
 
+                            cmbHSNCustomeValidate();
+
                             event.preventDefault();
                             event.stopPropagation();
                         }
@@ -196,6 +198,16 @@ rel = "Stylesheet" type="text/css" />
             return result;
         };
 
+        function sucess() {
+            $('#iconMsg').css('color', 'green');
+            $('#iconMsg').removeClass('fa-times-circle').addClass('fa-check-circle');
+        };
+
+        function error() {
+            $('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
+            $('#iconMsg').css('color', 'red');
+        };
+
         function BindHSNCode() {
 
             // drop down------
@@ -214,7 +226,7 @@ rel = "Stylesheet" type="text/css" />
 
                     // set the deafult state from session
                     // Initialize select2
-                    //$("#cmbHSNCode").select2();
+                    $("#cmbHSNCode").select2();
 
                 },
                 error: function (xhr, status, error) {
@@ -281,7 +293,7 @@ rel = "Stylesheet" type="text/css" />
                             $('#loadingBox').modal('hide');
 
                             $('#lblMessage').text(responseData.strMessage);
-
+                            sucess();
                             $('#mdlNormalMessage').modal('show');
 
                             $('#frmSKU').trigger("reset");
@@ -294,8 +306,9 @@ rel = "Stylesheet" type="text/css" />
                         }
                         else {
                             $('#lblMessage').text(responseData.strMessage);
-                            $('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
-                            $('#iconMsg').css('color', 'red');
+                            //$('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
+                            //$('#iconMsg').css('color', 'red');
+                            error();
                             $('#mdlNormalMessage').modal('show');
                         }
                     },
@@ -421,6 +434,7 @@ rel = "Stylesheet" type="text/css" />
             $('#txtDescription').val(varDescription);
             $('#txtProductID').val(varSKUID);
             $('#cmbHSNCode').val(varHSNID);
+            $('#select2-cmbHSNCode-container').text(varHSNCode);
             
             return false; // <---------or this if you want to prevent bubbling as well
         });

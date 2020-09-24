@@ -6,11 +6,8 @@
         <div id="pnlLogin" class="card border-info" style="width: 23rem;">
             <img class="card-img-top" src="../assets/img/Main_Logo.png" alt="Card image cap">
 
-
             <div class="card-body">
-
-                <form id="frmaccount" class="needs-validation"  novalidate>
-
+                <form id="frmaccount" class="needs-validation" novalidate>
                     <input type="text" runat="server" class="form-control text" id="txtAccounID" value="0" hidden>
                     <div class="form-row">
                         <div class="col-md-12">
@@ -28,9 +25,7 @@
                             </div>
 
                             <div class="input-group mb-3">
-
                                 <div class="input-group-prepend">
-
                                     <span class="fa fa-lock fa-2x mt-1" style="color: #007bff"></span>&nbsp;
                                 </div>
                                 <input type="password" class="form-control" id="txtPassword" placeholder="Enter Password" required>
@@ -38,9 +33,7 @@
                                     Please Enter Password.
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                     <div class="form-row">
 
@@ -55,28 +48,19 @@
                                 <p class="text-danger  ">Incorrect Username or Password.</p>
                             </div>
                         </div>
-
-
                     </div>
                     <div class="form-row">
 
                         <div class="col-md-12 ">
                             <button id="btnLogin" type="submit" class="btn btn-primary w-100">Login</button>
-
                         </div>
-
                     </div>
-
                 </form>
                 <br />
                 <div class="text-center">
-                     <a href="#" class="link" style="color: #06456f" data-toggle="modal" data-target="#exampleModal">Forget Password?</a>
-                    
+                    <a href="#" class="link" style="color: #06456f" data-toggle="modal" data-target="#exampleModal">Forget Password?</a>
                 </div>
-
-
             </div>
-
         </div>
     </div>
     <div class="container text-center">
@@ -90,7 +74,7 @@
 
     </div>
 
-       <!-- Forgot password -->
+    <!-- Forgot password -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -102,7 +86,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <form class="needs-validation" novalidate>
+                    <form id="frmForgotPass" class="needs-validation" novalidate>
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="alert alert-primary" role="alert">
@@ -110,17 +94,28 @@
                                 </div>
 
 
-                                <label for="validationCustom01">E-Mail ID :</label>
-                                <input type="email" class="form-control" id="validationCustom01" value="" placeholder="Enter Email address" required>
+                                <label for="txtforgotEmailID">E-Mail ID :</label>
+                                <input type="email" class="form-control" id="txtforgotEmailID" value="" placeholder="Enter Email address" required>
+                                <div class="invalid-feedback text-left">
+                                    Please Enter Email address.
+                                </div>
                             </div>
 
+                            <div class="col-md-12  text-center ">
+                                <div id="pnlforgotpassLoading" class="d-none">
+                                    <div class="spinner-border text-primary " role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                                <div id="lblforgotEmailMessage" class="text-left d-none">
+                                    <p id="pnlforgotEmailMessage" class="text-danger  ">Incorrect Email Address.</p>
+                                </div>
+                            </div>
                         </div>
                         <br />
-                        <button class="btn btn-primary" type="submit">Submit</button>
+                        <button id="btnforgotemail" class="btn btn-primary" type="submit">Submit</button>
                     </form>
-
                 </div>
-
             </div>
         </div>
     </div>
@@ -136,13 +131,17 @@
                 var validation = Array.prototype.filter.call(forms, function (form) {
                     form.addEventListener('submit', function (event) {
                         if (form.checkValidity() === false) {
+
                             event.preventDefault();
                             event.stopPropagation();
                         }
                         else {
                             event.preventDefault();
                             event.stopPropagation();
-                            $.DoLogin();
+
+                            if (form.id == "frmaccount") {
+                                $.DoLogin();
+                            }
                         }
                         form.classList.add('was-validated');
                     }, false);
@@ -155,16 +154,16 @@
 
             var sessionValue =  <%
 
-        if (Session["UserID"]!=null)
+        if (Session["UserID"] != null)
         {
             Response.Write("'True'");
         }
         else
         {
-              Response.Write("'False'");
+            Response.Write("'False'");
         }
         %>;
-              
+
             if (sessionValue == "True") {
 
                 // dont show the login window again
@@ -174,13 +173,12 @@
                 $('#pnlBack').removeClass("d-none");
                 $('#pnlBack').addClass("d-block");
 
-
                 $('#pnlProfile').removeClass("d-none");
                 $('#pnlProfile').addClass("d-block");
             }
             else {
                 $('#pnlLogin').show();
-
+                $('#txtUserName').focus();
                 // show back pannel
                 $('#pnlBack').removeClass("d-block");
                 $('#pnlBack').addClass("d-none");
@@ -245,7 +243,7 @@
 
                     }
                     else {
-                        
+
                         $('#lblPassMessage').removeClass("d-none");
                         $('#lblPassMessage').addClass("d-block");
 
@@ -272,10 +270,12 @@
         function SetLoginSession(result) {
 
             var varUserName = $('#txtUserName').val();
+            $('#dropdownMenuButton').html("Login By : " + varUserName);
+
             var DefaultState = result.Value;
             var varUserID = result.UserID;
-            
-            var objData = { UserName: varUserName, DefaulStatetValue: DefaultState, UserID: varUserID};
+
+            var objData = { UserName: varUserName, DefaulStatetValue: DefaultState, UserID: varUserID };
             // calling asp.net page method [Session should be maintain by page NOT by web service.]
             $.ajax({
                 type: "POST",
@@ -288,14 +288,125 @@
                 },
                 error: function (xhr, status, error) {
 
-                 //   alert("Error : " + error);
-                  //  alert("Error Text: " + xhr.responseText);
+                    //   alert("Error : " + error);
+                    //  alert("Error Text: " + xhr.responseText);
 
                 },
                 failure: function (r) {
                     alert("Error : " + r);
                 }
             });
-        }  
+        }
+
+        $("#btnforgotemail").click(function () {
+
+            var varforgotEmailID = $('#txtforgotEmailID').val();
+            var ForgotEmailData = { ForgotEmailID: varforgotEmailID };
+            if (varforgotEmailID != "") {
+                $.ajax({
+                    url: "../Service/Invoicing_Service.asmx/ForgotEmailIDData",
+                    type: 'POST',
+                    data: JSON.stringify(ForgotEmailData),
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (responseData) {
+
+                        if (responseData.Result) {
+
+                            $('#lblforgotEmailMessage').removeClass("d-block");
+                            $('#lblforgotEmailMessage').addClass("d-none");
+
+                            var varforgotpass = responseData.strMessage;
+                            $.SendEmail(varforgotEmailID, varforgotpass);
+                        }
+                        else {
+
+                            $('#lblforgotEmailMessage').removeClass("d-none");
+                            $('#lblforgotEmailMessage').addClass("d-block");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Error : " + error);
+                        alert("Error Text: " + xhr.responseText);
+                    },
+                    failure: function (r) {
+                        alert("Fail:" + r.responseText);
+                    }
+                }).done(function (response) { //
+
+                    // alert("Done : " + response);
+                });
+            }
+        });
+
+        $.SendEmail = function (emailid, pass) {
+
+            var val_emailid = emailid;
+            var val_pass = pass;
+
+            // Create an object:
+            var AccountData = {
+                ForgotEmailID: val_emailid,
+                Password: val_pass
+            };
+
+            $.ajax({
+                url: "../Service/Invoicing_Service.asmx/SendForgotPass",
+                type: 'POST',
+                data: JSON.stringify(AccountData),
+                contentType: "application/json",
+                dataType: "json",
+                beforeSend: function () {
+
+                    $('#pnlforgotpassLoading').removeClass("d-none");
+                    $('#pnlforgotpassLoading').addClass("d-block");
+                },
+                complete: function () {
+
+                    $('#pnlforgotpassLoading').removeClass("d-block");
+                    $('#pnlforgotpassLoading').addClass("d-none");
+                },
+
+                success: function (responseData) {
+
+                    // parse it to java script object so that you can access property
+                    // data = $.parseJSON(responseData.d);
+
+                    $('#pnlforgotEmailMessage').html(responseData.strMessage);
+                    if (responseData.Result) {
+
+                        $('#lblforgotEmailMessage').removeClass("text-danger d-none");
+                        $('#lblforgotEmailMessage').addClass("d-block");
+
+                        $('#frmForgotPass').trigger("reset");
+
+                        // after reset remove the class else it will show validtion message.
+                        let jsContactForm = document.getElementById('frmForgotPass');                   // <=== 
+                        jsContactForm.classList.remove('was-validated');
+                    }
+                    else {
+
+                        $('#lblforgotEmailMessage').removeClass("d-none");
+                        $('#lblforgotEmailMessage').addClass("text-danger d-block");
+
+                        $('#pnlforgotpassLoading').removeClass("d-block");
+                        $('#pnlforgotpassLoading').addClass("d-none");
+                    }
+                },
+                error: function (xhr, status, error) {
+
+                    $('#loadingBox').modal('hide');
+                    //alert("Error : " + error);
+                    //alert("Error Text: " + xhr.responseText);
+                },
+                failure: function (r) {
+                    alert("Fail:" + r.responseText);
+                }
+            }).done(function (response) { //
+
+                // alert("Done : " + response);
+            });
+        };
+
     </script>
 </asp:Content>

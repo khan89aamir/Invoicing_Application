@@ -173,6 +173,15 @@
             }, false);
         })();
 
+        function sucess() {
+            $('#iconMsg').css('color', 'green');
+            $('#iconMsg').removeClass('fa-times-circle').addClass('fa-check-circle');
+        };
+
+        function error() {
+            $('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
+            $('#iconMsg').css('color', 'red');
+        };
         $(document).ready(function () {
 
             // drop down------
@@ -247,7 +256,7 @@
                         $('#loadingBox').modal('hide');
 
                         $('#lblMessage').text(responseData.strMessage);
-
+                        sucess();
                         $('#mdlNormalMessage').modal('show');
 
                         $('#frmCustomer').trigger("reset");
@@ -260,8 +269,9 @@
                     }
                     else {
                         $('#lblMessage').text(responseData.strMessage);
-                        $('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
-                        $('#iconMsg').css('color', 'red');
+                        //$('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
+                        //$('#iconMsg').css('color', 'red');
+                        error();
                         $('#mdlNormalMessage').modal('show');
                     }
                 },

@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="PaymentInfo.aspx.cs" Inherits="Invoicing_Application.Webs.PaymentInfo" ClientIDMode="Static" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
-     <script src="../assets/js/select2.js"></script>
+
+    <script src="../assets/js/select2.js"></script>
     <link href="../assets/css/select2.css" rel="stylesheet" />
     <style>
         h5 {
@@ -41,7 +41,7 @@
 
                             <div class="form-group">
                                 <label for="txtSearchInvoiceNo">Invoice No </label>
-                                <input type="text" class="form-control text " id="txtSearchInvoiceNo" placeholder="Enter Invoice No." required>
+                                <input type="text" class="form-control text " id="txtSearchInvoiceNo" placeholder="Enter Invoice No." autocomplete="off" required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter Invoice No.
                                 </div>
@@ -105,9 +105,10 @@
     </div>
     <br />
 
+
     <div class="container  d-flex justify-content-start">
         <div class="card border-info" style="width: 100%">
-            <a class="btn btn-info mb-2 w-100 " data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Payment Details <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+            <a id="collap" class="btn btn-info mb-2 w-100 " data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Payment Details <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
             </a>
             <div class="collapse" id="collapseExample">
                 <div class="card-body">
@@ -137,6 +138,7 @@
             </div>
         </div>
     </div>
+
     <br />
 
 
@@ -332,6 +334,7 @@
 
                 //alert('Payment amount cant be greater then actual bill amount');
                 $('#lblMessage').text('Payment amount cant be greater then actual bill amount');
+                error();
                 $('#mdlNormalMessage').modal('show');
                 result = false;
             }
@@ -367,6 +370,16 @@
         $(function () {
             $("#dtpTranDate").datepicker();
         });
+
+        function sucess() {
+            $('#iconMsg').css('color', 'green');
+            $('#iconMsg').removeClass('fa-times-circle').addClass('fa-check-circle');
+        };
+
+        function error() {
+            $('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
+            $('#iconMsg').css('color', 'red');
+        };
 
         function BindCustomer() {
 
@@ -428,6 +441,11 @@
                 $('#paymentdetails').DataTable().columns([1, 2]).visible(false);
             }
             ResetSearch();
+        });
+
+        $("#btnCancel").click(function () {
+
+            $("#select2-cmbCustomer-container").text(varCustomerNameDefault);
         });
         var varInvoiceNo
         $.GetPartPaymentList = function () {
@@ -507,58 +525,59 @@
                 });
 
                 //to invisble multipe columns
-                table.columns([1, 6]).visible(false);
-
-                //   attaching event on table , then on link ( to be pricese)
-                $("#example").on("click", ".lnkSelect", function () {
-
-                    event.preventDefault(); // <---------you may want this to stop the link
-
-                    // get the link value
-                    //var addressValue = $(this).attr("href");
-
-                    //remove all other selected rows..
-                    $('#example tr.selected2').removeClass('selected2');
-
-                    // set the selected rows.
-                    $(this).parent().parent().addClass('selected2');
-
-                    var currentRow = $(this).closest("tr");
-                    var data = $('#example').DataTable().row(currentRow).data();
-
-                    var varInvoiceNumber = (data['InvoiceNumber']);
-                    var varCustomerName = (data['CustomerName']);
-                    var varCompanyName = (data['CompanyName']);
-                    var varRemainingAmt = (data['RemaningAmount']);
-                    var varSaleInvoiceID = (data['SaleInvoiceID']);
-                    var varPaymentStatus = (data['PaymentStatus']);
-
-                    $('#txtInvoiceNo').val(varInvoiceNumber);
-                    $('#txtCustomerName').val(varCustomerName);
-                    $('#txtCompanyName').val(varCompanyName);
-                    $('#txtRemainingAmt').val(varRemainingAmt);
-                    $('#txtSaleInvoiceID').val(varSaleInvoiceID);
-                    $('#txtCustomerID').val((data['PartyID']));
-
-                    if (varPaymentStatus == 'UnPaid') {
-                        $('#btnSave').prop("disabled", "");
-                    }
-                    else {
-                        $('#btnSave').prop("disabled", "disabled");
-                    }
-
-                    $.GetPartPaymentDetails();
-
-                    return false; // <---------or this if you want to prevent bubbling as well
-                });
+                table.columns([1, 6]).visible(false);   
             }
             else {
                 //alert('Please use any oneof filter..');
                 $('#lblMessage').text('Please use any oneof filter..');
-
+                error();
                 $('#mdlNormalMessage').modal('show');
             }
         };
+
+        //   attaching event on table , then on link ( to be pricese)
+        $("#example").on("click", ".lnkSelect", function () {
+
+            $(document).scrollTop($(document).height() - 100);
+            
+            event.preventDefault(); // <---------you may want this to stop the link
+
+            // get the link value
+            //var addressValue = $(this).attr("href");
+
+            //remove all other selected rows..
+            $('#example tr.selected2').removeClass('selected2');
+
+            // set the selected rows.
+            $(this).parent().parent().addClass('selected2');
+
+            var currentRow = $(this).closest("tr");
+            var data = $('#example').DataTable().row(currentRow).data();
+
+            var varInvoiceNumber = (data['InvoiceNumber']);
+            var varCustomerName = (data['CustomerName']);
+            var varCompanyName = (data['CompanyName']);
+            var varRemainingAmt = (data['RemaningAmount']);
+            var varSaleInvoiceID = (data['SaleInvoiceID']);
+            var varPaymentStatus = (data['PaymentStatus']);
+
+            $('#txtInvoiceNo').val(varInvoiceNumber);
+            $('#txtCustomerName').val(varCustomerName);
+            $('#txtCompanyName').val(varCompanyName);
+            $('#txtRemainingAmt').val(varRemainingAmt);
+            $('#txtSaleInvoiceID').val(varSaleInvoiceID);
+            $('#txtCustomerID').val((data['PartyID']));
+
+            if (varPaymentStatus == 'UnPaid') {
+                $('#btnSave').prop("disabled", "");
+            }
+            else {
+                $('#btnSave').prop("disabled", "disabled");
+            }
+            $.GetPartPaymentDetails();
+
+            return false; // <---------or this if you want to prevent bubbling as well
+        });
 
         $.GetPartPaymentDetails = function () {
 
@@ -589,6 +608,7 @@
                     //contentType: "application/json",
                     dataType: 'json',
                     dataSrc: function (d) {
+
                         return d
                     }
                 },
@@ -650,7 +670,7 @@
                         $('#loadingBox').modal('hide');
 
                         $('#lblMessage').text(responseData.strMessage);
-
+                        sucess();
                         $('#mdlNormalMessage').modal('show');
 
                         $('#frmPaymentInfo').trigger("reset");
@@ -666,8 +686,9 @@
                     }
                     else {
                         $('#lblMessage').text(responseData.strMessage);
-                        $('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
-                        $('#iconMsg').css('color', 'red');
+                        //$('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
+                        //$('#iconMsg').css('color', 'red');
+                        error();
                         $('#mdlNormalMessage').modal('show');
                     }
                 },
@@ -685,16 +706,15 @@
                 // alert("Done : " + response);
             });
         };
-
+        varCustomerNameDefault = 'Select Customer';
         $("#txtSearchInvoiceNo").focus(function () {
             //this.value = "";
-            $("#cmbCustomer").val("-1");
+            $("#select2-cmbCustomer-container").text(varCustomerNameDefault);
             $("#cmdInvoiceStatus").val("-1");
         });
 
         $("#cmdInvoiceStatus").change(function () {
-
-            $("#cmbCustomer").val("-1");
+            $("#select2-cmbCustomer-container").text(varCustomerNameDefault);
             $("#txtSearchInvoiceNo").val("");
         });
 
