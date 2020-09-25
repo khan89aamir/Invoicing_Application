@@ -214,9 +214,11 @@ namespace Invoicing_Application.Report.Report_Pages
 
             string strURL = "../../Temp/"+ fileName + ".pdf";
 
+            string DefaultURL = "../../Webs/Invoicing.aspx";
+
             ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage", "  window.open('"+ strURL + "');", true);
 
-            // ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage", "window.location.href = '" + strURL + "';", true);
+             ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage2", "window.location.href = '" + DefaultURL + "';", true);
 
 
         }
