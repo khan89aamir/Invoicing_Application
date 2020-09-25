@@ -8,7 +8,7 @@
     <script src="../assets/js/mindmup-editabletable.js"></script>
     <script src="../assets/js/fnFindCellRowIndexes.js"></script>
     <style>
-        h5 {
+        .PnlHeading {
             background-color: #f7f7f7;
             border-radius: 6px;
             padding: 5px;
@@ -24,12 +24,12 @@
         <div class="container d-flex justify-content-start">
             <div class="card border-info" style="width: 100%">
                 <div class="card-header">
-                    <h5>Invoice </h5>
+                    <h5 class="PnlHeading">Invoice </h5>
                 </div>
                 <div class="card-body">
                     <form id="frmInvoice" class="needs-validation" novalidate runat="server">
 
-                        <h5>Invoice Header</h5>
+                        <h5  class="PnlHeading">Invoice Header</h5>
                         <div class="form-row">
                             <div class="col-md-4">
 
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                         <hr />
-                        <h5>Bill to  Party</h5>
+                        <h5  class="PnlHeading">Bill to Party</h5>
                         <div class="form-row">
                             <div class="col-md-4">
 
@@ -98,7 +98,7 @@
                                     <input type="text" class="form-control text " autocomplete="off" id="txtPartyStateID" name="txtPartyStateID" placeholder="Enter GST Number" hidden>
 
                                     <label for="txtFullName">GST No </label>
-                                    <input type="text" class="form-control text " autocomplete="off" id="txtGSTNo" name="txtGSTNo" placeholder="Enter GST Number" >
+                                    <input type="text" class="form-control text disableValue" autocomplete="off" id="txtGSTNo" name="txtGSTNo" placeholder="Enter GST Number" >
 
                                     <div class="invalid-feedback text-left">
                                         Please Enter GST No
@@ -111,7 +111,7 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">State </label>
-                                    <input type="text" class="form-control text " id="txtPartyState" name="txtPartyState" autocomplete="off" placeholder="Enter Your State" >
+                                    <input type="text" class="form-control text disableValue " id="txtPartyState" name="txtPartyState" autocomplete="off" placeholder="Enter Your State" >
                                     <div class="invalid-feedback text-left">
                                         Please Enter State 
                                     </div>
@@ -127,7 +127,7 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">Address </label>
-                                    <input type="text" class="form-control text " id="txtAddress" name="txtAddress" autocomplete="off" placeholder="Enter Address" >
+                                    <input type="text" class="form-control text disableValue" id="txtAddress" name="txtAddress" autocomplete="off" placeholder="Enter Address" >
                                     <div class="invalid-feedback text-left">
                                         Please Enter Address 
                                     </div>
@@ -139,7 +139,7 @@
                         </div>
 
                         <hr />
-                        <h5>Product Details</h5>
+                        <h5  class="PnlHeading">Product Details</h5>
                         <div class="form-row">
                             <div class="col-md-4">
 
@@ -199,7 +199,7 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">Rate </label>
-                                    <input type="text" class="form-control text disableValue" id="txtRate" name="txtRate" placeholder="0.00">
+                                    <input type="text" class="form-control text " id="txtRate" name="txtRate" placeholder="0.00">
                                     <div class="invalid-feedback text-left">
                                         Rate is missing
                                     </div>
@@ -223,7 +223,7 @@
                         </div>
                         <div class="form-row">
                             <div class="col-md-12 mb-2  text-right">
-                                <button id="btnAddProduct" type="button" class="btn btn-primary"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add Item</button>
+                                <button id="btnAddProduct" type="button" class="btn btn-primary ui-state-disabled " ><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add Item</button>
                                 <button id="btnCancel" type="button" formnovalidate="formnovalidate" class="btn btn-secondary"><i class="fa fa-times mr-1" aria-hidden="true"></i>Cancel</button>
 
 
@@ -275,14 +275,20 @@
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label  ">Add: CGST : </label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control form-control-sm " id="txtCGST" placeholder="0.00" onchange="MasterCalculation()">
+                                <%--<input type="text" class="form-control form-control-sm " id="txtCGST" placeholder="0.00" onchange="MasterCalculation()">--%>
+                                 <select id="txtCGST" class="form-control form-control-sm"  name="txtCGST" onchange="MasterCalculation()">
+                                    </select>
+                                  <input type="text" class="form-control form-control-sm disableValue" id="txtstrCGST" value="0" placeholder="0.00" hidden>
                             </div>
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Add: SGST : </label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control form-control-sm" id="txtSGST" placeholder="0.00" onchange="MasterCalculation()">
+                               <%--<input type="text" class="form-control form-control-sm" id="txtSGST" placeholder="0.00" onchange="MasterCalculation()">--%>
+                                 <select id="txtSGST" class="form-control form-control-sm"  name="txtSGST" onchange="MasterCalculation()">
+                                    </select>
+                                <input type="text" class="form-control form-control-sm disableValue" id="txtstrSGST" value="0" placeholder="0.00" hidden>
                             </div>
 
                             <div class="col-7">
@@ -290,7 +296,10 @@
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Add: IGST : </label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control form-control-sm" id="txtIGST" placeholder="0.00" onchange="MasterCalculation()">
+                                <%--<input type="text" class="form-control form-control-sm" id="txtIGST" placeholder="0.00" onchange="MasterCalculation()">--%>
+                                <select id="txtIGST" class="form-control form-control-sm"  name="txtIGST" onchange="MasterCalculation()">
+                                    </select>
+                                 <input type="text" class="form-control form-control-sm disableValue" id="txtstrIGST" value="0" placeholder="0.00" hidden>
                             </div>
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
@@ -314,7 +323,7 @@
                         <a class="btn btn-info mb-2 w-100 " data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Other Details <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
                         </a>
                         <div class="collapse" id="collapseExample">
-                            <h5>Other Details</h5>
+                            <h5  class="PnlHeading">Other Details</h5>
                             <div class="form-group row">
 
                                 <label for="colFormLabel" class="col-sm-3 col-form-label ">Reverse Charge: </label>
@@ -338,9 +347,14 @@
                                     <input type="text" class="form-control form-control-sm " id="txtDateofSupply">
                                 </div>
 
+                                 <label for="colFormLabel" class="col-sm-3 col-form-label ">Place of Supply: </label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control form-control-sm " id="txtPlaceofSupply">
+                                </div>
+
 
                             </div>
-                            <h5>Details of Consignee | Shipped to :</h5>
+                            <h5  class="PnlHeading">Details of Consignee | Shipped to :</h5>
                             <div class="form-group row">
 
                                 <div class="col-md-4">
@@ -377,7 +391,7 @@
 
                         </div>
 
-                        <asp:Button ID="Button1" runat="server" Text="Button" />
+                      <%--<asp:Button ID="Button1" runat="server" Text="Button" />--%>
 
 
                     </form>
@@ -392,20 +406,34 @@
         <div class="container">
         </div>
     </div>
-    <button id="btnTest" class="mb-4" onclick="SaveOtherInvoiceDetials(1)">Test</button>
-    <button id="btnReport" type="submit">Report</button>
+   <%-- <button id="btnTest" class="mb-4" onclick="SaveOtherInvoiceDetials(1)">Test</button>
+    <button id="btnReport" type="submit">Report</button>--%>
+
+   <button id="btnTest" class="mb-4" onclick="MasterCalculation()">Test</button>
+
     <script>
+
+        function Test() {
+
+            $('#txtCGST').text("dfdfdf");
+          
+
+        }
 
         // for manual validtion
         function CustomValidation() {
 
             var result = false;
 
+            var length = $('#tblProduct').DataTable().page.info().recordsTotal;
+            if (length==0) {
+                alert('Please add products before generating invoice.');
+                result = false;
+                return;
+            }
 
             var custValue = $("#cmbCustomer").val();
-            var ProductValue = $("#cmbProduct").val();
-            var SKUValue = $("#cmbSKU").val();
-
+           
             //console.log(custValue);
             //console.log(ProductValue);
             //console.log(SKUValue);
@@ -422,15 +450,7 @@
             }
 
 
-            if (ProductValue ==null && SKUValue==null) {
-                $("#cmbProduct").addClass("is-invalid");
-                result = false;
-            }
-            else {
-                $("#cmbProduct").removeClass("is-invalid");
-                $("#cmbProduct").addClass("is-valid")
-                result = true;
-            }
+           
            // console.log(result);
            
             return result; 
@@ -447,10 +467,17 @@
                 parmPartyID: $("#cmbCustomer").val(),
                 parmTotalAmtBeforeTax: $("#txtAmountBeforeTax").val(),
                 parmDiscountAmount: $("#txtDiscountAmt").val(),
-                parmIGST: $("#txtIGST").val(),
-                parmCGST: $("#txtCGST").val(),
-                parmSGST: $("#txtSGST").val(),
+              
+                parmCGST: $("#txtstrCGST").val(),
+                parmSGST: $("#txtstrSGST").val(),
+                parmIGST: $("#txtstrIGST").val(),
                 parmGST: $("#txtGST").val(),
+             
+
+                parmCGST_Percent: $("#txtCGST").val(),
+                parmSGST_Percent: $("#txtSGST").val(),
+                parmIGST_Percent: $("#txtIGST").val(),
+         
                 parmAmountAfterGST: $("#txtAmountafterTax").val(),
                 parmCreatedBy: <%= Session["UserID"] %>,
                 parmModifiedBy: <%= Session["UserID"] %>
@@ -488,12 +515,9 @@
 
                         $('#lblLoadingtxt').text("Invoice header saved..");
 
-
                         // get the auto Invoice ID which is generated
                         var InvoiceID = responseData.Value;
                         
-
-
                         // post the product details in another request
                         PostSalesInvioceDetails(InvoiceID);
 
@@ -624,7 +648,7 @@
                 var validation = Array.prototype.filter.call(forms, function (form) {
                     form.addEventListener('submit', function (event) {
                         if (form.checkValidity() === false) {
-                           
+                       
                             event.preventDefault();
                             event.stopPropagation();
                             CustomValidation();
@@ -640,6 +664,14 @@
 
 
                                 PostSalesInvoiceMaster();
+                            }
+                            else {
+                                // if custom validtion fails
+                                event.preventDefault();
+                                event.stopPropagation();
+                             
+                                form.classList.add('was-validated');
+    
                             }
                            
                         }
@@ -693,7 +725,8 @@
                 var ConsigneeGST = $("#txtConsigneeGST").val();
                 var ConsigneeState = $("#cmdConsigneeState").val();
                 var ConsigneeAddress = $("#txtConsigneeAddress").val();
-
+                var ConsigneeAddress = $("#txtConsigneeAddress").val();
+                var PlaceofSupply = $("#txtPlaceofSupply").val(); 
 
                 var ObjOtherInvoiceData = {
                     parmInvoiceID: InvoiceID,
@@ -705,11 +738,13 @@
                     parmConsignee_StateID: ConsigneeState,
                     parmConsignee_Address: ConsigneeAddress,
                     parmSupplyDate: DateofSupply,
-                    parmConsignee_PAN: "NA"
+                    
+                    parmConsignee_PAN: "NA",
+                    parmPlaceofSupply: PlaceofSupply
                 };
 
 
-                alert(JSON.stringify(ObjOtherInvoiceData));
+                //alert(JSON.stringify(ObjOtherInvoiceData));
 
                 $.ajax({
                     url: "../Service/Invoicing_Service.asmx/SaveOtherInfoiceDetails",
@@ -743,7 +778,7 @@
 
                             $('#mdlNormalMessage').modal('show');
 
-                            $('#frmInvoice').trigger("reset");
+                           
                             // after reset remove the class else it will show validtion message.
                             let jsContactForm = document.getElementById('frmInvoice');                   // <=== 
                             jsContactForm.classList.remove('was-validated');  
@@ -751,8 +786,8 @@
                             // clear the data table
                             $('#tblProduct').DataTable().clear().draw();
 
-                            window.location.href = "../Report/Report_Pages/Invoice_Report.aspx";
-
+                            window.location.href = "../Report/Report_Pages/Invoice_Report.aspx?InvoiceID=" + InvoiceID + "&PartyID=" + $("#cmbCustomer").val();
+                            $('#frmInvoice').trigger("reset");
                         }
                         else {
 
@@ -792,12 +827,13 @@
 
                 $('#mdlNormalMessage').modal('show');
 
-                $('#frmInvoice').trigger("reset");
+               
                 // after reset remove the class else it will show validtion message.
                 let jsContactForm = document.getElementById('frmInvoice');                   // <=== 
                 jsContactForm.classList.remove('was-validated');  
 
-                window.location.href = "../Report/Report_Pages/Invoice_Report.aspx";
+                window.location.href = "../Report/Report_Pages/Invoice_Report.aspx?InvoiceID=" + InvoiceID + "&PartyID=" + $("#cmbCustomer").val();
+                $('#frmInvoice').trigger("reset");
             }
 
 
@@ -866,7 +902,7 @@
                 var temp = $('#tblProduct').DataTable().row(rowId).data();
 
                 // get the column value (QTY)
-                var ExistingQTY = temp[2];
+                var ExistingQTY = temp[4];
 
 
                 // add the qty
@@ -875,8 +911,8 @@
                 var Total = parseFloat(parseFloat(PRate) * parseFloat(NewQTY)).toFixed(2);
 
                 // update the new QTY
-                temp[2] = NewQTY;
-                temp[4] = Total;
+                temp[4] = NewQTY;
+                temp[6] = Total;
 
 
                 // add the row back to table
@@ -917,6 +953,8 @@
 
 
             HideProductIDColumn();
+            ClearProductSelect();
+
         });
 
 
@@ -954,6 +992,44 @@
 
         }
 
+        function CalculateSGST(percent,subTotal) {
+
+            //The percent that we want to get.
+            //i.e. We want to get 50% of 120.
+            var percentToGet = percent;
+
+            //Calculate the percent.
+            var Amout = (percentToGet / 100) * subTotal;
+
+            $('#txtstrSGST').val(Amout);
+
+            
+
+        }
+        function CalculateCGST(percent, subTotal) {
+
+            //The percent that we want to get.
+            //i.e. We want to get 50% of 120.
+            var percentToGet = percent;
+
+            //Calculate the percent.
+            var Amout = (percentToGet / 100) * subTotal;
+
+            $('#txtstrCGST').val(Amout);
+
+        }
+        function CalculateIGST(percent, subTotal) {
+
+            //The percent that we want to get.
+            //i.e. We want to get 50% of 120.
+            var percentToGet = percent;
+
+            //Calculate the percent.
+            var Amout = (percentToGet / 100) * subTotal;
+
+            $('#txtstrIGST').val(Amout);
+        }
+
         function MasterCalculation() {
 
             // calculate the percent first 
@@ -965,18 +1041,44 @@
             var numVal2 = Number(Percent) / 100;
             var totalValue = numVal1 - (numVal1 * numVal2)
 
-            // Sum ALL GST values
+            // this is percent
+            var CGST = $('#txtCGST').val();
+            var SGST = $('#txtSGST').val();
+            var IGST = $('#txtIGST').val();
 
-            var TotalGSTAmount = Number(document.getElementById("txtCGST").value) +
-                Number(document.getElementById("txtSGST").value) +
-                Number(document.getElementById("txtIGST").value);
 
+            console.log(CGST);
+         
+            CalculateCGST(CGST, numVal1);
+            CalculateSGST(SGST, numVal1);
+            CalculateIGST(IGST, numVal1);
+            
+          
+            // this is actual amount
+            var amtCGST = $('#txtstrCGST').val();
+            var amtSGST = $('#txtstrSGST').val();
+            var amtIGST = $('#txtstrIGST').val();
+
+            console.log("amtCGST : " + amtCGST);
+            console.log("amtSGST : " + amtSGST);
+            console.log("amtIGST : " + amtIGST);
+
+            var TotalGSTAmount = Number(amtCGST) + Number(amtSGST) + Number(amtIGST);
+              
+            console.log("Total : " + TotalGSTAmount);
             // show total GST
             document.getElementById("txtGST").value = Number(TotalGSTAmount).toFixed(2);
 
             var GrandTotal = totalValue + TotalGSTAmount;
 
             document.getElementById("txtAmountafterTax").value = Number(GrandTotal).toFixed(2);
+
+          
+         
+          
+         
+
+
         }
 
         function CalculateDiscount() {
@@ -1071,7 +1173,9 @@
             var selectedText = $(this).find("option:selected").text();
             var selectedValue = $(this).val();
 
-            GetSelectedProduct(selectedValue);
+            var prID= $("#cmbCustomer").val();
+
+            GetSelectedProduct(selectedValue, prID);
             //alert("Selected Text: " + selectedText + " Value: " + selectedValue);
         });
 
@@ -1143,10 +1247,98 @@
 
             HideProductIDColumn();
 
+            BindCGST();
+            BindIGST();
+            BindSGST();
+
 
         });
 
+        function BindCGST() {
+            // drop down------
+            $.ajax({
+                type: "POST",
+                url: "../Service/Invoicing_Service.asmx/BindCGST",
+                dataType: "json",
+                //data: JSON.stringify(ObjMyData),
+                contentType: "application/json",
+                success: function (res) {
 
+                    $("#txtCGST").append($("<option selected='selected' ></option>").val('0').html('Select CGST'));
+                    $.each(res, function (data, value) {
+
+                        $("#txtCGST").append($("<option></option>").val(value.CGSTValue).html(value.CGST));
+                    })
+
+                  
+
+                },
+                error: function (xhr, status, error) {
+
+                    alert("Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
+                },
+                failure: function (r) {
+                    alert("Fail:" + r.responseText);
+                }
+            });
+        }
+        function BindSGST() {
+            // drop down------
+            $.ajax({
+                type: "POST",
+                url: "../Service/Invoicing_Service.asmx/BindSGST",
+                dataType: "json",
+                //data: JSON.stringify(ObjMyData),
+                contentType: "application/json",
+                success: function (res) {
+
+                    $("#txtSGST").append($("<option selected='selected' ></option>").val('0').html('Select SGST'));
+                    $.each(res, function (data, value) {
+
+                        $("#txtSGST").append($("<option></option>").val(value.SGSTValue).html(value.SGST));
+                    })
+
+                },
+                error: function (xhr, status, error) {
+
+                    alert("Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
+                },
+                failure: function (r) {
+                    alert("Fail:" + r.responseText);
+                }
+            });
+        }
+        function BindIGST() {
+            // drop down------
+            $.ajax({
+                type: "POST",
+                url: "../Service/Invoicing_Service.asmx/BindIGST",
+                dataType: "json",
+                //data: JSON.stringify(ObjMyData),
+                contentType: "application/json",
+                success: function (res) {
+
+                    $("#txtIGST").append($("<option selected='selected'></option>").val('0').html('Select IGST'));
+                    $.each(res, function (data, value) {
+
+                        $("#txtIGST").append($("<option></option>").val(value.IGSTValue).html(value.IGST));
+                    })
+
+
+
+                },
+                error: function (xhr, status, error) {
+
+                    alert("Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
+                },
+                failure: function (r) {
+                    alert("Fail:" + r.responseText);
+                }
+            });
+        }
         function BindCustomer() {
 
             // drop down------
@@ -1191,7 +1383,7 @@
                 contentType: "application/json",
                 success: function (res) {
 
-                    $("#cmbProduct").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select SKU'));
+                    $("#cmbProduct").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select Product'));
                     $.each(res, function (data, value) {
 
                         $("#cmbProduct").append($("<option></option>").val(value.SKUID).html(value.SKUName));
@@ -1255,10 +1447,19 @@
                 dataType: "json",
                 data: JSON.stringify(objData),
                 contentType: "application/json",
+                beforeSend: function () {
+
+                    $('#lblLoadingtxt').text("Fetching Party Details....");
+                    $('#loadingBox').modal('show');
+                },
+                complete: function () {
+
+                    $('#loadingBox').modal('hide');
+                },
                 success: function (res) {
 
                     // single row would come
-
+                    $('#loadingBox').modal('hide');
                     $("#txtPartyState").val(res[0].StateName);
                     $("#txtAddress").val(res[0].Address);
                     $("#txtGSTNo").val(res[0].GSTNo);
@@ -1274,10 +1475,28 @@
                 }
             });
         }
+        function  ClearProductSelect(){
 
-        function GetSelectedProduct(PID) {
+            $("#select2-cmbProduct-container").text("Select Product");  
+            $("#select2-cmbSKU-container").text("Select SKU");  
+            
 
-            var objData = { ProductID: PID };
+            $("#cmbProduct").val("-1");
+            $("#cmbSKU").val("-1");
+
+            $("#txtProductName").val("");
+            $("#txtQTY").val("");
+            $("#txtRate").val("");
+            $("#txtProductID").val("");
+
+            $("#txtTotal").val("");
+
+            $("#txtSKUNumber").val("");
+            $("#txtHSN_No").val("");
+        }
+        function GetSelectedProduct(PID,PR_ID) {
+
+            var objData = { ProductID: PID, PartyID: PR_ID };
             // drop down------
             $.ajax({
                 type: "POST",
@@ -1288,6 +1507,8 @@
                 success: function (res) {
 
                     // single row would come
+                    $("#btnAddProduct").removeClass("ui-state-disabled");
+
 
                     $("#txtProductName").val(res[0].SKUName);
                     $("#txtQTY").val("1");
@@ -1300,6 +1521,18 @@
                     $("#txtHSN_No").val(res[0].HSN_No);
 
 
+                },
+                beforeSend: function () {
+
+
+                    $('#lblLoadingtxt').text("Fetching Product Details....");
+                    $('#loadingBox').modal('show');
+                },
+                complete: function () {
+
+
+
+                    $('#loadingBox').modal('hide');
                 },
                 error: function (xhr, status, error) {
 

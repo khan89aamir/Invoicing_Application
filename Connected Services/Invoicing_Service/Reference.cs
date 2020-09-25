@@ -151,31 +151,17 @@ namespace Invoicing_Application.Invoicing_Service {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SaveOtherInfoiceDetails", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        void SaveOtherInfoiceDetails(string parmInvoiceID, string parmReverseCharge, string parmTransportation_Mode, string parmVehicle_Number, string parmConsignee_Name, string parmConsignee_GST, string parmConsignee_StateID, string parmConsignee_Address, string parmConsignee_PAN, System.DateTime parmSupplyDate);
+        void SaveOtherInfoiceDetails(string parmInvoiceID, string parmReverseCharge, string parmTransportation_Mode, string parmVehicle_Number, string parmConsignee_Name, string parmConsignee_GST, string parmConsignee_StateID, string parmConsignee_Address, System.DateTime parmSupplyDate, string parmConsignee_PAN, string parmPlaceofSupply);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SaveOtherInfoiceDetails", ReplyAction="*")]
-        System.Threading.Tasks.Task SaveOtherInfoiceDetailsAsync(string parmInvoiceID, string parmReverseCharge, string parmTransportation_Mode, string parmVehicle_Number, string parmConsignee_Name, string parmConsignee_GST, string parmConsignee_StateID, string parmConsignee_Address, string parmConsignee_PAN, System.DateTime parmSupplyDate);
+        System.Threading.Tasks.Task SaveOtherInfoiceDetailsAsync(string parmInvoiceID, string parmReverseCharge, string parmTransportation_Mode, string parmVehicle_Number, string parmConsignee_Name, string parmConsignee_GST, string parmConsignee_StateID, string parmConsignee_Address, System.DateTime parmSupplyDate, string parmConsignee_PAN, string parmPlaceofSupply);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSalesDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetReportData", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Data.DataTable GetSalesDetails();
+        System.Data.DataSet GetReportData(string InvoiceID, string PartyID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSalesDetails", ReplyAction="*")]
-        System.Threading.Tasks.Task<System.Data.DataTable> GetSalesDetailsAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetTaxCalculation", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Data.DataTable GetTaxCalculation();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetTaxCalculation", ReplyAction="*")]
-        System.Threading.Tasks.Task<System.Data.DataTable> GetTaxCalculationAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetOwmnerHeaderInfo", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Data.DataTable GetOwmnerHeaderInfo();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetOwmnerHeaderInfo", ReplyAction="*")]
-        System.Threading.Tasks.Task<System.Data.DataTable> GetOwmnerHeaderInfoAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetReportData", ReplyAction="*")]
+        System.Threading.Tasks.Task<System.Data.DataSet> GetReportDataAsync(string InvoiceID, string PartyID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -357,36 +343,20 @@ namespace Invoicing_Application.Invoicing_Service {
             return base.Channel.BINDSKU_CodeAsync();
         }
         
-        public void SaveOtherInfoiceDetails(string parmInvoiceID, string parmReverseCharge, string parmTransportation_Mode, string parmVehicle_Number, string parmConsignee_Name, string parmConsignee_GST, string parmConsignee_StateID, string parmConsignee_Address, string parmConsignee_PAN, System.DateTime parmSupplyDate) {
-            base.Channel.SaveOtherInfoiceDetails(parmInvoiceID, parmReverseCharge, parmTransportation_Mode, parmVehicle_Number, parmConsignee_Name, parmConsignee_GST, parmConsignee_StateID, parmConsignee_Address, parmConsignee_PAN, parmSupplyDate);
+        public void SaveOtherInfoiceDetails(string parmInvoiceID, string parmReverseCharge, string parmTransportation_Mode, string parmVehicle_Number, string parmConsignee_Name, string parmConsignee_GST, string parmConsignee_StateID, string parmConsignee_Address, System.DateTime parmSupplyDate, string parmConsignee_PAN, string parmPlaceofSupply) {
+            base.Channel.SaveOtherInfoiceDetails(parmInvoiceID, parmReverseCharge, parmTransportation_Mode, parmVehicle_Number, parmConsignee_Name, parmConsignee_GST, parmConsignee_StateID, parmConsignee_Address, parmSupplyDate, parmConsignee_PAN, parmPlaceofSupply);
         }
         
-        public System.Threading.Tasks.Task SaveOtherInfoiceDetailsAsync(string parmInvoiceID, string parmReverseCharge, string parmTransportation_Mode, string parmVehicle_Number, string parmConsignee_Name, string parmConsignee_GST, string parmConsignee_StateID, string parmConsignee_Address, string parmConsignee_PAN, System.DateTime parmSupplyDate) {
-            return base.Channel.SaveOtherInfoiceDetailsAsync(parmInvoiceID, parmReverseCharge, parmTransportation_Mode, parmVehicle_Number, parmConsignee_Name, parmConsignee_GST, parmConsignee_StateID, parmConsignee_Address, parmConsignee_PAN, parmSupplyDate);
+        public System.Threading.Tasks.Task SaveOtherInfoiceDetailsAsync(string parmInvoiceID, string parmReverseCharge, string parmTransportation_Mode, string parmVehicle_Number, string parmConsignee_Name, string parmConsignee_GST, string parmConsignee_StateID, string parmConsignee_Address, System.DateTime parmSupplyDate, string parmConsignee_PAN, string parmPlaceofSupply) {
+            return base.Channel.SaveOtherInfoiceDetailsAsync(parmInvoiceID, parmReverseCharge, parmTransportation_Mode, parmVehicle_Number, parmConsignee_Name, parmConsignee_GST, parmConsignee_StateID, parmConsignee_Address, parmSupplyDate, parmConsignee_PAN, parmPlaceofSupply);
         }
         
-        public System.Data.DataTable GetSalesDetails() {
-            return base.Channel.GetSalesDetails();
+        public System.Data.DataSet GetReportData(string InvoiceID, string PartyID) {
+            return base.Channel.GetReportData(InvoiceID, PartyID);
         }
         
-        public System.Threading.Tasks.Task<System.Data.DataTable> GetSalesDetailsAsync() {
-            return base.Channel.GetSalesDetailsAsync();
-        }
-        
-        public System.Data.DataTable GetTaxCalculation() {
-            return base.Channel.GetTaxCalculation();
-        }
-        
-        public System.Threading.Tasks.Task<System.Data.DataTable> GetTaxCalculationAsync() {
-            return base.Channel.GetTaxCalculationAsync();
-        }
-        
-        public System.Data.DataTable GetOwmnerHeaderInfo() {
-            return base.Channel.GetOwmnerHeaderInfo();
-        }
-        
-        public System.Threading.Tasks.Task<System.Data.DataTable> GetOwmnerHeaderInfoAsync() {
-            return base.Channel.GetOwmnerHeaderInfoAsync();
+        public System.Threading.Tasks.Task<System.Data.DataSet> GetReportDataAsync(string InvoiceID, string PartyID) {
+            return base.Channel.GetReportDataAsync(InvoiceID, PartyID);
         }
     }
 }
