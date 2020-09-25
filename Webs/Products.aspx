@@ -2,6 +2,8 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
+    <script src="../assets/js/select2.js"></script>
+    <link href="../assets/css/select2.css" rel="stylesheet" />
     <script src="../assets/js/mindmup-editabletable.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
 
@@ -53,7 +55,20 @@ rel = "Stylesheet" type="text/css" />
                             </div>
                         </div>
 
-                        <div class="col-md-12">
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="cmbHSNCode">HSN Code </label>
+                                <select id="cmbHSNCode" class="custom-select">
+                                </select>
+                                <div class="invalid-feedback text-left">
+                                    Please Select HSN Code.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-8">
                             <div class="form-group">
 
                                 <label for="txtMobile">Description : </label>
@@ -99,6 +114,8 @@ rel = "Stylesheet" type="text/css" />
                             <th>SKU Name</th>
                             <th>Rate</th>
                             <th>Description</th>
+                            <th>HSNID</th>
+                            <th>HSN Code</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
@@ -124,6 +141,9 @@ rel = "Stylesheet" type="text/css" />
                 var validation = Array.prototype.filter.call(forms, function (form) {
                     form.addEventListener('submit', function (event) {
                         if (form.checkValidity() === false) {
+
+                            cmbHSNCustomeValidate();
+
                             event.preventDefault();
                             event.stopPropagation();
                         }
@@ -134,7 +154,9 @@ rel = "Stylesheet" type="text/css" />
                                 event.preventDefault();
                                 event.stopPropagation();
 
-                                $.ManageProducts();
+                                if (cmbHSNCustomeValidate()) {
+                                    $.ManageProducts();
+                                };
                             }
                         }
                         form.classList.add('was-validated');
@@ -156,12 +178,75 @@ rel = "Stylesheet" type="text/css" />
             return true;
         }
 
+        function cmbHSNCustomeValidate() {
+
+            var result = false;
+            var paymentValue = $('#cmbHSNCode').val();
+
+            if (paymentValue == -1 || paymentValue == null) {
+
+                $("#cmbHSNCode").addClass("is-invalid");
+                //let jsContactForm = document.getElementById('frmPaymentInfo');
+                //jsContactForm.classList.remove('was-validated');
+                result = false;
+            }
+            else {
+                $("#cmbHSNCode").removeClass("is-invalid");
+                $("#cmbHSNCode").addClass("is-valid");
+                result = true;
+            }
+            return result;
+        };
+
+        function sucess() {
+            $('#iconMsg').css('color', 'green');
+            $('#iconMsg').removeClass('fa-times-circle').addClass('fa-check-circle');
+        };
+
+        function error() {
+            $('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
+            $('#iconMsg').css('color', 'red');
+        };
+
+        function BindHSNCode() {
+
+            // drop down------
+            $.ajax({
+                type: "POST",
+                url: "../Service/Invoicing_Service.asmx/BindHSNCode",
+                dataType: "json",
+                contentType: "application/json",
+                success: function (res) {
+
+                    $("#cmbHSNCode").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select HSN Code'));
+                    $.each(res, function (data, value) {
+
+                        $("#cmbHSNCode").append($("<option></option>").val(value.HSNID).html(value.HSNCode));
+                    })
+
+                    // set the deafult state from session
+                    // Initialize select2
+                    $("#cmbHSNCode").select2();
+
+                },
+                error: function (xhr, status, error) {
+
+                    alert("Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
+                },
+                failure: function (r) {
+                    alert("Fail:" + r.responseText);
+                }
+            });
+        };
+
         $(document).ready(function () {
 
             $("#txtRate").keypress(function (event) {
                 return isNumeric(event, this);
             });
 
+            BindHSNCode();
             $.GetSKUDetails();
         });
 
@@ -176,11 +261,12 @@ rel = "Stylesheet" type="text/css" />
                 var Rate = $('#txtRate').val();
                 var description = $('#txtDescription').val();
                 var productid = $('#txtProductID').val();
+                var hsnid = $('#cmbHSNCode').val();
                 var varUserID = <%= Session["UserID"] %>;
 
                 // Create an object:
                 var ProductData = {
-                    SKUCode: SkuCode, SKUName: SkuName, Rate: Rate, Description: description, ProudctID: productid, UserID: varUserID
+                    SKUCode: SkuCode, SKUName: SkuName, Rate: Rate, Description: description, ProudctID: productid, HSNID: hsnid, UserID: varUserID
                 };
                 //alert(JSON.stringify(ProductData));
 
@@ -207,7 +293,7 @@ rel = "Stylesheet" type="text/css" />
                             $('#loadingBox').modal('hide');
 
                             $('#lblMessage').text(responseData.strMessage);
-
+                            sucess();
                             $('#mdlNormalMessage').modal('show');
 
                             $('#frmSKU').trigger("reset");
@@ -220,8 +306,9 @@ rel = "Stylesheet" type="text/css" />
                         }
                         else {
                             $('#lblMessage').text(responseData.strMessage);
-                            $('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
-                            $('#iconMsg').css('color', 'red');
+                            //$('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
+                            //$('#iconMsg').css('color', 'red');
+                            error();
                             $('#mdlNormalMessage').modal('show');
                         }
                     },
@@ -274,6 +361,8 @@ rel = "Stylesheet" type="text/css" />
                     { 'data': 'SKUName' },
                     { 'data': 'Rate' },
                     { 'data': 'Description' },
+                    { 'data': 'HSNID' },
+                    { 'data': 'HSNCode' },
                     {
                         data: 'Delete',
                         render: function (data, type, row) {
@@ -298,7 +387,7 @@ rel = "Stylesheet" type="text/css" />
             //to invisble multipe columns
             // table.columns([1, 2]).visible(false);
 
-            table.columns([1]).visible(false);
+            table.columns([1,6]).visible(false);
         };
 
         //   attaching event on table , then on link ( to be pricese)
@@ -333,13 +422,20 @@ rel = "Stylesheet" type="text/css" />
             var varSKUName = (data['SKUName']);
             var varRate = (data['Rate']);
             var varDescription = (data['Description']);
+            var varHSNID = (data['HSNID']);
+            var varHSNCode = (data['HSNCode']);
 
+            if (varHSNID==null) {
+                varHSNID = -1;
+            };
             $('#txtSkuCode').val(varSKUCode);
             $('#txtSkuName').val(varSKUName);
             $('#txtRate').val(varRate);
             $('#txtDescription').val(varDescription);
             $('#txtProductID').val(varSKUID);
-
+            $('#cmbHSNCode').val(varHSNID);
+            $('#select2-cmbHSNCode-container').text(varHSNCode);
+            
             return false; // <---------or this if you want to prevent bubbling as well
         });
 
