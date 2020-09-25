@@ -1149,9 +1149,15 @@
         function OnQTYChange() {
 
             var QTY = $("#txtQTY").val();
-            var Rate = $("#txtRate").val();
-            var Total = parseFloat(parseFloat(Rate) * parseFloat(QTY)).toFixed(2);
-            $("#txtTotal").val(Total);
+            if (QTY<=0) {
+                alert('Please Enter Postive QTY');
+            }
+            else {
+                var Rate = $("#txtRate").val();
+                var Total = parseFloat(parseFloat(Rate) * parseFloat(QTY)).toFixed(2);
+                $("#txtTotal").val(Total);
+            }
+           
         }
         function GetSelectedTextValue(ddlFruits) {
             var selectedText = ddlFruits.options[ddlFruits.selectedIndex].innerHTML;
