@@ -4,8 +4,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <form id="form1" runat="server">
-          <asp:Button ID="Button1" runat="server" Text="Show Report" OnClick="Button1_Click" /><br />
-         <asp:Button ID="PrintButton" Text="Print" runat="server" OnClientClick="return Print();" />
+   <%--       <asp:Button ID="Button1" runat="server" Text="Show Report" OnClick="Button1_Click" /><br />
+         <asp:Button ID="PrintButton" Text="Print" runat="server" OnClientClick="return Print();" />--%>
 
       
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>

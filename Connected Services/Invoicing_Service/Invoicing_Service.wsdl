@@ -214,59 +214,31 @@
             <s:element minOccurs="0" maxOccurs="1" name="parmConsignee_GST" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="parmConsignee_StateID" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="parmConsignee_Address" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="parmConsignee_PAN" type="s:string" />
             <s:element minOccurs="1" maxOccurs="1" name="parmSupplyDate" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmConsignee_PAN" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmPlaceofSupply" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
       <s:element name="SaveOtherInfoiceDetailsResponse">
         <s:complexType />
       </s:element>
-      <s:element name="GetSalesDetails">
-        <s:complexType />
-      </s:element>
-      <s:element name="GetSalesDetailsResponse">
+      <s:element name="GetReportData">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetSalesDetailsResult">
-              <s:complexType>
-                <s:sequence>
-                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
-                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
-                </s:sequence>
-              </s:complexType>
-            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="InvoiceID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PartyID" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="GetTaxCalculation">
-        <s:complexType />
-      </s:element>
-      <s:element name="GetTaxCalculationResponse">
+      <s:element name="GetReportDataResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetTaxCalculationResult">
+            <s:element minOccurs="0" maxOccurs="1" name="GetReportDataResult">
               <s:complexType>
                 <s:sequence>
-                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
-                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
-                </s:sequence>
-              </s:complexType>
-            </s:element>
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetOwmnerHeaderInfo">
-        <s:complexType />
-      </s:element>
-      <s:element name="GetOwmnerHeaderInfoResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetOwmnerHeaderInfoResult">
-              <s:complexType>
-                <s:sequence>
-                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
-                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                  <s:element ref="s:schema" />
+                  <s:any />
                 </s:sequence>
               </s:complexType>
             </s:element>
@@ -395,23 +367,11 @@
   <wsdl:message name="SaveOtherInfoiceDetailsSoapOut">
     <wsdl:part name="parameters" element="tns:SaveOtherInfoiceDetailsResponse" />
   </wsdl:message>
-  <wsdl:message name="GetSalesDetailsSoapIn">
-    <wsdl:part name="parameters" element="tns:GetSalesDetails" />
+  <wsdl:message name="GetReportDataSoapIn">
+    <wsdl:part name="parameters" element="tns:GetReportData" />
   </wsdl:message>
-  <wsdl:message name="GetSalesDetailsSoapOut">
-    <wsdl:part name="parameters" element="tns:GetSalesDetailsResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetTaxCalculationSoapIn">
-    <wsdl:part name="parameters" element="tns:GetTaxCalculation" />
-  </wsdl:message>
-  <wsdl:message name="GetTaxCalculationSoapOut">
-    <wsdl:part name="parameters" element="tns:GetTaxCalculationResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetOwmnerHeaderInfoSoapIn">
-    <wsdl:part name="parameters" element="tns:GetOwmnerHeaderInfo" />
-  </wsdl:message>
-  <wsdl:message name="GetOwmnerHeaderInfoSoapOut">
-    <wsdl:part name="parameters" element="tns:GetOwmnerHeaderInfoResponse" />
+  <wsdl:message name="GetReportDataSoapOut">
+    <wsdl:part name="parameters" element="tns:GetReportDataResponse" />
   </wsdl:message>
   <wsdl:portType name="Invoicing_ServiceSoap">
     <wsdl:operation name="BindState">
@@ -494,17 +454,9 @@
       <wsdl:input message="tns:SaveOtherInfoiceDetailsSoapIn" />
       <wsdl:output message="tns:SaveOtherInfoiceDetailsSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="GetSalesDetails">
-      <wsdl:input message="tns:GetSalesDetailsSoapIn" />
-      <wsdl:output message="tns:GetSalesDetailsSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetTaxCalculation">
-      <wsdl:input message="tns:GetTaxCalculationSoapIn" />
-      <wsdl:output message="tns:GetTaxCalculationSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetOwmnerHeaderInfo">
-      <wsdl:input message="tns:GetOwmnerHeaderInfoSoapIn" />
-      <wsdl:output message="tns:GetOwmnerHeaderInfoSoapOut" />
+    <wsdl:operation name="GetReportData">
+      <wsdl:input message="tns:GetReportDataSoapIn" />
+      <wsdl:output message="tns:GetReportDataSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="Invoicing_ServiceSoap" type="tns:Invoicing_ServiceSoap">
@@ -689,26 +641,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetSalesDetails">
-      <soap:operation soapAction="http://tempuri.org/GetSalesDetails" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetTaxCalculation">
-      <soap:operation soapAction="http://tempuri.org/GetTaxCalculation" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetOwmnerHeaderInfo">
-      <soap:operation soapAction="http://tempuri.org/GetOwmnerHeaderInfo" style="document" />
+    <wsdl:operation name="GetReportData">
+      <soap:operation soapAction="http://tempuri.org/GetReportData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -899,26 +833,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetSalesDetails">
-      <soap12:operation soapAction="http://tempuri.org/GetSalesDetails" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetTaxCalculation">
-      <soap12:operation soapAction="http://tempuri.org/GetTaxCalculation" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetOwmnerHeaderInfo">
-      <soap12:operation soapAction="http://tempuri.org/GetOwmnerHeaderInfo" style="document" />
+    <wsdl:operation name="GetReportData">
+      <soap12:operation soapAction="http://tempuri.org/GetReportData" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
