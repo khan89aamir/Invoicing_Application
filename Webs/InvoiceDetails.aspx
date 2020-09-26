@@ -54,6 +54,7 @@
                                             <th>Customer Name</th>
                                             <th>Total QTY</th>
                                             <th>Total Amount</th>
+                                              <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -148,7 +149,15 @@
                     { 'data': 'InvoiceDate' },
                     { 'data': 'CustomerName' },
                     { 'data': 'TotalQTY' },
-                    { 'data': 'Total Amount' }
+                    { 'data': 'Total Amount' },
+                    {
+                        data: 'Delete',
+                        render: function (data, type, row) {
+
+                            return "<a class='lnkDelete btn btn btn-primary' href='" + data + "'>Delete</a>";
+                        }
+                    }
+
                 ],
             }); // table ends here
 
@@ -188,7 +197,55 @@
 
             return false; // <---------or this if you want to prevent bubbling as well
         });
+        $("#example").on("click", ".lnkDelete", function () {
 
+            event.preventDefault(); // <---------you may want this to stop the link
+
+            // get the link value
+            var addressValue = $(this).attr("href");
+
+
+            var objData = { InvoiceID: addressValue };
+            // drop down------
+            $.ajax({
+                type: "POST",
+                url: "../Service/Invoicing_Service.asmx/DeleteInvoice",
+                dataType: "json",
+                data: JSON.stringify(objData),
+                contentType: "application/json",
+                success: function (res) {
+
+                    $('#lblMessage').text("Invoice have been deleted successfully.");
+                    $('#mdlNormalMessage').modal('show');
+                    $.GetInvoiceDetails();
+
+                },
+                beforeSend: function () {
+
+
+                    $('#lblLoadingtxt').text("Deleting Invoice....");
+                    $('#loadingBox').modal('show');
+                },
+                complete: function () {
+
+                 
+
+                    $('#loadingBox').modal('hide');
+                },
+                error: function (xhr, status, error) {
+
+                    alert("Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
+                },
+                failure: function (r) {
+                    alert("Fail:" + r.responseText);
+                }
+            });
+
+
+            return false; // <---------or this if you want to prevent bubbling as well
+        });
+        
 
     </script>
 </asp:Content>

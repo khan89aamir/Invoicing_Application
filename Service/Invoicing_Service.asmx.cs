@@ -193,6 +193,35 @@ namespace Invoicing_Application.Service
             Context.Response.ContentType = "application/json";
             Context.Response.Write(js.Serialize(message));
         }
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void DeleteInvoice(int InvoiceID)
+        {
+            clsMessage message = new clsMessage();
+
+            ObjDAL.SetStoreProcedureData("parmSaleInvoiceID", MySqlConnector.MySqlDbType.Int16, InvoiceID);
+          bool result=  ObjDAL.ExecuteStoreProcedure_DML("SPR_DeleteInvoice");
+
+          
+            if (result)
+            {
+                message.Result = true;
+                message.strMessage = "Invoice have been deleted.";
+            }
+            else
+            {
+                message.Result = false;
+                message.strMessage = "Failed to delete the invoice.";
+            }
+
+            string strResponse = JsonConvert.SerializeObject(message);
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+            Context.Response.Write(strResponse);
+            Context.Response.Flush();
+        }
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]

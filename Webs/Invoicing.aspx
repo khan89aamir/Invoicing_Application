@@ -1409,7 +1409,7 @@
                                 $('#lblMessage').text("Invoice have been updated successfully.");
                             }
                           
-
+                       
                             $('#mdlNormalMessage').modal('show');
 
 
