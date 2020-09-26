@@ -1322,7 +1322,7 @@ namespace Invoicing_Application.Service
         {
         
             // get invoice master and invoice other details
-            string strQ= "select *,sm.StateName,sm.GSTStateCode  from anjacreation.tblSalesInvoceMaster im left join  "+
+            string strQ= "select *,sm.StateName,sm.GSTStateCode  from anjacreation.tblSalesInvoceMaster im left join  " +
                             " anjacreation.tblInvoiceOtherDetails ot on im.SaleInvoiceID = ot.InvoiceID "+
                             " left join anjacreation.tblStateMaster sm  on ot.Consignee_StateID = sm.StateID " +
                              " where im.SaleInvoiceID ="+ invoiceID;

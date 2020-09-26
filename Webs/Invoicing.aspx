@@ -477,8 +477,8 @@
                     $("#txtInvoiceNumber").val(data[0].InvoiceNumber);
 
                     var d = new Date(data[0].InvoiceDate);
-                    var strDate = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
-
+                    var strDate = d.getFullYear() + "-" + (d.getMonth()+1)+ "-" + d.getDate();
+                    //alert('d ' + d + ' strDate ' + strDate);
                     $("#datepicker").val(strDate);
 
                     $("#cmbCustomer").val(data[0].PartyID);
