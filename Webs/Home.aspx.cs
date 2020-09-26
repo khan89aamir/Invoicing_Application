@@ -16,5 +16,30 @@ namespace Invoicing_Application.Webs
                 Response.Redirect("Home.aspx");
             }
         }
+
+        protected void btnLogin_Click(object sender, EventArgs e)
+        {
+            Invoicing_Service.Invoicing_ServiceSoapClient objClient = new Invoicing_Service.Invoicing_ServiceSoapClient();
+
+            if (objClient.Login(txtUserName.Value, txtPassword.Value))
+            {
+                Session["UserID"] = "1";
+                Session["UserName"] = txtUserName.Value;
+
+
+                Session["DefaultValue"] = objClient.GetDefaultState();
+
+            }
+            else
+            {
+                lblPassMessage.Attributes.Remove("d-none");
+                lblPassMessage.Attributes.Add("class","d -block");
+
+              //  ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Incorrect UserName or Password')", true);
+            }
+           
+
+        }
+     
     }
 }

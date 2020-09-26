@@ -72,6 +72,8 @@
     </div>
 
     <script>
+
+
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function () {
             'use strict';
@@ -170,6 +172,23 @@
             $("#dtpFromDate").datepicker();
             $("#dtpToDate").datepicker();
         });
+
+        $("#example").on("click", ".lnkSelect", function () {
+
+            event.preventDefault(); // <---------you may want this to stop the link
+
+            // get the link value
+            var addressValue = $(this).attr("href");
+
+            window.location.href = "Invoicing.aspx?InvoiceID=" + addressValue;
+
+          
+
+      
+
+            return false; // <---------or this if you want to prevent bubbling as well
+        });
+
 
     </script>
 </asp:Content>

@@ -19,6 +19,18 @@ namespace Invoicing_Application.Webs
             {
                 Response.Write("Page psoted back");
             }
+
+            if (!IsPostBack)
+            {
+                if (Request.QueryString["InvoiceID"]!=null)
+                {
+                    string InvoiceID = Request.QueryString["InvoiceID"].ToString();
+                    txtBindInvoiceID.Value = InvoiceID;
+
+                    ClientScript.RegisterStartupScript(this.GetType(), "updateProgress", "Test('" + InvoiceID + "');", true);
+                }
+             
+            }
         }
     }
 }

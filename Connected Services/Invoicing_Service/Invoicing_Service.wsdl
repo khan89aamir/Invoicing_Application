@@ -8,6 +8,12 @@
       <s:element name="BindStateResponse">
         <s:complexType />
       </s:element>
+      <s:element name="BindHSNCode">
+        <s:complexType />
+      </s:element>
+      <s:element name="BindHSNCodeResponse">
+        <s:complexType />
+      </s:element>
       <s:element name="ManageProducts">
         <s:complexType>
           <s:sequence>
@@ -16,6 +22,7 @@
             <s:element minOccurs="1" maxOccurs="1" name="Rate" type="s:decimal" />
             <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
             <s:element minOccurs="1" maxOccurs="1" name="ProudctID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="HSNID" type="s:int" />
             <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
           </s:sequence>
         </s:complexType>
@@ -81,7 +88,21 @@
         </s:complexType>
       </s:element>
       <s:element name="LoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="LoginResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDefaultState">
         <s:complexType />
+      </s:element>
+      <s:element name="GetDefaultStateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetDefaultStateResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
       <s:element name="GetCustomerAutoPopulate">
         <s:complexType />
@@ -115,6 +136,7 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="1" maxOccurs="1" name="ProductID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="PartyID" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -135,6 +157,9 @@
             <s:element minOccurs="0" maxOccurs="1" name="parmCGST" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="parmSGST" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="parmGST" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmCGST_Percent" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmSGST_Percent" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parmIGST_Percent" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="parmAmountAfterGST" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="parmCreatedBy" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="parmModifiedBy" type="s:string" />
@@ -187,14 +212,108 @@
       <s:element name="GetMyProfileResponse">
         <s:complexType />
       </s:element>
-      <s:element name="GetPartPaymentDetails">
+      <s:element name="GetPartPaymentList">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="InvoiceNo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="CustomerID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="PaymentStatus" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPartPaymentListResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="InsertPartPayment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InvoiceNo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="InvoiceID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="CustomerID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="PaymentMode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ChequeNo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="TransactionDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="PayAmount" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertPartPaymentResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetPartPaymentDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InvoiceID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="CustomerID" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
       <s:element name="GetPartPaymentDetailsResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ManageHSNCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HSNCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="HSNDescription" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="CGST" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="SGST" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="IGST" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="HSNID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ManageHSNCodeResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetHSNDetails">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetHSNDetailsResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeletedHSNCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="HSNID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeletedHSNCodeResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetInvoiceDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FromDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="ToDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInvoiceDetailsResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ForgotEmailIDData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ForgotEmailID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ForgotEmailIDDataResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SendForgotPass">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ForgotEmailID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendForgotPassResponse">
         <s:complexType />
       </s:element>
       <s:element name="BINDSKU_Code">
@@ -245,6 +364,44 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="BindCGST">
+        <s:complexType />
+      </s:element>
+      <s:element name="BindCGSTResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="BindSGST">
+        <s:complexType />
+      </s:element>
+      <s:element name="BindSGSTResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="BindIGST">
+        <s:complexType />
+      </s:element>
+      <s:element name="BindIGSTResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetSalesDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InvoiceID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSalesDetailsResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetBindInvoiceDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="invoiceID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBindInvoiceDetailsResponse">
+        <s:complexType />
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="BindStateSoapIn">
@@ -252,6 +409,12 @@
   </wsdl:message>
   <wsdl:message name="BindStateSoapOut">
     <wsdl:part name="parameters" element="tns:BindStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="BindHSNCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:BindHSNCode" />
+  </wsdl:message>
+  <wsdl:message name="BindHSNCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:BindHSNCodeResponse" />
   </wsdl:message>
   <wsdl:message name="ManageProductsSoapIn">
     <wsdl:part name="parameters" element="tns:ManageProducts" />
@@ -294,6 +457,12 @@
   </wsdl:message>
   <wsdl:message name="LoginSoapOut">
     <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDefaultStateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDefaultState" />
+  </wsdl:message>
+  <wsdl:message name="GetDefaultStateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDefaultStateResponse" />
   </wsdl:message>
   <wsdl:message name="GetCustomerAutoPopulateSoapIn">
     <wsdl:part name="parameters" element="tns:GetCustomerAutoPopulate" />
@@ -349,11 +518,59 @@
   <wsdl:message name="GetMyProfileSoapOut">
     <wsdl:part name="parameters" element="tns:GetMyProfileResponse" />
   </wsdl:message>
+  <wsdl:message name="GetPartPaymentListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPartPaymentList" />
+  </wsdl:message>
+  <wsdl:message name="GetPartPaymentListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPartPaymentListResponse" />
+  </wsdl:message>
+  <wsdl:message name="InsertPartPaymentSoapIn">
+    <wsdl:part name="parameters" element="tns:InsertPartPayment" />
+  </wsdl:message>
+  <wsdl:message name="InsertPartPaymentSoapOut">
+    <wsdl:part name="parameters" element="tns:InsertPartPaymentResponse" />
+  </wsdl:message>
   <wsdl:message name="GetPartPaymentDetailsSoapIn">
     <wsdl:part name="parameters" element="tns:GetPartPaymentDetails" />
   </wsdl:message>
   <wsdl:message name="GetPartPaymentDetailsSoapOut">
     <wsdl:part name="parameters" element="tns:GetPartPaymentDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ManageHSNCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:ManageHSNCode" />
+  </wsdl:message>
+  <wsdl:message name="ManageHSNCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:ManageHSNCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHSNDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetHSNDetails" />
+  </wsdl:message>
+  <wsdl:message name="GetHSNDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetHSNDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeletedHSNCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:DeletedHSNCode" />
+  </wsdl:message>
+  <wsdl:message name="DeletedHSNCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:DeletedHSNCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetInvoiceDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetInvoiceDetails" />
+  </wsdl:message>
+  <wsdl:message name="GetInvoiceDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetInvoiceDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ForgotEmailIDDataSoapIn">
+    <wsdl:part name="parameters" element="tns:ForgotEmailIDData" />
+  </wsdl:message>
+  <wsdl:message name="ForgotEmailIDDataSoapOut">
+    <wsdl:part name="parameters" element="tns:ForgotEmailIDDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendForgotPassSoapIn">
+    <wsdl:part name="parameters" element="tns:SendForgotPass" />
+  </wsdl:message>
+  <wsdl:message name="SendForgotPassSoapOut">
+    <wsdl:part name="parameters" element="tns:SendForgotPassResponse" />
   </wsdl:message>
   <wsdl:message name="BINDSKU_CodeSoapIn">
     <wsdl:part name="parameters" element="tns:BINDSKU_Code" />
@@ -373,10 +590,44 @@
   <wsdl:message name="GetReportDataSoapOut">
     <wsdl:part name="parameters" element="tns:GetReportDataResponse" />
   </wsdl:message>
+  <wsdl:message name="BindCGSTSoapIn">
+    <wsdl:part name="parameters" element="tns:BindCGST" />
+  </wsdl:message>
+  <wsdl:message name="BindCGSTSoapOut">
+    <wsdl:part name="parameters" element="tns:BindCGSTResponse" />
+  </wsdl:message>
+  <wsdl:message name="BindSGSTSoapIn">
+    <wsdl:part name="parameters" element="tns:BindSGST" />
+  </wsdl:message>
+  <wsdl:message name="BindSGSTSoapOut">
+    <wsdl:part name="parameters" element="tns:BindSGSTResponse" />
+  </wsdl:message>
+  <wsdl:message name="BindIGSTSoapIn">
+    <wsdl:part name="parameters" element="tns:BindIGST" />
+  </wsdl:message>
+  <wsdl:message name="BindIGSTSoapOut">
+    <wsdl:part name="parameters" element="tns:BindIGSTResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSalesDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSalesDetails" />
+  </wsdl:message>
+  <wsdl:message name="GetSalesDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSalesDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBindInvoiceDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBindInvoiceDetails" />
+  </wsdl:message>
+  <wsdl:message name="GetBindInvoiceDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBindInvoiceDetailsResponse" />
+  </wsdl:message>
   <wsdl:portType name="Invoicing_ServiceSoap">
     <wsdl:operation name="BindState">
       <wsdl:input message="tns:BindStateSoapIn" />
       <wsdl:output message="tns:BindStateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BindHSNCode">
+      <wsdl:input message="tns:BindHSNCodeSoapIn" />
+      <wsdl:output message="tns:BindHSNCodeSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="ManageProducts">
       <wsdl:input message="tns:ManageProductsSoapIn" />
@@ -405,6 +656,10 @@
     <wsdl:operation name="Login">
       <wsdl:input message="tns:LoginSoapIn" />
       <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDefaultState">
+      <wsdl:input message="tns:GetDefaultStateSoapIn" />
+      <wsdl:output message="tns:GetDefaultStateSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="GetCustomerAutoPopulate">
       <wsdl:input message="tns:GetCustomerAutoPopulateSoapIn" />
@@ -442,9 +697,41 @@
       <wsdl:input message="tns:GetMyProfileSoapIn" />
       <wsdl:output message="tns:GetMyProfileSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="GetPartPaymentList">
+      <wsdl:input message="tns:GetPartPaymentListSoapIn" />
+      <wsdl:output message="tns:GetPartPaymentListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertPartPayment">
+      <wsdl:input message="tns:InsertPartPaymentSoapIn" />
+      <wsdl:output message="tns:InsertPartPaymentSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="GetPartPaymentDetails">
       <wsdl:input message="tns:GetPartPaymentDetailsSoapIn" />
       <wsdl:output message="tns:GetPartPaymentDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ManageHSNCode">
+      <wsdl:input message="tns:ManageHSNCodeSoapIn" />
+      <wsdl:output message="tns:ManageHSNCodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHSNDetails">
+      <wsdl:input message="tns:GetHSNDetailsSoapIn" />
+      <wsdl:output message="tns:GetHSNDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeletedHSNCode">
+      <wsdl:input message="tns:DeletedHSNCodeSoapIn" />
+      <wsdl:output message="tns:DeletedHSNCodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoiceDetails">
+      <wsdl:input message="tns:GetInvoiceDetailsSoapIn" />
+      <wsdl:output message="tns:GetInvoiceDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ForgotEmailIDData">
+      <wsdl:input message="tns:ForgotEmailIDDataSoapIn" />
+      <wsdl:output message="tns:ForgotEmailIDDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendForgotPass">
+      <wsdl:input message="tns:SendForgotPassSoapIn" />
+      <wsdl:output message="tns:SendForgotPassSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="BINDSKU_Code">
       <wsdl:input message="tns:BINDSKU_CodeSoapIn" />
@@ -458,11 +745,40 @@
       <wsdl:input message="tns:GetReportDataSoapIn" />
       <wsdl:output message="tns:GetReportDataSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="BindCGST">
+      <wsdl:input message="tns:BindCGSTSoapIn" />
+      <wsdl:output message="tns:BindCGSTSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BindSGST">
+      <wsdl:input message="tns:BindSGSTSoapIn" />
+      <wsdl:output message="tns:BindSGSTSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BindIGST">
+      <wsdl:input message="tns:BindIGSTSoapIn" />
+      <wsdl:output message="tns:BindIGSTSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSalesDetails">
+      <wsdl:input message="tns:GetSalesDetailsSoapIn" />
+      <wsdl:output message="tns:GetSalesDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBindInvoiceDetails">
+      <wsdl:input message="tns:GetBindInvoiceDetailsSoapIn" />
+      <wsdl:output message="tns:GetBindInvoiceDetailsSoapOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="Invoicing_ServiceSoap" type="tns:Invoicing_ServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="BindState">
       <soap:operation soapAction="http://tempuri.org/BindState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BindHSNCode">
+      <soap:operation soapAction="http://tempuri.org/BindHSNCode" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -526,6 +842,15 @@
     </wsdl:operation>
     <wsdl:operation name="Login">
       <soap:operation soapAction="http://tempuri.org/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDefaultState">
+      <soap:operation soapAction="http://tempuri.org/GetDefaultState" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -614,8 +939,80 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetPartPaymentList">
+      <soap:operation soapAction="http://tempuri.org/GetPartPaymentList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertPartPayment">
+      <soap:operation soapAction="http://tempuri.org/InsertPartPayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetPartPaymentDetails">
       <soap:operation soapAction="http://tempuri.org/GetPartPaymentDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManageHSNCode">
+      <soap:operation soapAction="http://tempuri.org/ManageHSNCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHSNDetails">
+      <soap:operation soapAction="http://tempuri.org/GetHSNDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletedHSNCode">
+      <soap:operation soapAction="http://tempuri.org/DeletedHSNCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoiceDetails">
+      <soap:operation soapAction="http://tempuri.org/GetInvoiceDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ForgotEmailIDData">
+      <soap:operation soapAction="http://tempuri.org/ForgotEmailIDData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendForgotPass">
+      <soap:operation soapAction="http://tempuri.org/SendForgotPass" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -650,11 +1047,65 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="BindCGST">
+      <soap:operation soapAction="http://tempuri.org/BindCGST" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BindSGST">
+      <soap:operation soapAction="http://tempuri.org/BindSGST" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BindIGST">
+      <soap:operation soapAction="http://tempuri.org/BindIGST" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSalesDetails">
+      <soap:operation soapAction="http://tempuri.org/GetSalesDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBindInvoiceDetails">
+      <soap:operation soapAction="http://tempuri.org/GetBindInvoiceDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="Invoicing_ServiceSoap12" type="tns:Invoicing_ServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="BindState">
       <soap12:operation soapAction="http://tempuri.org/BindState" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BindHSNCode">
+      <soap12:operation soapAction="http://tempuri.org/BindHSNCode" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -718,6 +1169,15 @@
     </wsdl:operation>
     <wsdl:operation name="Login">
       <soap12:operation soapAction="http://tempuri.org/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDefaultState">
+      <soap12:operation soapAction="http://tempuri.org/GetDefaultState" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -806,8 +1266,80 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetPartPaymentList">
+      <soap12:operation soapAction="http://tempuri.org/GetPartPaymentList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertPartPayment">
+      <soap12:operation soapAction="http://tempuri.org/InsertPartPayment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetPartPaymentDetails">
       <soap12:operation soapAction="http://tempuri.org/GetPartPaymentDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManageHSNCode">
+      <soap12:operation soapAction="http://tempuri.org/ManageHSNCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHSNDetails">
+      <soap12:operation soapAction="http://tempuri.org/GetHSNDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletedHSNCode">
+      <soap12:operation soapAction="http://tempuri.org/DeletedHSNCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoiceDetails">
+      <soap12:operation soapAction="http://tempuri.org/GetInvoiceDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ForgotEmailIDData">
+      <soap12:operation soapAction="http://tempuri.org/ForgotEmailIDData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendForgotPass">
+      <soap12:operation soapAction="http://tempuri.org/SendForgotPass" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -835,6 +1367,51 @@
     </wsdl:operation>
     <wsdl:operation name="GetReportData">
       <soap12:operation soapAction="http://tempuri.org/GetReportData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BindCGST">
+      <soap12:operation soapAction="http://tempuri.org/BindCGST" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BindSGST">
+      <soap12:operation soapAction="http://tempuri.org/BindSGST" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BindIGST">
+      <soap12:operation soapAction="http://tempuri.org/BindIGST" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSalesDetails">
+      <soap12:operation soapAction="http://tempuri.org/GetSalesDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBindInvoiceDetails">
+      <soap12:operation soapAction="http://tempuri.org/GetBindInvoiceDetails" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

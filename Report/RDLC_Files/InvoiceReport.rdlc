@@ -2076,6 +2076,38 @@
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
               </Textbox>
+              <Textbox Name="pConName">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Parameters!pConName.Value</Value>
+                        <Style>
+                          <FontFamily>Times New Roman</FontFamily>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <rd:DefaultName>pConName</rd:DefaultName>
+                <Top>0.01096in</Top>
+                <Left>5.25317in</Left>
+                <Height>0.23611in</Height>
+                <Width>2.5457in</Width>
+                <ZIndex>19</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
             <Top>3.7128in</Top>
@@ -2535,25 +2567,29 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Authorized Signatory</Value>
+                    <Value>This is computer generated invoice. No signature required.</Value>
                     <Style>
                       <FontFamily>Times New Roman</FontFamily>
+                      <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox18</rd:DefaultName>
-            <Top>8.62165in</Top>
-            <Left>5.90885in</Left>
-            <Height>0.22223in</Height>
-            <Width>1.75647in</Width>
+            <Top>8.13207in</Top>
+            <Left>5.24062in</Left>
+            <Height>0.61806in</Height>
+            <Width>2.55959in</Width>
             <ZIndex>24</ZIndex>
             <Style>
               <Border>
-                <Style>None</Style>
+                <Style>Dashed</Style>
+                <Width>1.1pt</Width>
               </Border>
               <PaddingLeft>2pt</PaddingLeft>
               <PaddingRight>2pt</PaddingRight>
@@ -2654,38 +2690,6 @@
             <Height>0.25in</Height>
             <Width>2.88079in</Width>
             <ZIndex>29</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="pConName">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>=Parameters!pConName.Value</Value>
-                    <Style>
-                      <FontFamily>Times New Roman</FontFamily>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>pConName</rd:DefaultName>
-            <Top>3.72376in</Top>
-            <Left>5.24062in</Left>
-            <Height>0.23611in</Height>
-            <Width>1in</Width>
-            <ZIndex>30</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -3273,7 +3277,7 @@
             <Left>5.16095in</Left>
             <Height>1.51915in</Height>
             <Width>2.82956in</Width>
-            <ZIndex>31</ZIndex>
+            <ZIndex>30</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -3308,7 +3312,7 @@
             <Left>0.01523in</Left>
             <Height>0.36111in</Height>
             <Width>5.10405in</Width>
-            <ZIndex>32</ZIndex>
+            <ZIndex>31</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
