@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="Invoicing_Application.Webs.Home" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="Invoicing_Application.Webs.Home" EnableSessionState="True" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container d-flex justify-content-center mt-3 d-none">
@@ -7,7 +7,7 @@
             <img class="card-img-top" src="../assets/img/Main_Logo.png" alt="Card image cap">
 
             <div class="card-body">
-                <form id="frmaccount" class="needs-validation" novalidate>
+                <form id="frmaccount" class="needs-validation123" novalidate runat="server">
                     <input type="text" runat="server" class="form-control text" id="txtAccounID" value="0" hidden>
                     <div class="form-row">
                         <div class="col-md-12">
@@ -221,6 +221,7 @@
 
                     if (responseData.Result) {
 
+                        alert(responseData.Result);
                         // set the login session for the user.
                         //SetLoginSession(responseData.Value);
                         SetLoginSession(responseData);
@@ -255,8 +256,8 @@
                 error: function (xhr, status, error) {
 
                     $('#loadingBox').modal('hide');
-                    //alert("Error : " + error);
-                    //alert("Error Text: " + xhr.responseText);
+                    alert("Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
                 },
                 failure: function (r) {
                     alert("Fail:" + r.responseText);
@@ -284,12 +285,12 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    //alert(response.d);
+                    alert(response.d);
                 },
                 error: function (xhr, status, error) {
 
-                    //   alert("Error : " + error);
-                    //  alert("Error Text: " + xhr.responseText);
+                    alert("Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
 
                 },
                 failure: function (r) {

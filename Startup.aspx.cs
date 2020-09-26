@@ -5,16 +5,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Invoicing_Application.Webs
+namespace Invoicing_Application
 {
-    public partial class Customer : System.Web.UI.Page
+    public partial class Startup : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["UserID"] == null)
-            {
-                Response.Redirect("Home.aspx");
-            }
+            Response.Redirect("Webs/Home.aspx");
         }
     }
 }
