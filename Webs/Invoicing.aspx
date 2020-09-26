@@ -1174,7 +1174,7 @@
                 var objSales = {};
                 var temp = $('#tblProduct').DataTable().row(row).data();
 
-                objSales.ProductID = temp["ProductID"];
+                objSales.ProductID = temp[0];
                 objSales.SKU_Code = temp[1];
                 objSales.HSN_NO = temp[3];
 
