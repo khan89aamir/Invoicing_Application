@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Customer.aspx.cs" Inherits="Invoicing_Application.Webs.Customer" ClientIDMode="Static" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Customer.aspx.cs" Inherits="Invoicing_Application.Webs.Customer" ClientIDMode="Static" EnableSessionState="True" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -261,7 +261,10 @@
 
                         $('#frmCustomer').trigger("reset");
 
-                        $('#example').DataTable().ajax.reload(null, false);
+                        //$('#example').DataTable().ajax.reload(null, false); // getting invalid json request on server
+
+                        $.GetCustomerDetails();
+
                         // after reset remove the class else it will show validtion message.
                         let jsContactForm = document.getElementById('frmCustomer');                   // <=== 
                         jsContactForm.classList.remove('was-validated');
@@ -269,8 +272,6 @@
                     }
                     else {
                         $('#lblMessage').text(responseData.strMessage);
-                        //$('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
-                        //$('#iconMsg').css('color', 'red');
                         error();
                         $('#mdlNormalMessage').modal('show');
                     }
@@ -292,6 +293,12 @@
 
 
         $.GetCustomerDetails = function () {
+
+            if ($('#example').DataTable() != null) {
+
+                //Destroy the old Datatable
+                $('#example').DataTable().clear().destroy();
+            }
 
             var table = $('#example').DataTable({
                 fixedHeader: true,
@@ -410,7 +417,9 @@
                         // alert("Result : " + responseData.strMessage);
                         $('#frmCustomer').trigger("reset");
 
-                        $('#example').DataTable().ajax.reload(null, false);
+                        //$('#example').DataTable().ajax.reload(null, false); // getting invalid json request on server
+
+                        $.GetCustomerDetails();
                     }
                     else {
                         alert("Failed Result : " + responseData.strMessage);

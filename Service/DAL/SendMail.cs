@@ -57,7 +57,7 @@ namespace CoreApp
             {
                 var smtp = new System.Net.Mail.SmtpClient();
                 {
-                    To = System.Configuration.ConfigurationManager.AppSettings["To"];
+                    //To = System.Configuration.ConfigurationManager.AppSettings["To"];
                     MailMessage message = new MailMessage();
                     message.From = new MailAddress(From);
                     message.To.Add(To);

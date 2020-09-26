@@ -123,9 +123,10 @@
     </None>
     <Content Include="Report\Report_Pages\Invoice_Report.aspx" />
     <Content Include="Service\Invoicing_Service.asmx" />
+    <Content Include="Startup.aspx" />
     <Content Include="Web.config" />
     <Content Include="Webs\Customer.aspx" />
-    <Content Include="Webs\Global.asax" />
+    <Content Include="Global.asax" />
     <Content Include="Webs\Home.aspx" />
     <Content Include="Webs\HSNMaster.aspx" />
     <Content Include="Webs\InvoiceDetails.aspx" />
@@ -170,6 +171,13 @@
       <DependentUpon>Invoicing_Service.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Startup.aspx.cs">
+      <DependentUpon>Startup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Startup.aspx.designer.cs">
+      <DependentUpon>Startup.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Webs\Customer.aspx.cs">
       <DependentUpon>Customer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -177,7 +185,7 @@
     <Compile Include="Webs\Customer.aspx.designer.cs">
       <DependentUpon>Customer.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Webs\Global.asax.cs">
+    <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Webs\Home.aspx.cs">

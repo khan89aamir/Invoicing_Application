@@ -298,7 +298,10 @@ rel = "Stylesheet" type="text/css" />
 
                             $('#frmSKU').trigger("reset");
 
-                            $('#example').DataTable().ajax.reload(null, false);
+                            //$('#example').DataTable().ajax.reload(null, false);// getting invalid json request on server
+
+                            $.GetSKUDetails();
+
                             // after reset remove the class else it will show validtion message.
                             let jsContactForm = document.getElementById('frmSKU');                   // <=== 
                             jsContactForm.classList.remove('was-validated');
@@ -306,8 +309,6 @@ rel = "Stylesheet" type="text/css" />
                         }
                         else {
                             $('#lblMessage').text(responseData.strMessage);
-                            //$('#iconMsg').removeClass('fa-check-circle').addClass('fa-times-circle');
-                            //$('#iconMsg').css('color', 'red');
                             error();
                             $('#mdlNormalMessage').modal('show');
                         }
@@ -329,6 +330,12 @@ rel = "Stylesheet" type="text/css" />
 
 
         $.GetSKUDetails = function () {
+
+            if ($('#example').DataTable() != null) {
+
+                //Destroy the old Datatable
+                $('#example').DataTable().clear().destroy();
+            }
 
             var table = $('#example').DataTable({
                 fixedHeader: true,
@@ -452,7 +459,9 @@ rel = "Stylesheet" type="text/css" />
                         // alert("Result : " + responseData.strMessage);
                         $('#frmSKU').trigger("reset");
 
-                        $('#example').DataTable().ajax.reload(null, false);
+                        //$('#example').DataTable().ajax.reload(null, false); // getting invalid json request on server
+
+                        $.GetSKUDetails();
                     }
                     else {
                         alert("Failed Result : " + responseData.strMessage);

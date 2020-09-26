@@ -268,7 +268,7 @@
                 error: function (xhr, status, error) {
                     result = false;
                     $('#loadingBox').modal('hide');
-                    alert("* Error : " + error);
+                    alert("Error : " + error);
                     alert("Error Text: " + xhr.responseText);
                 },
                 failure: function (r) {
@@ -302,12 +302,12 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    //alert(response.d);
+                    alert(response.d);
                 },
                 error: function (xhr, status, error) {
 
-                    //   alert("Error : " + error);
-                    //  alert("Error Text: " + xhr.responseText);
+                    alert("Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
 
                 },
                 failure: function (r) {

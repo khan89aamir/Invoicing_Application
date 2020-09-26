@@ -1074,6 +1074,7 @@ namespace Invoicing_Application.Service
             //snd.From = stremail;
             snd.Sub = "Forgot Password";
             snd.Body = bodyHTML;
+            snd.To = ForgotEmailID;
             snd.SendEMail();
 
             message.Result = snd.IsMail;
