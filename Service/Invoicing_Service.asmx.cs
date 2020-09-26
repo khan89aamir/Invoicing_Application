@@ -529,7 +529,8 @@ namespace Invoicing_Application.Service
                                         SKUName = r.Field<string>("SKUName"),
                                         Rate = r.Field<decimal>("Rate"),
                                         SKUNumber = r.Field<string>("SKUCode"),
-                                        HSN_No = r.Field<string>("HSN_No")
+                                        HSN_No = r.Field<string>("HSN_No"),
+                                        IsOld="0"
                                     });
 
                     string strResponse = JsonConvert.SerializeObject(NameList);
@@ -547,7 +548,8 @@ namespace Invoicing_Application.Service
                                         SKUName = r.Field<string>("SKUName"),
                                         Rate = LastRate(ProductID, PartyID),
                                         SKUNumber = r.Field<string>("SKUCode"),
-                                        HSN_No = r.Field<string>("HSN_No")
+                                        HSN_No = r.Field<string>("HSN_No"),
+                                        IsOld="1"
                                     });
 
                     string strResponse = JsonConvert.SerializeObject(NameList);
