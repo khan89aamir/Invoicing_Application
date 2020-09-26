@@ -32,11 +32,12 @@
                 fixedHeader: true,
                 "paging": false,
                 searching: false,
-                "ordering": false,
-                stateSave: true // this makes the first ( 0th) column hidden automatically
+                "ordering": false
+                //,stateSave: true // this makes the first ( 0th) column hidden automatically
 
 
             });
+            table.columns([0]).visible(false);
         }
         function ClearProductSelect() {
 
@@ -854,9 +855,9 @@
 
                                         <tr>
                                             <th>ProductID</th>
-                                            <th>SKU_No</th>
-                                            <th>Product_Name</th>
-                                            <th>HSN_No</th>
+                                            <th>SKU Code</th>
+                                            <th>Product Name</th>
+                                            <th>HSN Code</th>
                                             <th>QTY</th>
                                             <th>Rate</th>
                                             <th>Total</th>
@@ -1173,7 +1174,7 @@
                 var objSales = {};
                 var temp = $('#tblProduct').DataTable().row(row).data();
 
-                objSales.ProductID = temp[0];
+                objSales.ProductID = temp["ProductID"];
                 objSales.SKU_Code = temp[1];
                 objSales.HSN_NO = temp[3];
 
