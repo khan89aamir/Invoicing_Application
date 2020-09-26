@@ -23,12 +23,19 @@ namespace Invoicing_Application.Invoicing_Service {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindState", ReplyAction="*")]
         System.Threading.Tasks.Task BindStateAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ManageProducts", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindHSNCode", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        void ManageProducts(string SKUCode, string SKUName, decimal Rate, string Description, int ProudctID, int UserID);
+        void BindHSNCode();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindHSNCode", ReplyAction="*")]
+        System.Threading.Tasks.Task BindHSNCodeAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ManageProducts", ReplyAction="*")]
-        System.Threading.Tasks.Task ManageProductsAsync(string SKUCode, string SKUName, decimal Rate, string Description, int ProudctID, int UserID);
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void ManageProducts(string SKUCode, string SKUName, decimal Rate, string Description, int ProudctID, int HSNID, int UserID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ManageProducts", ReplyAction="*")]
+        System.Threading.Tasks.Task ManageProductsAsync(string SKUCode, string SKUName, decimal Rate, string Description, int ProudctID, int HSNID, int UserID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSKUDetails", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -67,10 +74,17 @@ namespace Invoicing_Application.Invoicing_Service {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Login", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        void Login(string UserName, string Password);
+        bool Login(string UserName, string Password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Login", ReplyAction="*")]
-        System.Threading.Tasks.Task LoginAsync(string UserName, string Password);
+        System.Threading.Tasks.Task<bool> LoginAsync(string UserName, string Password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetDefaultState", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        int GetDefaultState();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetDefaultState", ReplyAction="*")]
+        System.Threading.Tasks.Task<int> GetDefaultStateAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetCustomerAutoPopulate", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -102,17 +116,51 @@ namespace Invoicing_Application.Invoicing_Service {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSelectedProduct", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        void GetSelectedProduct(int ProductID);
+        void GetSelectedProduct(int ProductID, int PartyID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSelectedProduct", ReplyAction="*")]
-        System.Threading.Tasks.Task GetSelectedProductAsync(int ProductID);
+        System.Threading.Tasks.Task GetSelectedProductAsync(int ProductID, int PartyID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertUpdateSaleInvoiceMaster", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        void InsertUpdateSaleInvoiceMaster(int parmSaleInvoiceID, string parmInvoiceNumber, System.DateTime parmInvoiceDate, string parmStateID, string parmPartyID, string parmTotalAmtBeforeTax, string parmDiscountAmount, string parmIGST, string parmCGST, string parmSGST, string parmGST, string parmAmountAfterGST, string parmCreatedBy, string parmModifiedBy);
+        void InsertUpdateSaleInvoiceMaster(
+                    int parmSaleInvoiceID, 
+                    string parmInvoiceNumber, 
+                    System.DateTime parmInvoiceDate, 
+                    string parmStateID, 
+                    string parmPartyID, 
+                    string parmTotalAmtBeforeTax, 
+                    string parmDiscountAmount, 
+                    string parmIGST, 
+                    string parmCGST, 
+                    string parmSGST, 
+                    string parmGST, 
+                    string parmCGST_Percent, 
+                    string parmSGST_Percent, 
+                    string parmIGST_Percent, 
+                    string parmAmountAfterGST, 
+                    string parmCreatedBy, 
+                    string parmModifiedBy);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertUpdateSaleInvoiceMaster", ReplyAction="*")]
-        System.Threading.Tasks.Task InsertUpdateSaleInvoiceMasterAsync(int parmSaleInvoiceID, string parmInvoiceNumber, System.DateTime parmInvoiceDate, string parmStateID, string parmPartyID, string parmTotalAmtBeforeTax, string parmDiscountAmount, string parmIGST, string parmCGST, string parmSGST, string parmGST, string parmAmountAfterGST, string parmCreatedBy, string parmModifiedBy);
+        System.Threading.Tasks.Task InsertUpdateSaleInvoiceMasterAsync(
+                    int parmSaleInvoiceID, 
+                    string parmInvoiceNumber, 
+                    System.DateTime parmInvoiceDate, 
+                    string parmStateID, 
+                    string parmPartyID, 
+                    string parmTotalAmtBeforeTax, 
+                    string parmDiscountAmount, 
+                    string parmIGST, 
+                    string parmCGST, 
+                    string parmSGST, 
+                    string parmGST, 
+                    string parmCGST_Percent, 
+                    string parmSGST_Percent, 
+                    string parmIGST_Percent, 
+                    string parmAmountAfterGST, 
+                    string parmCreatedBy, 
+                    string parmModifiedBy);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertUpdateSalesDetails", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -135,12 +183,68 @@ namespace Invoicing_Application.Invoicing_Service {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetMyProfile", ReplyAction="*")]
         System.Threading.Tasks.Task GetMyProfileAsync(int UserID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetPartPaymentDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetPartPaymentList", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        void GetPartPaymentDetails(string InvoiceNo);
+        void GetPartPaymentList(string InvoiceNo, int CustomerID, int PaymentStatus);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetPartPaymentList", ReplyAction="*")]
+        System.Threading.Tasks.Task GetPartPaymentListAsync(string InvoiceNo, int CustomerID, int PaymentStatus);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertPartPayment", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void InsertPartPayment(string InvoiceNo, int InvoiceID, int CustomerID, string PaymentMode, string ChequeNo, System.DateTime TransactionDate, decimal PayAmount, int UserID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertPartPayment", ReplyAction="*")]
+        System.Threading.Tasks.Task InsertPartPaymentAsync(string InvoiceNo, int InvoiceID, int CustomerID, string PaymentMode, string ChequeNo, System.DateTime TransactionDate, decimal PayAmount, int UserID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetPartPaymentDetails", ReplyAction="*")]
-        System.Threading.Tasks.Task GetPartPaymentDetailsAsync(string InvoiceNo);
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void GetPartPaymentDetails(int InvoiceID, int CustomerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetPartPaymentDetails", ReplyAction="*")]
+        System.Threading.Tasks.Task GetPartPaymentDetailsAsync(int InvoiceID, int CustomerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ManageHSNCode", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void ManageHSNCode(string HSNCode, string HSNDescription, decimal CGST, decimal SGST, decimal IGST, int HSNID, int UserID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ManageHSNCode", ReplyAction="*")]
+        System.Threading.Tasks.Task ManageHSNCodeAsync(string HSNCode, string HSNDescription, decimal CGST, decimal SGST, decimal IGST, int HSNID, int UserID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetHSNDetails", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void GetHSNDetails();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetHSNDetails", ReplyAction="*")]
+        System.Threading.Tasks.Task GetHSNDetailsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DeletedHSNCode", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void DeletedHSNCode(int HSNID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DeletedHSNCode", ReplyAction="*")]
+        System.Threading.Tasks.Task DeletedHSNCodeAsync(int HSNID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetInvoiceDetails", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void GetInvoiceDetails(System.DateTime FromDate, System.DateTime ToDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetInvoiceDetails", ReplyAction="*")]
+        System.Threading.Tasks.Task GetInvoiceDetailsAsync(System.DateTime FromDate, System.DateTime ToDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ForgotEmailIDData", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void ForgotEmailIDData(string ForgotEmailID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ForgotEmailIDData", ReplyAction="*")]
+        System.Threading.Tasks.Task ForgotEmailIDDataAsync(string ForgotEmailID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SendForgotPass", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void SendForgotPass(string ForgotEmailID, string Password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SendForgotPass", ReplyAction="*")]
+        System.Threading.Tasks.Task SendForgotPassAsync(string ForgotEmailID, string Password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BINDSKU_Code", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -162,6 +266,41 @@ namespace Invoicing_Application.Invoicing_Service {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetReportData", ReplyAction="*")]
         System.Threading.Tasks.Task<System.Data.DataSet> GetReportDataAsync(string InvoiceID, string PartyID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindCGST", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void BindCGST();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindCGST", ReplyAction="*")]
+        System.Threading.Tasks.Task BindCGSTAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindSGST", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void BindSGST();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindSGST", ReplyAction="*")]
+        System.Threading.Tasks.Task BindSGSTAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindIGST", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void BindIGST();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindIGST", ReplyAction="*")]
+        System.Threading.Tasks.Task BindIGSTAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSalesDetails", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void GetSalesDetails(string InvoiceID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSalesDetails", ReplyAction="*")]
+        System.Threading.Tasks.Task GetSalesDetailsAsync(string InvoiceID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetBindInvoiceDetails", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void GetBindInvoiceDetails(string invoiceID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetBindInvoiceDetails", ReplyAction="*")]
+        System.Threading.Tasks.Task GetBindInvoiceDetailsAsync(string invoiceID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -199,12 +338,20 @@ namespace Invoicing_Application.Invoicing_Service {
             return base.Channel.BindStateAsync();
         }
         
-        public void ManageProducts(string SKUCode, string SKUName, decimal Rate, string Description, int ProudctID, int UserID) {
-            base.Channel.ManageProducts(SKUCode, SKUName, Rate, Description, ProudctID, UserID);
+        public void BindHSNCode() {
+            base.Channel.BindHSNCode();
         }
         
-        public System.Threading.Tasks.Task ManageProductsAsync(string SKUCode, string SKUName, decimal Rate, string Description, int ProudctID, int UserID) {
-            return base.Channel.ManageProductsAsync(SKUCode, SKUName, Rate, Description, ProudctID, UserID);
+        public System.Threading.Tasks.Task BindHSNCodeAsync() {
+            return base.Channel.BindHSNCodeAsync();
+        }
+        
+        public void ManageProducts(string SKUCode, string SKUName, decimal Rate, string Description, int ProudctID, int HSNID, int UserID) {
+            base.Channel.ManageProducts(SKUCode, SKUName, Rate, Description, ProudctID, HSNID, UserID);
+        }
+        
+        public System.Threading.Tasks.Task ManageProductsAsync(string SKUCode, string SKUName, decimal Rate, string Description, int ProudctID, int HSNID, int UserID) {
+            return base.Channel.ManageProductsAsync(SKUCode, SKUName, Rate, Description, ProudctID, HSNID, UserID);
         }
         
         public void GetSKUDetails() {
@@ -247,12 +394,20 @@ namespace Invoicing_Application.Invoicing_Service {
             return base.Channel.DeleteCustomerAsync(CustomerID);
         }
         
-        public void Login(string UserName, string Password) {
-            base.Channel.Login(UserName, Password);
+        public bool Login(string UserName, string Password) {
+            return base.Channel.Login(UserName, Password);
         }
         
-        public System.Threading.Tasks.Task LoginAsync(string UserName, string Password) {
+        public System.Threading.Tasks.Task<bool> LoginAsync(string UserName, string Password) {
             return base.Channel.LoginAsync(UserName, Password);
+        }
+        
+        public int GetDefaultState() {
+            return base.Channel.GetDefaultState();
+        }
+        
+        public System.Threading.Tasks.Task<int> GetDefaultStateAsync() {
+            return base.Channel.GetDefaultStateAsync();
         }
         
         public void GetCustomerAutoPopulate() {
@@ -287,20 +442,54 @@ namespace Invoicing_Application.Invoicing_Service {
             return base.Channel.BindProductAsync();
         }
         
-        public void GetSelectedProduct(int ProductID) {
-            base.Channel.GetSelectedProduct(ProductID);
+        public void GetSelectedProduct(int ProductID, int PartyID) {
+            base.Channel.GetSelectedProduct(ProductID, PartyID);
         }
         
-        public System.Threading.Tasks.Task GetSelectedProductAsync(int ProductID) {
-            return base.Channel.GetSelectedProductAsync(ProductID);
+        public System.Threading.Tasks.Task GetSelectedProductAsync(int ProductID, int PartyID) {
+            return base.Channel.GetSelectedProductAsync(ProductID, PartyID);
         }
         
-        public void InsertUpdateSaleInvoiceMaster(int parmSaleInvoiceID, string parmInvoiceNumber, System.DateTime parmInvoiceDate, string parmStateID, string parmPartyID, string parmTotalAmtBeforeTax, string parmDiscountAmount, string parmIGST, string parmCGST, string parmSGST, string parmGST, string parmAmountAfterGST, string parmCreatedBy, string parmModifiedBy) {
-            base.Channel.InsertUpdateSaleInvoiceMaster(parmSaleInvoiceID, parmInvoiceNumber, parmInvoiceDate, parmStateID, parmPartyID, parmTotalAmtBeforeTax, parmDiscountAmount, parmIGST, parmCGST, parmSGST, parmGST, parmAmountAfterGST, parmCreatedBy, parmModifiedBy);
+        public void InsertUpdateSaleInvoiceMaster(
+                    int parmSaleInvoiceID, 
+                    string parmInvoiceNumber, 
+                    System.DateTime parmInvoiceDate, 
+                    string parmStateID, 
+                    string parmPartyID, 
+                    string parmTotalAmtBeforeTax, 
+                    string parmDiscountAmount, 
+                    string parmIGST, 
+                    string parmCGST, 
+                    string parmSGST, 
+                    string parmGST, 
+                    string parmCGST_Percent, 
+                    string parmSGST_Percent, 
+                    string parmIGST_Percent, 
+                    string parmAmountAfterGST, 
+                    string parmCreatedBy, 
+                    string parmModifiedBy) {
+            base.Channel.InsertUpdateSaleInvoiceMaster(parmSaleInvoiceID, parmInvoiceNumber, parmInvoiceDate, parmStateID, parmPartyID, parmTotalAmtBeforeTax, parmDiscountAmount, parmIGST, parmCGST, parmSGST, parmGST, parmCGST_Percent, parmSGST_Percent, parmIGST_Percent, parmAmountAfterGST, parmCreatedBy, parmModifiedBy);
         }
         
-        public System.Threading.Tasks.Task InsertUpdateSaleInvoiceMasterAsync(int parmSaleInvoiceID, string parmInvoiceNumber, System.DateTime parmInvoiceDate, string parmStateID, string parmPartyID, string parmTotalAmtBeforeTax, string parmDiscountAmount, string parmIGST, string parmCGST, string parmSGST, string parmGST, string parmAmountAfterGST, string parmCreatedBy, string parmModifiedBy) {
-            return base.Channel.InsertUpdateSaleInvoiceMasterAsync(parmSaleInvoiceID, parmInvoiceNumber, parmInvoiceDate, parmStateID, parmPartyID, parmTotalAmtBeforeTax, parmDiscountAmount, parmIGST, parmCGST, parmSGST, parmGST, parmAmountAfterGST, parmCreatedBy, parmModifiedBy);
+        public System.Threading.Tasks.Task InsertUpdateSaleInvoiceMasterAsync(
+                    int parmSaleInvoiceID, 
+                    string parmInvoiceNumber, 
+                    System.DateTime parmInvoiceDate, 
+                    string parmStateID, 
+                    string parmPartyID, 
+                    string parmTotalAmtBeforeTax, 
+                    string parmDiscountAmount, 
+                    string parmIGST, 
+                    string parmCGST, 
+                    string parmSGST, 
+                    string parmGST, 
+                    string parmCGST_Percent, 
+                    string parmSGST_Percent, 
+                    string parmIGST_Percent, 
+                    string parmAmountAfterGST, 
+                    string parmCreatedBy, 
+                    string parmModifiedBy) {
+            return base.Channel.InsertUpdateSaleInvoiceMasterAsync(parmSaleInvoiceID, parmInvoiceNumber, parmInvoiceDate, parmStateID, parmPartyID, parmTotalAmtBeforeTax, parmDiscountAmount, parmIGST, parmCGST, parmSGST, parmGST, parmCGST_Percent, parmSGST_Percent, parmIGST_Percent, parmAmountAfterGST, parmCreatedBy, parmModifiedBy);
         }
         
         public void InsertUpdateSalesDetails(string PostedData) {
@@ -327,12 +516,76 @@ namespace Invoicing_Application.Invoicing_Service {
             return base.Channel.GetMyProfileAsync(UserID);
         }
         
-        public void GetPartPaymentDetails(string InvoiceNo) {
-            base.Channel.GetPartPaymentDetails(InvoiceNo);
+        public void GetPartPaymentList(string InvoiceNo, int CustomerID, int PaymentStatus) {
+            base.Channel.GetPartPaymentList(InvoiceNo, CustomerID, PaymentStatus);
         }
         
-        public System.Threading.Tasks.Task GetPartPaymentDetailsAsync(string InvoiceNo) {
-            return base.Channel.GetPartPaymentDetailsAsync(InvoiceNo);
+        public System.Threading.Tasks.Task GetPartPaymentListAsync(string InvoiceNo, int CustomerID, int PaymentStatus) {
+            return base.Channel.GetPartPaymentListAsync(InvoiceNo, CustomerID, PaymentStatus);
+        }
+        
+        public void InsertPartPayment(string InvoiceNo, int InvoiceID, int CustomerID, string PaymentMode, string ChequeNo, System.DateTime TransactionDate, decimal PayAmount, int UserID) {
+            base.Channel.InsertPartPayment(InvoiceNo, InvoiceID, CustomerID, PaymentMode, ChequeNo, TransactionDate, PayAmount, UserID);
+        }
+        
+        public System.Threading.Tasks.Task InsertPartPaymentAsync(string InvoiceNo, int InvoiceID, int CustomerID, string PaymentMode, string ChequeNo, System.DateTime TransactionDate, decimal PayAmount, int UserID) {
+            return base.Channel.InsertPartPaymentAsync(InvoiceNo, InvoiceID, CustomerID, PaymentMode, ChequeNo, TransactionDate, PayAmount, UserID);
+        }
+        
+        public void GetPartPaymentDetails(int InvoiceID, int CustomerID) {
+            base.Channel.GetPartPaymentDetails(InvoiceID, CustomerID);
+        }
+        
+        public System.Threading.Tasks.Task GetPartPaymentDetailsAsync(int InvoiceID, int CustomerID) {
+            return base.Channel.GetPartPaymentDetailsAsync(InvoiceID, CustomerID);
+        }
+        
+        public void ManageHSNCode(string HSNCode, string HSNDescription, decimal CGST, decimal SGST, decimal IGST, int HSNID, int UserID) {
+            base.Channel.ManageHSNCode(HSNCode, HSNDescription, CGST, SGST, IGST, HSNID, UserID);
+        }
+        
+        public System.Threading.Tasks.Task ManageHSNCodeAsync(string HSNCode, string HSNDescription, decimal CGST, decimal SGST, decimal IGST, int HSNID, int UserID) {
+            return base.Channel.ManageHSNCodeAsync(HSNCode, HSNDescription, CGST, SGST, IGST, HSNID, UserID);
+        }
+        
+        public void GetHSNDetails() {
+            base.Channel.GetHSNDetails();
+        }
+        
+        public System.Threading.Tasks.Task GetHSNDetailsAsync() {
+            return base.Channel.GetHSNDetailsAsync();
+        }
+        
+        public void DeletedHSNCode(int HSNID) {
+            base.Channel.DeletedHSNCode(HSNID);
+        }
+        
+        public System.Threading.Tasks.Task DeletedHSNCodeAsync(int HSNID) {
+            return base.Channel.DeletedHSNCodeAsync(HSNID);
+        }
+        
+        public void GetInvoiceDetails(System.DateTime FromDate, System.DateTime ToDate) {
+            base.Channel.GetInvoiceDetails(FromDate, ToDate);
+        }
+        
+        public System.Threading.Tasks.Task GetInvoiceDetailsAsync(System.DateTime FromDate, System.DateTime ToDate) {
+            return base.Channel.GetInvoiceDetailsAsync(FromDate, ToDate);
+        }
+        
+        public void ForgotEmailIDData(string ForgotEmailID) {
+            base.Channel.ForgotEmailIDData(ForgotEmailID);
+        }
+        
+        public System.Threading.Tasks.Task ForgotEmailIDDataAsync(string ForgotEmailID) {
+            return base.Channel.ForgotEmailIDDataAsync(ForgotEmailID);
+        }
+        
+        public void SendForgotPass(string ForgotEmailID, string Password) {
+            base.Channel.SendForgotPass(ForgotEmailID, Password);
+        }
+        
+        public System.Threading.Tasks.Task SendForgotPassAsync(string ForgotEmailID, string Password) {
+            return base.Channel.SendForgotPassAsync(ForgotEmailID, Password);
         }
         
         public void BINDSKU_Code() {
@@ -357,6 +610,46 @@ namespace Invoicing_Application.Invoicing_Service {
         
         public System.Threading.Tasks.Task<System.Data.DataSet> GetReportDataAsync(string InvoiceID, string PartyID) {
             return base.Channel.GetReportDataAsync(InvoiceID, PartyID);
+        }
+        
+        public void BindCGST() {
+            base.Channel.BindCGST();
+        }
+        
+        public System.Threading.Tasks.Task BindCGSTAsync() {
+            return base.Channel.BindCGSTAsync();
+        }
+        
+        public void BindSGST() {
+            base.Channel.BindSGST();
+        }
+        
+        public System.Threading.Tasks.Task BindSGSTAsync() {
+            return base.Channel.BindSGSTAsync();
+        }
+        
+        public void BindIGST() {
+            base.Channel.BindIGST();
+        }
+        
+        public System.Threading.Tasks.Task BindIGSTAsync() {
+            return base.Channel.BindIGSTAsync();
+        }
+        
+        public void GetSalesDetails(string InvoiceID) {
+            base.Channel.GetSalesDetails(InvoiceID);
+        }
+        
+        public System.Threading.Tasks.Task GetSalesDetailsAsync(string InvoiceID) {
+            return base.Channel.GetSalesDetailsAsync(InvoiceID);
+        }
+        
+        public void GetBindInvoiceDetails(string invoiceID) {
+            base.Channel.GetBindInvoiceDetails(invoiceID);
+        }
+        
+        public System.Threading.Tasks.Task GetBindInvoiceDetailsAsync(string invoiceID) {
+            return base.Channel.GetBindInvoiceDetailsAsync(invoiceID);
         }
     }
 }

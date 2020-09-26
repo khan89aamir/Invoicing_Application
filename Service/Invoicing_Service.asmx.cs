@@ -295,45 +295,38 @@ namespace Invoicing_Application.Service
         }
 
         [WebMethod]
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void Login(string UserName, string Password)
+       
+        public bool Login(string UserName, string Password)
         {
-            clsMessage message = new clsMessage();
+           
+            
+            bool LoginResult = false;
 
             object result = ObjDAL.ExecuteScalarQuery("SELECT ProfileID FROM   anjacreation.tblMyProfile WHERE UserName='" + UserName + "' AND CAST(AES_DECRYPT(Password, 'UserNameEmailID') AS CHAR(255))='" + Password + "'");
             if (result != null)
             {
                 if (Convert.ToInt32(result) > 0)
                 {
-                    message.Result = true;
-                    message.strMessage = "User Found.";
-                    message.UserID = Convert.ToInt32(result);
-                    message.Value = GetDefaultState(message.UserID);
+                    LoginResult = true;
                 }
                 else
                 {
-                    message.Result = false;
-                    message.strMessage = "Incorrect Username or Password.";
+                    LoginResult = false;
                 }
             }
             else
             {
-                message.Result = false;
-                message.strMessage = "Incorrect Username or Password.";
+                LoginResult = false;
             }
 
-            string strResponse = JsonConvert.SerializeObject(message);
-            Context.Response.Clear();
-            Context.Response.ContentType = "application/json";
-            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
-
-            Context.Response.Write(strResponse);
-            Context.Response.Flush();
+            return LoginResult;
         }
 
-        public int GetDefaultState(int UserID)
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public int GetDefaultState()
         {
-            int state = ObjDAL.ExecuteScalarInt("SELECT StateID from anjacreation.tblMyProfile WHERE ProfileID=" + UserID);
+            int state = ObjDAL.ExecuteScalarInt("SELECT StateID from anjacreation.tblMyProfile");
             return state;
         }
 
@@ -575,6 +568,21 @@ namespace Invoicing_Application.Service
         {
             clsMessage message = new clsMessage();
 
+            if (parmCGST_Percent==null)
+            {
+                parmCGST_Percent = "0";
+            }
+
+            if (parmSGST_Percent==null)
+            {
+                parmSGST_Percent = "0";
+            }
+
+            if (parmIGST_Percent == null)
+            {
+                parmIGST_Percent = "0";
+            }
+
             ObjDAL.SetStoreProcedureData("parmSaleInvoiceID", MySqlConnector.MySqlDbType.Int32, parmSaleInvoiceID, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("parmInvoiceNumber", MySqlConnector.MySqlDbType.VarChar, parmInvoiceNumber, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("parmInvoiceDate", MySqlConnector.MySqlDbType.Date, parmInvoiceDate, clsMySQLCoreApp.ParamType.Input);
@@ -647,6 +655,8 @@ namespace Invoicing_Application.Service
             var SalesDetailsObj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<clsSalesDetails>>(PostedData);
 
             bool result = false;
+           
+            ObjDAL.ExecuteNonQuery("delete from tblSalesDetails where InvoiceID=" + SalesDetailsObj[0].InvID);
 
             foreach (var item in SalesDetailsObj)
             {
@@ -1246,6 +1256,68 @@ namespace Invoicing_Application.Service
                 this.Context.Response.ContentType = "application/json; charset=utf-8";
                 this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
+        }
+
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void GetSalesDetails(string InvoiceID)
+        {
+            // System.Threading.Thread.Sleep(2000);
+            string jsonData = "{}";
+            string strQ = "select s1.ProductID,sk.SKUName as Product_Name, SKU_Code,HSN,s1.Rate,QTY, (s1.Rate*QTY) as Total " +
+                         " from anjacreation.tblSalesDetails s1 join " +
+                         " anjacreation.tblSKUMaster sk on s1.ProductID = sk.SKUID "+
+                         " where InvoiceID = "+ InvoiceID;
+
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement(strQ);
+            if (dataTable != null && dataTable.Rows.Count > 0)
+            {
+                jsonData = DataTableToJSONWithJSONNet(dataTable);
+            }
+            //Context.Response.ContentType = "application/json";
+            //Context.Response.Write(jsonData);
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.AddHeader("content-length", jsonData.Length.ToString());
+            Context.Response.Write(jsonData);
+            Context.Response.Flush();
+        }
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void GetBindInvoiceDetails(string invoiceID)
+        {
+        
+            // get invoice master and invoice other details
+            string strQ= "select *,sm.StateName,sm.GSTStateCode  from anjacreation.tblSalesInvoceMaster im left join  "+
+                            " anjacreation.tblInvoiceOtherDetails ot on im.SaleInvoiceID = ot.InvoiceID "+
+                            " left join anjacreation.tblStateMaster sm  on ot.Consignee_StateID = sm.StateID " +
+                             " where im.SaleInvoiceID ="+ invoiceID;
+
+
+
+
+            DataTable dtInvoiceMaster = ObjDAL.ExecuteSelectStatement(strQ);
+
+
+            string jsonData = "{}";
+
+            if (dtInvoiceMaster != null && dtInvoiceMaster.Rows.Count > 0)
+            {
+                jsonData = DataTableToJSONWithJSONNet(dtInvoiceMaster);
+            }
+            //Context.Response.ContentType = "application/json";
+            //Context.Response.Write(jsonData);
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.AddHeader("content-length", jsonData.Length.ToString());
+            Context.Response.Write(jsonData);
+            Context.Response.Flush();
+
+
+
         }
 
     }

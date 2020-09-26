@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="Invoicing_Application.Webs.Home" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Invoicing.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="Invoicing_Application.Webs.Home" ClientIDMode="Static" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container d-flex justify-content-center mt-3 d-none">
@@ -7,7 +7,7 @@
             <img class="card-img-top" src="../assets/img/Main_Logo.png" alt="Card image cap">
 
             <div class="card-body">
-                <form id="frmaccount" class="needs-validation" novalidate>
+                <form id="frmaccount"  novalidate runat="server">
                     <input type="text" runat="server" class="form-control text" id="txtAccounID" value="0" hidden>
                     <div class="form-row">
                         <div class="col-md-12">
@@ -18,7 +18,7 @@
                                     <span class="fa fa-user fa-2x mt-1" style="color: #007bff"></span>&nbsp;
                                 </div>
 
-                                <input type="text" class="form-control text " id="txtUserName" placeholder="Enter User Name" required>
+                                <input type="text" class="form-control text" runat="server" id="txtUserName" placeholder="Enter User Name" required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter User Name.
                                 </div>
@@ -28,7 +28,7 @@
                                 <div class="input-group-prepend">
                                     <span class="fa fa-lock fa-2x mt-1" style="color: #007bff"></span>&nbsp;
                                 </div>
-                                <input type="password" class="form-control" id="txtPassword" placeholder="Enter Password" required>
+                                <input type="password" class="form-control" id="txtPassword" runat="server" placeholder="Enter Password" required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter Password.
                                 </div>
@@ -44,7 +44,7 @@
                                 </div>
                             </div>
 
-                            <div id="lblPassMessage" class="text-center d-none">
+                            <div id="lblPassMessage" class="text-center d-none" runat="server">
                                 <p class="text-danger  ">Incorrect Username or Password.</p>
                             </div>
                         </div>
@@ -52,7 +52,8 @@
                     <div class="form-row">
 
                         <div class="col-md-12 ">
-                            <button id="btnLogin" type="submit" class="btn btn-primary w-100">Login</button>
+                            <asp:Button ID="btnLogin" class="btn btn-primary w-100" runat="server" Text="Login" OnClick="btnLogin_Click" />
+
                         </div>
                     </div>
                 </form>
@@ -136,11 +137,18 @@
                             event.stopPropagation();
                         }
                         else {
-                            event.preventDefault();
-                            event.stopPropagation();
 
+                          
                             if (form.id == "frmaccount") {
-                                $.DoLogin();
+                                if (DoLogin()) {
+
+                                    alert('ok');
+                                }
+                                else {
+                                    alert('failed');
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                }
                             }
                         }
                         form.classList.add('was-validated');
@@ -185,8 +193,9 @@
             }
         });
 
+        function DoLogin() {
 
-        $.DoLogin = function () {
+            var result = false;  
 
             var val_user = $('#txtUserName').val();
             var val_pass = $('#txtPassword').val();
@@ -196,7 +205,7 @@
                 UserName: val_user,
                 Password: val_pass
             };
-
+            alert(JSON.stringify(AccountData));
             $.ajax({
                 url: "../Service/Invoicing_Service.asmx/Login",
                 type: 'POST',
@@ -218,12 +227,14 @@
 
                     // parse it to java script object so that you can access property
                     // data = $.parseJSON(responseData.d);
-
+                    alert(responseData);
                     if (responseData.Result) {
 
+                       
+                        result = true;
                         // set the login session for the user.
                         //SetLoginSession(responseData.Value);
-                        SetLoginSession(responseData);
+                        // SetLoginSession(responseData);
 
                         // hide the login panel
                         $('#pnlLogin').hide();
@@ -244,6 +255,8 @@
                     }
                     else {
 
+                      
+                        result = false;
                         $('#lblPassMessage').removeClass("d-none");
                         $('#lblPassMessage').addClass("d-block");
 
@@ -253,19 +266,24 @@
                     }
                 },
                 error: function (xhr, status, error) {
-
+                    result = false;
                     $('#loadingBox').modal('hide');
-                    //alert("Error : " + error);
-                    //alert("Error Text: " + xhr.responseText);
+                    alert("* Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
                 },
                 failure: function (r) {
-                    alert("Fail:" + r.responseText);
+                    result = false;
+                    alert("--Fail:" + r.responseText);
                 }
             }).done(function (response) { //
 
                 // alert("Done : " + response);
             });
-        };
+
+            return result;
+        }
+
+
 
         function SetLoginSession(result) {
 
