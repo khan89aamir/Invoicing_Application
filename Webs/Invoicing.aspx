@@ -17,6 +17,12 @@
         .disableValue {
             pointer-events: none;
         }
+
+        .OldRate{
+            background-color:yellow;
+
+        }
+
     </style>
     <script>
 
@@ -1409,7 +1415,7 @@
                                 $('#lblMessage').text("Invoice have been updated successfully.");
                             }
                           
-
+                       
                             $('#mdlNormalMessage').modal('show');
 
 
@@ -1803,7 +1809,15 @@
 
                     $("#txtSKUNumber").val(res[0].SKUNumber);
                     $("#txtHSN_No").val(res[0].HSN_No);
-
+                    if (res[0].IsOld=="1")
+                    {
+                        $("#txtRate").addClass("OldRate");
+                        
+                    }
+                    else
+                    {
+                        $("#txtRate").removeClass("OldRate");
+                    }
 
                 },
                 beforeSend: function () {
