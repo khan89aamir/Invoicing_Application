@@ -46,6 +46,16 @@
       <s:element name="DeleteSKUResponse">
         <s:complexType />
       </s:element>
+      <s:element name="DeleteInvoice">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InvoiceID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteInvoiceResponse">
+        <s:complexType />
+      </s:element>
       <s:element name="ManageCustomers">
         <s:complexType>
           <s:sequence>
@@ -100,7 +110,7 @@
       <s:element name="GetDefaultStateResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="GetDefaultStateResult" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetDefaultStateResult" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -434,6 +444,12 @@
   <wsdl:message name="DeleteSKUSoapOut">
     <wsdl:part name="parameters" element="tns:DeleteSKUResponse" />
   </wsdl:message>
+  <wsdl:message name="DeleteInvoiceSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteInvoice" />
+  </wsdl:message>
+  <wsdl:message name="DeleteInvoiceSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteInvoiceResponse" />
+  </wsdl:message>
   <wsdl:message name="ManageCustomersSoapIn">
     <wsdl:part name="parameters" element="tns:ManageCustomers" />
   </wsdl:message>
@@ -641,6 +657,10 @@
       <wsdl:input message="tns:DeleteSKUSoapIn" />
       <wsdl:output message="tns:DeleteSKUSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="DeleteInvoice">
+      <wsdl:input message="tns:DeleteInvoiceSoapIn" />
+      <wsdl:output message="tns:DeleteInvoiceSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="ManageCustomers">
       <wsdl:input message="tns:ManageCustomersSoapIn" />
       <wsdl:output message="tns:ManageCustomersSoapOut" />
@@ -806,6 +826,15 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteSKU">
       <soap:operation soapAction="http://tempuri.org/DeleteSKU" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteInvoice">
+      <soap:operation soapAction="http://tempuri.org/DeleteInvoice" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1133,6 +1162,15 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteSKU">
       <soap12:operation soapAction="http://tempuri.org/DeleteSKU" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteInvoice">
+      <soap12:operation soapAction="http://tempuri.org/DeleteInvoice" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

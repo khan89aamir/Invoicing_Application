@@ -27,7 +27,20 @@ namespace Invoicing_Application.Webs
                 Session["UserName"] = txtUserName.Value;
 
 
-                Session["DefaultValue"] = objClient.GetDefaultState();
+               string strStateResult = objClient.GetDefaultState();
+              string [] StateInfo=   strStateResult.Split(',');
+                if (StateInfo.Length>0)
+                {
+                    Session["DefaultValue"] = StateInfo[0];
+                    Session["StateName"] = StateInfo[1];
+                }
+                else
+                {
+                    Session["DefaultValue"] = "0";
+                    Session["StateName"] = "NA";
+                }
+              
+
 
             }
             else

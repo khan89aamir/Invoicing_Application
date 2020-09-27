@@ -13,7 +13,7 @@ namespace Invoicing_Application.Service
     /// <summary>
     /// Summary description for Invoicing_Service
     /// </summary>
-    [WebService(Namespace = "http://tempuri.org/")]
+    [WebService(Namespace = "http://anjacreation.in/Service")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
@@ -36,6 +36,7 @@ namespace Invoicing_Application.Service
                                     StateName = r.Field<string>("StateName"),
                                 });
                 string strResponse = JsonConvert.SerializeObject(NameList);
+		Context.Response.Clear();
                 Context.Response.ContentType = "application/json";
                 Context.Response.AddHeader("content-length", strResponse.Length.ToString());
                 Context.Response.Write(strResponse);
@@ -49,6 +50,7 @@ namespace Invoicing_Application.Service
                 message.strMessage = "No records found";
                 message.Result = true;
 
+		Context.Response.Clear();
                 this.Context.Response.ContentType = "application/json; charset=utf-8";
                 this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
@@ -68,6 +70,7 @@ namespace Invoicing_Application.Service
                                        HSNCode = r.Field<string>("HSNCode"),
                                    });
                 string strResponse = JsonConvert.SerializeObject(HSNCodeList);
+		Context.Response.Clear();
                 Context.Response.ContentType = "application/json";
                 Context.Response.AddHeader("content-length", strResponse.Length.ToString());
                 Context.Response.Write(strResponse);
@@ -80,7 +83,8 @@ namespace Invoicing_Application.Service
 
                 message.strMessage = "No records found";
                 message.Result = true;
-
+		
+		Context.Response.Clear();
                 this.Context.Response.ContentType = "application/json; charset=utf-8";
                 this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
@@ -190,6 +194,7 @@ namespace Invoicing_Application.Service
             }
 
             JavaScriptSerializer js = new JavaScriptSerializer();
+	    Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.Write(js.Serialize(message));
         }
@@ -319,6 +324,7 @@ namespace Invoicing_Application.Service
             }
 
             JavaScriptSerializer js = new JavaScriptSerializer();
+	    Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.Write(js.Serialize(message));
         }
@@ -353,10 +359,18 @@ namespace Invoicing_Application.Service
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public int GetDefaultState()
+        public string GetDefaultState()
         {
-            int state = ObjDAL.ExecuteScalarInt("SELECT StateID from anjacreation.tblMyProfile");
-            return state;
+            string result = "0,NA";
+            string strq = "SELECT m.StateID,s.StateName from anjacreation.tblMyProfile m join anjacreation.tblStateMaster s " +
+                        " on m.StateID = s.StateID";
+
+            DataTable dtStateDetails= ObjDAL.ExecuteSelectStatement(strq);
+            if (dtStateDetails.Rows.Count>0)
+            {
+                result = dtStateDetails.Rows[0]["StateID"].ToString() + "," + dtStateDetails.Rows[0]["StateName"].ToString();
+            }
+            return result;
         }
 
         [WebMethod]
@@ -382,6 +396,7 @@ namespace Invoicing_Application.Service
                 message.strMessage = "No records found";
                 message.Result = true;
 
+		Context.Response.Clear();
                 this.Context.Response.ContentType = "application/json; charset=utf-8";
                 this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
@@ -401,6 +416,7 @@ namespace Invoicing_Application.Service
                                     CustomerName = r.Field<string>("CustomerName"),
                                 });
                 string strResponse = JsonConvert.SerializeObject(NameList);
+		Context.Response.Clear();
                 Context.Response.ContentType = "application/json";
                 Context.Response.AddHeader("content-length", strResponse.Length.ToString());
                 Context.Response.Write(strResponse);
@@ -414,6 +430,7 @@ namespace Invoicing_Application.Service
                 message.strMessage = "No records found";
                 message.Result = true;
 
+		Context.Response.Clear();
                 this.Context.Response.ContentType = "application/json; charset=utf-8";
                 this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
@@ -439,6 +456,7 @@ namespace Invoicing_Application.Service
                                     StateName = r.Field<string>("StateName"),
                                 });
                 string strResponse = JsonConvert.SerializeObject(NameList);
+		Context.Response.Clear();
                 Context.Response.ContentType = "application/json";
                 Context.Response.AddHeader("content-length", strResponse.Length.ToString());
                 Context.Response.Write(strResponse);
@@ -452,6 +470,7 @@ namespace Invoicing_Application.Service
                 message.strMessage = "No records found";
                 message.Result = true;
 
+		Context.Response.Clear();
                 this.Context.Response.ContentType = "application/json; charset=utf-8";
                 this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
@@ -471,6 +490,7 @@ namespace Invoicing_Application.Service
                                     SKUName = r.Field<string>("SKUName"),
                                 });
                 string strResponse = JsonConvert.SerializeObject(NameList);
+		Context.Response.Clear();
                 Context.Response.ContentType = "application/json";
                 Context.Response.AddHeader("content-length", strResponse.Length.ToString());
                 Context.Response.Write(strResponse);
@@ -483,7 +503,8 @@ namespace Invoicing_Application.Service
 
                 message.strMessage = "No records found";
                 message.Result = true;
-
+		
+		Context.Response.Clear();
                 this.Context.Response.ContentType = "application/json; charset=utf-8";
                 this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
@@ -534,6 +555,7 @@ namespace Invoicing_Application.Service
                                     });
 
                     string strResponse = JsonConvert.SerializeObject(NameList);
+		    Context.Response.Clear();
                     Context.Response.ContentType = "application/json";
                     Context.Response.AddHeader("content-length", strResponse.Length.ToString());
                     Context.Response.Write(strResponse);
@@ -553,6 +575,7 @@ namespace Invoicing_Application.Service
                                     });
 
                     string strResponse = JsonConvert.SerializeObject(NameList);
+		    Context.Response.Clear();
                     Context.Response.ContentType = "application/json";
                     Context.Response.AddHeader("content-length", strResponse.Length.ToString());
                     Context.Response.Write(strResponse);
@@ -568,7 +591,7 @@ namespace Invoicing_Application.Service
 
                 message.strMessage = "No records found";
                 message.Result = true;
-
+		Context.Response.Clear();
                 this.Context.Response.ContentType = "application/json; charset=utf-8";
                 this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
@@ -736,7 +759,7 @@ namespace Invoicing_Application.Service
 
 
             string strResponse = JsonConvert.SerializeObject(message);
-
+	    Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.Write(strResponse);
         }
@@ -821,6 +844,7 @@ namespace Invoicing_Application.Service
                 DataTable dataTable = ds.Tables[0];
                 jsonData = JsonConvert.SerializeObject(dataTable);
             }
+	    Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.Write(jsonData);
         }
@@ -979,6 +1003,7 @@ namespace Invoicing_Application.Service
             }
 
             JavaScriptSerializer js = new JavaScriptSerializer();
+	    Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.Write(js.Serialize(message));
         }
@@ -1106,6 +1131,7 @@ namespace Invoicing_Application.Service
                                     SKUName = r.Field<string>("SKUCode"),
                                 });
                 string strResponse = JsonConvert.SerializeObject(NameList);
+		Context.Response.Clear();
                 Context.Response.ContentType = "application/json";
                 Context.Response.AddHeader("content-length", strResponse.Length.ToString());
                 Context.Response.Write(strResponse);
@@ -1118,7 +1144,8 @@ namespace Invoicing_Application.Service
 
                 message.strMessage = "No records found";
                 message.Result = true;
-
+		
+		Context.Response.Clear();
                 this.Context.Response.ContentType = "application/json; charset=utf-8";
                 this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
@@ -1206,6 +1233,7 @@ namespace Invoicing_Application.Service
                                    
                                 });
                 string strResponse = JsonConvert.SerializeObject(NameList);
+		Context.Response.Clear();
                 Context.Response.ContentType = "application/json";
                 Context.Response.AddHeader("content-length", strResponse.Length.ToString());
                 Context.Response.Write(strResponse);
@@ -1219,6 +1247,7 @@ namespace Invoicing_Application.Service
                 message.strMessage = "No records found";
                 message.Result = true;
 
+		Context.Response.Clear();
                 this.Context.Response.ContentType = "application/json; charset=utf-8";
                 this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
@@ -1239,6 +1268,7 @@ namespace Invoicing_Application.Service
 
                                 });
                 string strResponse = JsonConvert.SerializeObject(NameList);
+		Context.Response.Clear();
                 Context.Response.ContentType = "application/json";
                 Context.Response.AddHeader("content-length", strResponse.Length.ToString());
                 Context.Response.Write(strResponse);
@@ -1252,6 +1282,7 @@ namespace Invoicing_Application.Service
                 message.strMessage = "No records found";
                 message.Result = true;
 
+		Context.Response.Clear();
                 this.Context.Response.ContentType = "application/json; charset=utf-8";
                 this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
@@ -1272,6 +1303,7 @@ namespace Invoicing_Application.Service
 
                                 });
                 string strResponse = JsonConvert.SerializeObject(NameList);
+		Context.Response.Clear();
                 Context.Response.ContentType = "application/json";
                 Context.Response.AddHeader("content-length", strResponse.Length.ToString());
                 Context.Response.Write(strResponse);
@@ -1285,6 +1317,7 @@ namespace Invoicing_Application.Service
                 message.strMessage = "No records found";
                 message.Result = true;
 
+		Context.Response.Clear();
                 this.Context.Response.ContentType = "application/json; charset=utf-8";
                 this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }

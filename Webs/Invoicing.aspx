@@ -25,7 +25,7 @@
 
     </style>
     <script>
-
+       
         function InitDataTable() {
             var table = $('#tblProduct').DataTable({
                 responsive: true,
@@ -171,7 +171,7 @@
             BindProducts();
             BindSKUCode();
             // drop down------
-            BindState();
+         //   BindState();
 
             //  HideProductIDColumn();
 
@@ -212,61 +212,23 @@
             });
         }
         function BindState() {
-            $.ajax({
-                type: "POST",
-                url: "../Service/Invoicing_Service.asmx/BindState",
-                dataType: "json",
-                //data: JSON.stringify(ObjMyData),
-                contentType: "application/json",
-                success: function (res) {
+            // set the deafult state from session
+            var DefaultState = '<%  Response.Write(Session["DefaultValue"].ToString()); %>';
+            var stateName = '<%  Response.Write(Session["StateName"].ToString()); %>';
 
-                    $("#cmdState").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select State'));
-                    $.each(res, function (data, value) {
-
-                        $("#cmdState").append($("<option></option>").val(value.StateID).html(value.StateName));
-                    })
-
-                    // set the deafult state from session
-                    var DefaultState = '<%  Response.Write(Session["DefaultValue"].ToString()); %>';
-
-                    $("#cmdState").val(DefaultState)
-
-                    $("#cmdState").prop("disabled", true);
-
-
-                    // Bind consignee state
-
-                    $("#cmdConsigneeState").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select State'));
-                    $.each(res, function (data, value) {
-
-                        $("#cmdConsigneeState").append($("<option></option>").val(value.StateID).html(value.StateName));
-                    })
-
-
-
-
-
-
-                },
-                error: function (xhr, status, error) {
-
-                    alert("Error : " + error);
-                    alert("Error Text: " + xhr.responseText);
-                },
-                failure: function (r) {
-                    alert("Fail:" + r.responseText);
-                }
-            });
+            $("#cmdState").val(DefaultState);
+            $("#txtStateName").val(stateName);
+            
         }
 
-
+      
         function BindCGST() {
             // drop down------
             $.ajax({
                 type: "POST",
                 url: "../Service/Invoicing_Service.asmx/BindCGST",
                 dataType: "json",
-                //data: JSON.stringify(ObjMyData),
+               
                 contentType: "application/json",
                 success: function (res) {
 
@@ -295,7 +257,7 @@
                 type: "POST",
                 url: "../Service/Invoicing_Service.asmx/BindSGST",
                 dataType: "json",
-                //data: JSON.stringify(ObjMyData),
+               
                 contentType: "application/json",
                 success: function (res) {
 
@@ -322,7 +284,7 @@
                 type: "POST",
                 url: "../Service/Invoicing_Service.asmx/BindIGST",
                 dataType: "json",
-                //data: JSON.stringify(ObjMyData),
+               
                 contentType: "application/json",
                 success: function (res) {
 
@@ -600,6 +562,8 @@
         }
         function Test(num) {
 
+            BindState();
+
             InitDataTable();
 
             BindInitialData();
@@ -609,7 +573,7 @@
             BindSalesDetails();
 
 
-
+          
 
 
         }
@@ -678,8 +642,12 @@
                                 <div class="form-row">
 
                                     <label for="cmdState">State :</label>
-                                    <asp:DropDownList ID="cmdState" class="custom-select" name="cmdState" runat="server" required="true">
-                                    </asp:DropDownList>
+                                    <input type="text" id="cmdState" hidden />
+                                      <input type="text" id="txtStateName" class="form-control text" disabled  />
+
+
+                                   <%-- <asp:DropDownList ID="cmdState" class="custom-select" name="cmdState" runat="server" required="true">
+                                    </asp:DropDownList>--%>
 
                                     <div class="invalid-feedback">
                                         Please select your product.
@@ -1706,7 +1674,8 @@
         $("#cmbCustomer").change(function () {
             var selectedText = $(this).find("option:selected").text();
             var selectedValue = $(this).val();
-
+          
+            console.log("Customer : " + selectedValue);
             GetSelectedCustomer(selectedValue);
             //alert("Selected Text: " + selectedText + " Value: " + selectedValue);
         });
@@ -1722,6 +1691,8 @@
 
             }
             else {
+
+                console.log("Product ID : " + selectedValue);
                 GetSelectedProduct(selectedValue, prID);
             }
 
@@ -1731,10 +1702,12 @@
 
         $(document).ready(function () {   // dynamic Table
 
+         
             var BindID = $('#txtBindInvoiceID').val();
             if (BindID == "0") {
                 InitDataTable();
                 BindInitialData();
+                BindState();
             }
 
             //// dont hide the column if you are gona use it as Auto ID

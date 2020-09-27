@@ -297,7 +297,7 @@
 
     </script>
  <!-- Footer -->
-    <footer class="fixed-bottom  font-small mdb-color  bg-dark Zfooter text-center" style="font-family:'Times New Roman'">
+<%--    <footer class="s  font-small mdb-color  bg-dark Zfooter text-center" style="font-family:'Times New Roman'">
         <div class="container-fluid">
              <div class="row">
           <div class="col-md-4 col-sm-4">
@@ -313,7 +313,7 @@
         </div>
      
 
-    </footer>
+    </footer>--%>
     <!-- Footer -->
    
     <script src=<%=ConfigurationManager.AppSettings["host"]%>/assets/js/popper.min.js></script>

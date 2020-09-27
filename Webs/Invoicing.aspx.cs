@@ -11,6 +11,8 @@ namespace Invoicing_Application.Webs
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+          
+
             if (Session["UserID"] == null)
             {
                 Response.Redirect("Home.aspx");
@@ -26,11 +28,13 @@ namespace Invoicing_Application.Webs
                 {
                     string InvoiceID = Request.QueryString["InvoiceID"].ToString();
                     txtBindInvoiceID.Value = InvoiceID;
-
+                  
                     ClientScript.RegisterStartupScript(this.GetType(), "updateProgress", "Test('" + InvoiceID + "');", true);
                 }
              
             }
+
+
         }
     }
 }

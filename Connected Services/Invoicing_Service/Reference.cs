@@ -51,6 +51,13 @@ namespace Invoicing_Application.Invoicing_Service {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DeleteSKU", ReplyAction="*")]
         System.Threading.Tasks.Task DeleteSKUAsync(int SKUID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DeleteInvoice", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void DeleteInvoice(int InvoiceID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DeleteInvoice", ReplyAction="*")]
+        System.Threading.Tasks.Task DeleteInvoiceAsync(int InvoiceID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ManageCustomers", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void ManageCustomers(string CustomerName, string CompanyName, string GSTNo, string EmailID, string Address, int StateID, int CustomerID, int UserID);
@@ -81,10 +88,10 @@ namespace Invoicing_Application.Invoicing_Service {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetDefaultState", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        int GetDefaultState();
+        string GetDefaultState();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetDefaultState", ReplyAction="*")]
-        System.Threading.Tasks.Task<int> GetDefaultStateAsync();
+        System.Threading.Tasks.Task<string> GetDefaultStateAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetCustomerAutoPopulate", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -370,6 +377,14 @@ namespace Invoicing_Application.Invoicing_Service {
             return base.Channel.DeleteSKUAsync(SKUID);
         }
         
+        public void DeleteInvoice(int InvoiceID) {
+            base.Channel.DeleteInvoice(InvoiceID);
+        }
+        
+        public System.Threading.Tasks.Task DeleteInvoiceAsync(int InvoiceID) {
+            return base.Channel.DeleteInvoiceAsync(InvoiceID);
+        }
+        
         public void ManageCustomers(string CustomerName, string CompanyName, string GSTNo, string EmailID, string Address, int StateID, int CustomerID, int UserID) {
             base.Channel.ManageCustomers(CustomerName, CompanyName, GSTNo, EmailID, Address, StateID, CustomerID, UserID);
         }
@@ -402,11 +417,11 @@ namespace Invoicing_Application.Invoicing_Service {
             return base.Channel.LoginAsync(UserName, Password);
         }
         
-        public int GetDefaultState() {
+        public string GetDefaultState() {
             return base.Channel.GetDefaultState();
         }
         
-        public System.Threading.Tasks.Task<int> GetDefaultStateAsync() {
+        public System.Threading.Tasks.Task<string> GetDefaultStateAsync() {
             return base.Channel.GetDefaultStateAsync();
         }
         
