@@ -21,38 +21,39 @@ namespace Invoicing_Application.Webs
         {
             Invoicing_Service.Invoicing_ServiceSoapClient objClient = new Invoicing_Service.Invoicing_ServiceSoapClient();
 
-            if (objClient.Login(txtUserName.Value, txtPassword.Value))
+            //if (objClient.Login(txtUserName.Value, txtPassword.Value))
+            //{
+            //    Session["UserID"] = "1";
+            //    Session["UserName"] = txtUserName.Value;
+
+            //    string strStateResult = objClient.GetDefaultState();
+            //    string[] StateInfo = strStateResult.Split(',');
+            //    if (StateInfo.Length > 0)
+            //    {
+            //        Session["DefaultValue"] = StateInfo[0];
+            //        Session["StateName"] = StateInfo[1];
+            //    }
+            //    else
+            //    {
+            //        Session["DefaultValue"] = "0";
+            //        Session["StateName"] = "NA";
+            //    }
+            //}
+            System.Data.DataTable dt = objClient.ValidateLogin(txtUserName.Value, txtPassword.Value);
+            if (dt != null && dt.Rows.Count > 0)
             {
-                Session["UserID"] = "1";
+                Session["UserID"] = dt.Rows[0]["UserID"].ToString();
                 Session["UserName"] = txtUserName.Value;
-
-
-               string strStateResult = objClient.GetDefaultState();
-              string [] StateInfo=   strStateResult.Split(',');
-                if (StateInfo.Length>0)
-                {
-                    Session["DefaultValue"] = StateInfo[0];
-                    Session["StateName"] = StateInfo[1];
-                }
-                else
-                {
-                    Session["DefaultValue"] = "0";
-                    Session["StateName"] = "NA";
-                }
-              
-
-
+                Session["DefaultValue"] = dt.Rows[0]["StateID"].ToString();
+                Session["StateName"] = dt.Rows[0]["StateName"].ToString();
             }
             else
             {
                 lblPassMessage.Attributes.Remove("d-none");
-                lblPassMessage.Attributes.Add("class","d -block");
+                lblPassMessage.Attributes.Add("class", "d -block");
 
-              //  ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Incorrect UserName or Password')", true);
+                //  ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Incorrect UserName or Password')", true);
             }
-           
-
         }
-     
     }
 }

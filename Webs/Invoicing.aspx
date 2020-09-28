@@ -2,7 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-
     <script src="../assets/js/select2.js"></script>
     <link href="../assets/css/select2.css" rel="stylesheet" />
     <script src="../assets/js/mindmup-editabletable.js"></script>
@@ -34,8 +33,6 @@
                 searching: false,
                 "ordering": false
                 //,stateSave: true // this makes the first ( 0th) column hidden automatically
-
-
             });
             table.columns([0]).visible(false);
         }
@@ -43,7 +40,6 @@
 
             $("#select2-cmbProduct-container").text("Select Product");
             $("#select2-cmbSKU-container").text("Select SKU");
-
 
             $("#cmbProduct").val("-1");
             $("#cmbSKU").val("-1");
@@ -69,8 +65,6 @@
 
             $('#txtstrSGST').val(Amout);
 
-
-
         }
         function CalculateCGST(percent, subTotal) {
 
@@ -82,7 +76,6 @@
             var Amout = (percentToGet / 100) * subTotal;
 
             $('#txtstrCGST').val(Amout);
-
         }
         function CalculateIGST(percent, subTotal) {
 
@@ -111,16 +104,14 @@
                 // alert("Tot : " + amtTotal);
 
                 SubTotal = parseFloat(SubTotal) + parseFloat(amtTotal);
-
             });
-
 
             var NewTotal = parseFloat(SubTotal).toFixed(2);
             $('#txtAmountBeforeTax').val(NewTotal);
 
             MasterCalculation();
-
         }
+
         function MasterCalculation() {
 
             // calculate the percent first 
@@ -137,13 +128,11 @@
             var SGST = $('#txtSGST').val();
             var IGST = $('#txtIGST').val();
 
-
         //    console.log(CGST);
 
             CalculateCGST(CGST, numVal1);
             CalculateSGST(SGST, numVal1);
             CalculateIGST(IGST, numVal1);
-
 
             // this is actual amount
             var amtCGST = $('#txtstrCGST').val();
@@ -163,21 +152,19 @@
             var GrandTotal = totalValue + TotalGSTAmount;
 
             document.getElementById("txtAmountafterTax").value = Number(GrandTotal).toFixed(2);
-
-
         }
         function BindInitialData() {
             BindCustomer();
             BindProducts();
-            BindSKUCode();
+            //BindSKUCode();
             // drop down------
          //   BindState();
 
             //  HideProductIDColumn();
 
-            BindCGST();
-            BindIGST();
-            BindSGST();
+            //BindCGST();
+            //BindIGST();
+            //BindSGST();
         }
         function BindCustomer() {
 
@@ -211,6 +198,7 @@
                 }
             });
         }
+
         function BindState() {
             // set the deafult state from session
             var DefaultState = '<%  Response.Write(Session["DefaultValue"].ToString()); %>';
@@ -221,92 +209,89 @@
             
         }
 
-      
-        function BindCGST() {
-            // drop down------
-            $.ajax({
-                type: "POST",
-                url: "../Service/Invoicing_Service.asmx/BindCGST",
-                dataType: "json",
+        //function BindCGST() {
+        //    // drop down------
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "../Service/Invoicing_Service.asmx/BindCGST",
+        //        dataType: "json",
                
-                contentType: "application/json",
-                success: function (res) {
+        //        contentType: "application/json",
+        //        success: function (res) {
 
-                    $("#txtCGST").append($("<option selected='selected' ></option>").val('0').html('Select CGST'));
-                    $.each(res, function (data, value) {
+        //            $("#txtCGST").append($("<option selected='selected' ></option>").val('0').html('Select CGST'));
+        //            $.each(res, function (data, value) {
 
-                        $("#txtCGST").append($("<option></option>").val(value.CGSTValue).html(value.CGST));
-                    })
+        //                $("#txtCGST").append($("<option></option>").val(value.CGSTValue).html(value.CGST));
+        //            })
 
+        //        },
+        //        error: function (xhr, status, error) {
 
+        //            alert("Error : " + error);
+        //            alert("Error Text: BindCGST " + xhr.responseText);
+        //        },
+        //        failure: function (r) {
+        //            alert("Fail:" + r.responseText);
+        //        }
+        //    });
+        //}
 
-                },
-                error: function (xhr, status, error) {
-
-                    alert("Error : " + error);
-                    alert("Error Text: BindCGST " + xhr.responseText);
-                },
-                failure: function (r) {
-                    alert("Fail:" + r.responseText);
-                }
-            });
-        }
-        function BindSGST() {
-            // drop down------
-            $.ajax({
-                type: "POST",
-                url: "../Service/Invoicing_Service.asmx/BindSGST",
-                dataType: "json",
+        //function BindSGST() {
+        //    // drop down------
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "../Service/Invoicing_Service.asmx/BindSGST",
+        //        dataType: "json",
                
-                contentType: "application/json",
-                success: function (res) {
+        //        contentType: "application/json",
+        //        success: function (res) {
 
-                    $("#txtSGST").append($("<option selected='selected' ></option>").val('0').html('Select SGST'));
-                    $.each(res, function (data, value) {
+        //            $("#txtSGST").append($("<option selected='selected' ></option>").val('0').html('Select SGST'));
+        //            $.each(res, function (data, value) {
 
-                        $("#txtSGST").append($("<option></option>").val(value.SGSTValue).html(value.SGST));
-                    })
+        //                $("#txtSGST").append($("<option></option>").val(value.SGSTValue).html(value.SGST));
+        //            })
 
-                },
-                error: function (xhr, status, error) {
+        //        },
+        //        error: function (xhr, status, error) {
 
-                    // alert("Error : " + error);
-                    alert("Error Text: BindSGST " + xhr.responseText);
-                },
-                failure: function (r) {
-                    alert("Fail:" + r.responseText);
-                }
-            });
-        }
-        function BindIGST() {
-            // drop down------
-            $.ajax({
-                type: "POST",
-                url: "../Service/Invoicing_Service.asmx/BindIGST",
-                dataType: "json",
+        //            // alert("Error : " + error);
+        //            alert("Error Text: BindSGST " + xhr.responseText);
+        //        },
+        //        failure: function (r) {
+        //            alert("Fail:" + r.responseText);
+        //        }
+        //    });
+        //}
+
+        //function BindIGST() {
+        //    // drop down------
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "../Service/Invoicing_Service.asmx/BindIGST",
+        //        dataType: "json",
                
-                contentType: "application/json",
-                success: function (res) {
+        //        contentType: "application/json",
+        //        success: function (res) {
 
-                    $("#txtIGST").append($("<option selected='selected'></option>").val('0').html('Select IGST'));
-                    $.each(res, function (data, value) {
+        //            $("#txtIGST").append($("<option selected='selected'></option>").val('0').html('Select IGST'));
+        //            $.each(res, function (data, value) {
 
-                        $("#txtIGST").append($("<option></option>").val(value.IGSTValue).html(value.IGST));
-                    })
+        //                $("#txtIGST").append($("<option></option>").val(value.IGSTValue).html(value.IGST));
+        //            })
 
-
-
-                },
-                error: function (xhr, status, error) {
+        //        },
+        //        error: function (xhr, status, error) {
 
 
-                    alert("Error Text:  BindIGST" + xhr.responseText);
-                },
-                failure: function (r) {
-                    alert("Fail:" + r.responseText);
-                }
-            });
-        }
+        //            alert("Error Text:  BindIGST" + xhr.responseText);
+        //        },
+        //        failure: function (r) {
+        //            alert("Fail:" + r.responseText);
+        //        }
+        //    });
+        //}
 
         function BindProducts() {
 
@@ -320,47 +305,17 @@
                 success: function (res) {
 
                     $("#cmbProduct").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select Product'));
+                    $("#cmbSKU").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select SKU'));
                     $.each(res, function (data, value) {
 
                         $("#cmbProduct").append($("<option></option>").val(value.SKUID).html(value.SKUName));
+                        $("#cmbSKU").append($("<option></option>").val(value.SKUID).html(value.SKUCode));
                     })
 
                     // set the deafult state from session
                     // Initialize select2 : this makes auto popupate
                     $("#cmbProduct").select2();
-
-                },
-                error: function (xhr, status, error) {
-
-                    alert("Error : " + error);
-                    alert("Error Text: " + xhr.responseText);
-                },
-                failure: function (r) {
-                    alert("Fail:" + r.responseText);
-                }
-            });
-        }
-        function BindSKUCode() {
-
-            // drop down------
-            $.ajax({
-                type: "POST",
-                url: "../Service/Invoicing_Service.asmx/BINDSKU_Code",
-                dataType: "json",
-                //data: JSON.stringify(ObjMyData),
-                contentType: "application/json",
-                success: function (res) {
-
-                    $("#cmbSKU").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select SKU'));
-                    $.each(res, function (data, value) {
-
-                        $("#cmbSKU").append($("<option></option>").val(value.SKUID).html(value.SKUName));
-                    })
-
-                    // set the deafult state from session
-                    // Initialize select2
                     $("#cmbSKU").select2();
-
                 },
                 error: function (xhr, status, error) {
 
@@ -372,6 +327,39 @@
                 }
             });
         }
+        //function BindSKUCode() {
+
+        //    // drop down------
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "../Service/Invoicing_Service.asmx/BINDSKU_Code",
+        //        dataType: "json",
+        //        //data: JSON.stringify(ObjMyData),
+        //        contentType: "application/json",
+        //        success: function (res) {
+
+        //            $("#cmbSKU").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select SKU'));
+        //            $.each(res, function (data, value) {
+
+        //                $("#cmbSKU").append($("<option></option>").val(value.SKUID).html(value.SKUName));
+        //            })
+
+        //            // set the deafult state from session
+        //            // Initialize select2
+        //            $("#cmbSKU").select2();
+
+        //        },
+        //        error: function (xhr, status, error) {
+
+        //            alert("Error : " + error);
+        //            alert("Error Text: " + xhr.responseText);
+        //        },
+        //        failure: function (r) {
+        //            alert("Fail:" + r.responseText);
+        //        }
+        //    });
+        //}
+
         function BindSalesDetails() {
 
             var invID = $("#txtBindInvoiceID").val();
@@ -386,10 +374,7 @@
                 contentType: "application/json",
                 success: function (res) {
 
-
-
                     $.each(res, function (data, value) {
-
 
                         AddProduct(
                             value.Product_Name,
@@ -399,14 +384,8 @@
                             value.ProductID,
                             value.SKU_Code,
                             value.HSN
-
                         )
-
-
                     })
-
-
-
                 },
                 error: function (xhr, status, error) {
 
@@ -417,11 +396,8 @@
                     alert("Fail:" + r.responseText);
                 }
             });
-
-
-
-
         }
+
         function BindInvoiceDetails() {
             var invID = $("#txtBindInvoiceID").val();
             var ObjMyData = { invoiceID: invID };
@@ -470,18 +446,15 @@
                         $("#txtDateofSupply").val(strDateSupply);
                     }
 
-
                     $("#txtPlaceofSupply").val(data[0].SupplyPlace);
 
                     $("#txtConsigneeName").val(data[0].Consignee_Name);
-
 
                     $("#txtConsigneeGST").val(data[0].Consignee_GST);
 
                     $("#cmdConsigneeState").val(data[0].Consignee_StateID);
 
                     $("#txtConsigneeAddress").val(data[0].Consignee_Address);
-
                 },
                 error: function (xhr, status, error) {
 
@@ -492,9 +465,6 @@
                     alert("Fail:" + r.responseText);
                 }
             });
-
-
-
         }
 
         function AddProduct(ProName, ProQTY, ProRate, ProTotal, ProProductID, ProSKU, ProHSN) {
@@ -524,8 +494,6 @@
 
             DoBillCalculation();
 
-
-
             // QTY Column is Editable only , rest of the columns are read only . this is done inside js file.
             $('#tblProduct').editableTableWidget();
 
@@ -534,7 +502,6 @@
 
                 // get the Total amount value before you delete
                 var temp = $('#tblProduct').DataTable().row(RowNumber).data();
-
 
                 // access the currently change QTY like this
                 // Dont get it from DataTable as its not upate there on change.
@@ -553,9 +520,7 @@
                 $('#tblProduct').DataTable().row(RowNumber).data(temp).invalidate();
 
                 DoBillCalculation();
-
             });
-
 
             // HideProductIDColumn();
             ClearProductSelect();
@@ -571,11 +536,6 @@
             BindInvoiceDetails();
 
             BindSalesDetails();
-
-
-          
-
-
         }
     </script>
     <br />
@@ -601,8 +561,6 @@
 
                             <div class="form-group">
                             </div>
-
-
 
                         </div>
                         <div class="col-md-4">
@@ -635,8 +593,6 @@
                                     </div>
                                 </div>
 
-
-
                             </div>
                             <div class="col-md-4">
                                 <div class="form-row">
@@ -645,14 +601,12 @@
                                     <input type="text" id="cmdState" hidden />
                                       <input type="text" id="txtStateName" class="form-control text" disabled  />
 
-
                                    <%-- <asp:DropDownList ID="cmdState" class="custom-select" name="cmdState" runat="server" required="true">
                                     </asp:DropDownList>--%>
 
                                     <div class="invalid-feedback">
-                                        Please select your product.
+                                        Please select State.
                                     </div>
-
 
                                 </div>
                             </div>
@@ -720,7 +674,6 @@
 
                             </div>
 
-
                         </div>
 
                         <hr />
@@ -784,7 +737,7 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">Rate </label>
-                                    <input type="text" class="form-control text " id="txtRate" name="txtRate" placeholder="0.00">
+                                    <input type="text" class="form-control text " id="txtRate" name="txtRate" onchange="OnQTYChange()" autocomplete="off" placeholder="0.00">
                                     <div class="invalid-feedback text-left">
                                         Rate is missing
                                     </div>
@@ -810,7 +763,6 @@
                             <div class="col-md-12 mb-2  text-right">
                                 <button id="btnAddProduct" type="button" class="btn btn-primary ui-state-disabled "><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add Item</button>
                                 <button id="btnCancel" type="button" formnovalidate="formnovalidate" class="btn btn-secondary"><i class="fa fa-times mr-1" aria-hidden="true"></i>Cancel</button>
-
 
                             </div>
 
@@ -901,9 +853,7 @@
                                 <input type="text" class="form-control form-control-sm disableValue" id="txtAmountafterTax" placeholder="0.00">
                             </div>
 
-
                         </div>
-
 
                         <a class="btn btn-info mb-2 w-100 " data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Other Details <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
                         </a>
@@ -937,7 +887,6 @@
                                     <input type="text" class="form-control form-control-sm " id="txtPlaceofSupply">
                                 </div>
 
-
                             </div>
                             <h5 class="PnlHeading">Details of Consignee | Shipped to :</h5>
                             <div class="form-group row">
@@ -955,7 +904,6 @@
                                     <label for="cmdConsigneeState">State :</label>
                                     <select id="cmdConsigneeState" class="form-control form-control-sm" name="cmdConsigneeState">
                                     </select>
-
 
                                 </div>
                                 <div class="col-md-12">
@@ -979,7 +927,6 @@
                         <%--<asp:Button ID="Button1" runat="server" Text="Button" />--%>
                     </form>
 
-
                 </div>
 
             </div>
@@ -991,7 +938,6 @@
     </div>
     <%-- <button id="btnTest" class="mb-4" onclick="SaveOtherInvoiceDetials(1)">Test</button>
     <button id="btnReport" type="submit">Report</button>--%>
-
     <%--<button id="btnTest" class="mb-4" onclick="Test2()">Test</button>--%>
 
     <script>
@@ -999,8 +945,6 @@
         function Test2() {
 
             window.location.href = "Invoicing.aspx?";
-
-
         }
 
         // for manual validtion
@@ -1032,8 +976,6 @@
                 result = true;
             }
 
-
-
             // console.log(result);
 
             return result;
@@ -1056,7 +998,6 @@
                 parmIGST: $("#txtstrIGST").val(),
                 parmGST: $("#txtGST").val(),
 
-
                 parmCGST_Percent: $("#txtCGST").val(),
                 parmSGST_Percent: $("#txtSGST").val(),
                 parmIGST_Percent: $("#txtIGST").val(),
@@ -1064,9 +1005,7 @@
                 parmAmountAfterGST: $("#txtAmountafterTax").val(),
                 parmCreatedBy: <%= Session["UserID"] %>,
                 parmModifiedBy: <%= Session["UserID"] %>
- 
-            }
-
+            };
 
             //alert(JSON.stringify(ObjInvoiceMaster))
 
@@ -1077,7 +1016,6 @@
                 contentType: "application/json",
                 dataType: "json",
                 beforeSend: function () {
-
 
                     $('#lblLoadingtxt').text("Creating Invoice Please wait....");
                     $('#loadingBox').modal('show');
@@ -1103,7 +1041,6 @@
 
                         // post the product details in another request
                         PostSalesInvioceDetails(InvoiceID);
-
                     }
                     else {
 
@@ -1128,7 +1065,6 @@
 
                 // alert("Done : " + response);
             });
-
         }
 
         function PostSalesInvioceDetails(InvoiceID) {
@@ -1146,7 +1082,6 @@
                 objSales.SKU_Code = temp[1];
                 objSales.HSN_NO = temp[3];
 
-
                 // get the QTY like this because it is editable. 
                 //if you get like this it would be at 3th postion
                 objSales.QTY = row.find("TD").eq(3).html();
@@ -1155,7 +1090,6 @@
                 objSales.Total = temp[6];
 
                 objSales.InvID = InvoiceID;
-
 
                 lstSalesDetails.push(objSales);
             });
@@ -1193,13 +1127,8 @@
 
                         //  $('#mdlNormalMessage').modal('show');
 
-
-
                         // save other invoice details
                         SaveOtherInvoiceDetials(InvoiceID);
-
-
-
                     }
                     else {
 
@@ -1250,7 +1179,6 @@
                                 event.preventDefault();
                                 event.stopPropagation();
 
-
                                 PostSalesInvoiceMaster();
                             }
                             else {
@@ -1259,9 +1187,7 @@
                                 event.stopPropagation();
 
                                 form.classList.add('was-validated');
-
                             }
-
                         }
 
                     }, false);
@@ -1269,24 +1195,34 @@
             }, false);
         })();
 
-        function SaveOtherInvoiceDetials(InvoiceID) {
+        function validateproduct(PID, PTotal) {
 
+            var result = false;
+            if (PID > 0 && PTotal > 0) {
+
+                result = true;
+            }
+            else {
+                alert('Please select any Product.');
+                result = false;
+            }
+            return result;
+        }
+
+        function SaveOtherInvoiceDetials(InvoiceID) {
 
             var flag = false;
 
             // if any of the following fields are set then go ahead and save the data.
             if (document.getElementById("txtReverseCharge").value != "") {
                 flag = true;
-              
             }
 
             if (document.getElementById("txtTransportationMode").value != "") {
-                flag = true;
-               
+                flag = true; 
             }
             if (document.getElementById("txtVehicleNumber").value != "") {
                 flag = true;
-
             }
             
             
@@ -1296,28 +1232,22 @@
             }
             if (document.getElementById("txtPlaceofSupply").value != "") {
                 flag = true;
-
             }
 
             if (document.getElementById("txtConsigneeName").value != "") {
                 flag = true;
-              
             }
 
-           
             if ( document.getElementById("txtConsigneeGST").value != "") {
                 flag = true;
-              
             }
 
             console.log("cmdConsigneeState :" + document.getElementById("cmdConsigneeState").value);
 
             if (document.getElementById("cmdConsigneeState").value>0) {
                 flag = true;
-             
             }
           
-         
             if (flag) {
                 var ReverseCharge = $("#txtReverseCharge").val();
                 var TransportationMode = $("#txtTransportationMode").val();
@@ -1345,7 +1275,6 @@
                     parmPlaceofSupply: PlaceofSupply
                 };
 
-
                 //alert(JSON.stringify(ObjOtherInvoiceData));
 
                 $.ajax({
@@ -1356,18 +1285,13 @@
                     dataType: "json",
                     beforeSend: function () {
 
-
                         $('#lblLoadingtxt').text("Saving Other details....");
-
                     },
                     complete: function () {
 
-
                         $('#loadingBox').modal('hide');
                     },
-
                     success: function (responseData) {
-
 
                         // parse it to java script object so that you can access property
                         // data = $.parseJSON(responseData.d);
@@ -1383,10 +1307,8 @@
                             else {
                                 $('#lblMessage').text("Invoice have been updated successfully.");
                             }
-                          
-                       
-                            $('#mdlNormalMessage').modal('show');
 
+                            $('#mdlNormalMessage').modal('show');
 
                             // after reset remove the class else it will show validtion message.
                             let jsContactForm = document.getElementById('frmInvoice');                   // <=== 
@@ -1406,19 +1328,13 @@
 
                             $('#iconMsg').css('color', 'red');
                             $('#mdlNormalMessage').modal('show');
-
-
                         }
-
-
                     },
                     error: function (xhr, status, error) {
 
                         $('#loadingBox').modal('hide');
                         alert("Error : " + error);
                         alert("Error Text: " + xhr.responseText);
-
-
                     },
                     failure: function (r) {
                         alert("Fail:" + r.responseText);
@@ -1442,7 +1358,6 @@
 
                 $('#mdlNormalMessage').modal('show');
 
-
                 // after reset remove the class else it will show validtion message.
                 let jsContactForm = document.getElementById('frmInvoice');                   // <=== 
                 jsContactForm.classList.remove('was-validated');
@@ -1450,23 +1365,21 @@
                 window.location.href = "../Report/Report_Pages/Invoice_Report.aspx?InvoiceID=" + InvoiceID + "&PartyID=" + $("#cmbCustomer").val();
                 $('#frmInvoice').trigger("reset");
             }
-
-
-
         }
 
-
-
         $(function () {
-            $("#datepicker").datepicker();
-            $("#txtDateofSupply").datepicker();
+            $("#datepicker").datepicker({
+                maxDate: 0
+            });
+            $("#txtDateofSupply").datepicker({
+                maxDate: 0
+            });
         });
 
         $("#lnkRefresh").click(function () {
             event.preventDefault();
             BindCustomer();
             alert("customer loaded");
-
         });
 
         $("#btnCancel").click(function () {
@@ -1476,7 +1389,6 @@
             $("#txtRate").val("");
             $("#txtProductID").val("");
             $("#txtTotal").val("");
-
         });
 
         // add new row to the list.
@@ -1490,8 +1402,10 @@
             var SKUNumber = $("#txtSKUNumber").val();
             var HSN_No = $("#txtHSN_No").val();
 
-            // if product ID already exists
-            var rowId = $('#tblProduct').dataTable().fnFindCellRowIndexes(PID, 0);
+            if (validateproduct(PID, PTotal)) {
+
+                // if product ID already exists
+                var rowId = $('#tblProduct').dataTable().fnFindCellRowIndexes(PID, 0);
 
             if (rowId == '') {
 
@@ -1509,6 +1423,7 @@
                 ]).draw(false);
 
                 DoBillCalculation();
+                $("#txtRate").removeClass("OldRate");
             }
             else {
                 // update the exsting row
@@ -1519,7 +1434,6 @@
                 // get the column value (QTY)
                 var ExistingQTY = temp[4];
 
-
                 // add the qty
                 var NewQTY = parseInt(ExistingQTY) + parseInt(PQTY);
 
@@ -1529,11 +1443,9 @@
                 temp[4] = NewQTY;
                 temp[6] = Total;
 
-
                 // add the row back to table
                 $('#tblProduct').DataTable().row(rowId).data(temp).invalidate();
                 DoBillCalculation();
-
             }
 
             // QTY Column is Editable only , rest of the columns are read only . this is done inside js file.
@@ -1544,7 +1456,6 @@
 
                 // get the Total amount value before you delete
                 var temp = $('#tblProduct').DataTable().row(RowNumber).data();
-
 
                 // access the currently change QTY like this
                 // Dont get it from DataTable as its not upate there on change.
@@ -1566,12 +1477,10 @@
 
             });
 
-
             // HideProductIDColumn();
             ClearProductSelect();
-
+        }
         });
-
 
         function CalculateDiscount() {
 
@@ -1607,8 +1516,6 @@
 
             $("#txtAmountBeforeTax").val(NewTotal);
 
-        
-
             // get the column value (QTY)
             var ExistingQTY = temp[2];
             $('#tblProduct').DataTable().row($(this).parents('tr'))
@@ -1628,11 +1535,12 @@
                 $('#txtstrSGST').val("0");
                 $('#txtstrIGST').val("0");
                 
-                
                 $('#txtIGST').val("0");
                 $('#txtAmountafterTax').val("0");
                 $('#txtAmountBeforeTax').val("0");
-                
+
+                $("#btnAddProduct").addClass("ui-state-disabled");
+                $("#txtRate").removeClass("OldRate");
             }
             else {
                 DoBillCalculation();
@@ -1678,7 +1586,10 @@
             console.log("Customer : " + selectedValue);
             GetSelectedCustomer(selectedValue);
             //alert("Selected Text: " + selectedText + " Value: " + selectedValue);
+
+            $("#select2-cmbSKU-container").text("Select SKU");
         });
+
         // Get the product details 101
         $("#cmbProduct, #cmbSKU").change(function () {
             var selectedText = $(this).find("option:selected").text();
@@ -1688,36 +1599,27 @@
             if (prID == null || prID == "0") {
 
                 alert("Please select the party first.");
-
+                topFunction();
             }
             else {
 
                 console.log("Product ID : " + selectedValue);
                 GetSelectedProduct(selectedValue, prID);
             }
-
-
             //alert("Selected Text: " + selectedText + " Value: " + selectedValue);
         });
 
         $(document).ready(function () {   // dynamic Table
 
-         
             var BindID = $('#txtBindInvoiceID').val();
             if (BindID == "0") {
                 InitDataTable();
                 BindInitialData();
                 BindState();
             }
-
             //// dont hide the column if you are gona use it as Auto ID
             //table.column(0).visible(false);
-
-
-
-
         });
-
 
         function GetSelectedCustomer(custID) {
 
@@ -1773,7 +1675,6 @@
                     // single row would come
                     $("#btnAddProduct").removeClass("ui-state-disabled");
 
-
                     $("#txtProductName").val(res[0].SKUName);
                     $("#txtQTY").val("1");
                     $("#txtRate").val(res[0].Rate);
@@ -1785,24 +1686,19 @@
                     $("#txtHSN_No").val(res[0].HSN_No);
                     if (res[0].IsOld=="1")
                     {
-                        $("#txtRate").addClass("OldRate");
-                        
+                        $("#txtRate").addClass("OldRate");   
                     }
                     else
                     {
                         $("#txtRate").removeClass("OldRate");
                     }
-
                 },
                 beforeSend: function () {
-
 
                     $('#lblLoadingtxt').text("Fetching Product Details....");
                     $('#loadingBox').modal('show');
                 },
                 complete: function () {
-
-
 
                     $('#loadingBox').modal('hide');
                 },
@@ -1816,8 +1712,6 @@
                 }
             });
         }
-
-
 
     </script>
 </asp:Content>

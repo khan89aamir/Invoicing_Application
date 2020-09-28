@@ -2,6 +2,14 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <br />
+
+    <%--    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="table2excel.js" type="text/javascript"></script>--%>
+
+<%--<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"></script>--%>
+<%--<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css"></script>--%>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
     <div class="container">
         <div class="container d-flex justify-content-start">
             <div class="card border-info" style="width: 100%">
@@ -38,6 +46,7 @@
                         <div class="row">
                             <div class="col-sm-8 text-right">
                                 <button id="btnSearch" type="submit" class="btn btn-primary"><i class="fa fa-search mr-1" aria-hidden="true"></i>Search</button>
+
                             </div>
                         </div>
                         <hr />
@@ -54,7 +63,7 @@
                                             <th>Customer Name</th>
                                             <th>Total QTY</th>
                                             <th>Total Amount</th>
-                                              <th>Delete</th>
+                                            <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -71,9 +80,9 @@
         </div>
 
     </div>
-
+    <br />
+    <br />
     <script>
-
 
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function () {
@@ -96,6 +105,7 @@
                                 event.stopPropagation();
 
                                 $.GetInvoiceDetails();
+                                
                             }
                         }
                         form.classList.add('was-validated');
@@ -132,7 +142,25 @@
                     type: 'POST',
                     data: SearchFilterData,
                     dataType: 'json',
+                    beforeSend: function () {
+
+                        $('#lblLoadingtxt').text("Fetching Invoice Details....");
+                        $('#loadingBox').modal('show');
+                    },
+                    complete: function () {
+
+                        $('#loadingBox').modal('hide');
+                    },
                     dataSrc: function (d) {
+
+                        //var blob = new Blob([d.data], { type: 'data:application/vnd.ms-excel' }); 
+                        //var downloadUrl = URL.createObjectURL(blob);
+                        //var a = document.createElement("a");
+                        //a.href = downloadUrl;
+                        //a.download = "downloadFile.xls";
+                        //document.body.appendChild(a);
+                        //a.click();
+
                         return d
                     }
                 },
@@ -157,8 +185,15 @@
                             return "<a class='lnkDelete btn btn btn-primary' href='" + data + "'>Delete</a>";
                         }
                     }
-
                 ],
+
+                dom: 'Bfrtip',
+                buttons: [
+                    //'copyHtml5',
+                    'excelHtml5',
+                    //'csvHtml5',
+                    //'pdfHtml5'
+                ]
             }); // table ends here
 
             $('#example tbody').on('click', 'tr', function () {
@@ -175,11 +210,30 @@
             //to invisble multipe columns
             // table.columns([1, 2]).visible(false);
             table.columns([1]).visible(false);
+
+            //var blob = new Blob([table], { type: 'data:application/vnd.ms-excel' }); 
+            //var downloadUrl = URL.createObjectURL(blob);
+            //var a = document.createElement("a");
+            //a.href = downloadUrl;
+            //a.download = "downloadFile.xlsx";
+            //document.body.appendChild(a);
+            //a.click();
         };
 
+        //$("#btnExport").click(function () {
+        //    $("#example").table2excel({
+        //        filename: "Table.xlsx"
+        //    });
+        //});
+
         $(function () {
-            $("#dtpFromDate").datepicker();
-            $("#dtpToDate").datepicker();
+            $("#dtpFromDate").datepicker({
+                maxDate: 0
+            });
+
+            $("#dtpToDate").datepicker({
+                maxDate: 0
+            });
         });
 
         $("#example").on("click", ".lnkSelect", function () {
@@ -191,22 +245,13 @@
 
             window.location.href = "Invoicing.aspx?InvoiceID=" + addressValue;
 
-          
-
-      
-
             return false; // <---------or this if you want to prevent bubbling as well
         });
-        $("#example").on("click", ".lnkDelete", function () {
 
-            event.preventDefault(); // <---------you may want this to stop the link
+        $.DeleteInvoice = function (id) {
 
-            // get the link value
-            var addressValue = $(this).attr("href");
+            var objData = { InvoiceID: id };
 
-
-            var objData = { InvoiceID: addressValue };
-            // drop down------
             $.ajax({
                 type: "POST",
                 url: "../Service/Invoicing_Service.asmx/DeleteInvoice",
@@ -217,18 +262,15 @@
 
                     $('#lblMessage').text("Invoice have been deleted successfully.");
                     $('#mdlNormalMessage').modal('show');
-                    $.GetInvoiceDetails();
 
+                    $.GetInvoiceDetails();
                 },
                 beforeSend: function () {
-
 
                     $('#lblLoadingtxt').text("Deleting Invoice....");
                     $('#loadingBox').modal('show');
                 },
                 complete: function () {
-
-                 
 
                     $('#loadingBox').modal('hide');
                 },
@@ -241,11 +283,30 @@
                     alert("Fail:" + r.responseText);
                 }
             });
+        };
 
+        var deletedID = 0;
+        $("#example").on("click", ".lnkDelete", function () {
+
+            event.preventDefault(); // <---------you may want this to stop the link
+
+            $('#spanConfirmMsg').text("Are you sure , you want to delete?");
+            $('#confirmationModel').modal('show');
+
+            // get the link value
+            var addressValue = $(this).attr("href");
+            deletedID = addressValue;
 
             return false; // <---------or this if you want to prevent bubbling as well
         });
-        
+
+        // confrimed to delete
+        $('#btnConfirm').click(function () {
+
+            $.DeleteInvoice(deletedID);
+
+            $('#confirmationModel').modal('hide');
+        });
 
     </script>
 </asp:Content>

@@ -370,6 +370,15 @@
                 data: JSON.stringify(UserIDData),
                 contentType: "application/json",
                 dataType: "json",
+                beforeSend: function () {
+
+                    $('#lblLoadingtxt').text("Fetching Profile Details....");
+                    $('#loadingBox').modal('show');
+                },
+                complete: function () {
+
+                    $('#loadingBox').modal('hide');
+                },
                 success: function (responseData) {
 
                     //alert("success : " + responseData.Table[0].Address);

@@ -368,7 +368,9 @@
         };
 
         $(function () {
-            $("#dtpTranDate").datepicker();
+            $("#dtpTranDate").datepicker({
+                maxDate: 0
+            });
         });
 
         function sucess() {
@@ -488,6 +490,15 @@
                         //data: { InvoiceNo: varInvoiceNo },
                         data: SearchFilterData,
                         dataType: 'json',
+                        beforeSend: function () {
+
+                            $('#lblLoadingtxt').text("Fetching Part Payment List....");
+                            $('#loadingBox').modal('show');
+                        },
+                        complete: function () {
+
+                            $('#loadingBox').modal('hide');
+                        },
                         dataSrc: function (d) {
                             return d
                         }
@@ -607,6 +618,15 @@
                     data: { InvoiceID: varSaleInvoiceID, CustomerID: varCustomerID },
                     //contentType: "application/json",
                     dataType: 'json',
+                    beforeSend: function () {
+
+                        $('#lblLoadingtxt').text("Fetching Part Payment Details....");
+                        $('#loadingBox').modal('show');
+                    },
+                    complete: function () {
+
+                        $('#loadingBox').modal('hide');
+                    },
                     dataSrc: function (d) {
 
                         return d

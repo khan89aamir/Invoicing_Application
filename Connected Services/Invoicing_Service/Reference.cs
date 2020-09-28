@@ -13,122 +13,129 @@ namespace Invoicing_Application.Invoicing_Service {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Invoicing_Service.Invoicing_ServiceSoap")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://anjacreation.in/Service", ConfigurationName="Invoicing_Service.Invoicing_ServiceSoap")]
     public interface Invoicing_ServiceSoap {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindState", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindState", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void BindState();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindState", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindState", ReplyAction="*")]
         System.Threading.Tasks.Task BindStateAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindHSNCode", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindHSNCode", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void BindHSNCode();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindHSNCode", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindHSNCode", ReplyAction="*")]
         System.Threading.Tasks.Task BindHSNCodeAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ManageProducts", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/ManageProducts", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void ManageProducts(string SKUCode, string SKUName, decimal Rate, string Description, int ProudctID, int HSNID, int UserID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ManageProducts", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/ManageProducts", ReplyAction="*")]
         System.Threading.Tasks.Task ManageProductsAsync(string SKUCode, string SKUName, decimal Rate, string Description, int ProudctID, int HSNID, int UserID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSKUDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetSKUDetails", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void GetSKUDetails();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSKUDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetSKUDetails", ReplyAction="*")]
         System.Threading.Tasks.Task GetSKUDetailsAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DeleteSKU", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/DeleteSKU", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void DeleteSKU(int SKUID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DeleteSKU", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/DeleteSKU", ReplyAction="*")]
         System.Threading.Tasks.Task DeleteSKUAsync(int SKUID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DeleteInvoice", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/DeleteInvoice", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void DeleteInvoice(int InvoiceID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DeleteInvoice", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/DeleteInvoice", ReplyAction="*")]
         System.Threading.Tasks.Task DeleteInvoiceAsync(int InvoiceID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ManageCustomers", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/ManageCustomers", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void ManageCustomers(string CustomerName, string CompanyName, string GSTNo, string EmailID, string Address, int StateID, int CustomerID, int UserID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ManageCustomers", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/ManageCustomers", ReplyAction="*")]
         System.Threading.Tasks.Task ManageCustomersAsync(string CustomerName, string CompanyName, string GSTNo, string EmailID, string Address, int StateID, int CustomerID, int UserID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetCustomerDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetCustomerDetails", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void GetCustomerDetails();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetCustomerDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetCustomerDetails", ReplyAction="*")]
         System.Threading.Tasks.Task GetCustomerDetailsAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DeleteCustomer", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/DeleteCustomer", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void DeleteCustomer(int CustomerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DeleteCustomer", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/DeleteCustomer", ReplyAction="*")]
         System.Threading.Tasks.Task DeleteCustomerAsync(int CustomerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Login", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/Login", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         bool Login(string UserName, string Password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Login", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/Login", ReplyAction="*")]
         System.Threading.Tasks.Task<bool> LoginAsync(string UserName, string Password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetDefaultState", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/ValidateLogin", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Data.DataTable ValidateLogin(string UserName, string Password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/ValidateLogin", ReplyAction="*")]
+        System.Threading.Tasks.Task<System.Data.DataTable> ValidateLoginAsync(string UserName, string Password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetDefaultState", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         string GetDefaultState();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetDefaultState", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetDefaultState", ReplyAction="*")]
         System.Threading.Tasks.Task<string> GetDefaultStateAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetCustomerAutoPopulate", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetCustomerAutoPopulate", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void GetCustomerAutoPopulate();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetCustomerAutoPopulate", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetCustomerAutoPopulate", ReplyAction="*")]
         System.Threading.Tasks.Task GetCustomerAutoPopulateAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindCustomer", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindCustomer", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void BindCustomer();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindCustomer", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindCustomer", ReplyAction="*")]
         System.Threading.Tasks.Task BindCustomerAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSelectedCustomer", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetSelectedCustomer", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void GetSelectedCustomer(int CustomerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSelectedCustomer", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetSelectedCustomer", ReplyAction="*")]
         System.Threading.Tasks.Task GetSelectedCustomerAsync(int CustomerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindProduct", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindProduct", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void BindProduct();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindProduct", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindProduct", ReplyAction="*")]
         System.Threading.Tasks.Task BindProductAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSelectedProduct", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetSelectedProduct", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void GetSelectedProduct(int ProductID, int PartyID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSelectedProduct", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetSelectedProduct", ReplyAction="*")]
         System.Threading.Tasks.Task GetSelectedProductAsync(int ProductID, int PartyID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertUpdateSaleInvoiceMaster", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/InsertUpdateSaleInvoiceMaster", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void InsertUpdateSaleInvoiceMaster(
                     int parmSaleInvoiceID, 
@@ -149,7 +156,7 @@ namespace Invoicing_Application.Invoicing_Service {
                     string parmCreatedBy, 
                     string parmModifiedBy);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertUpdateSaleInvoiceMaster", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/InsertUpdateSaleInvoiceMaster", ReplyAction="*")]
         System.Threading.Tasks.Task InsertUpdateSaleInvoiceMasterAsync(
                     int parmSaleInvoiceID, 
                     string parmInvoiceNumber, 
@@ -169,144 +176,144 @@ namespace Invoicing_Application.Invoicing_Service {
                     string parmCreatedBy, 
                     string parmModifiedBy);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertUpdateSalesDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/InsertUpdateSalesDetails", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void InsertUpdateSalesDetails(string PostedData);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertUpdateSalesDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/InsertUpdateSalesDetails", ReplyAction="*")]
         System.Threading.Tasks.Task InsertUpdateSalesDetailsAsync(string PostedData);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ManageMyProfile", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/ManageMyProfile", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void ManageMyProfile(int UserID, string OwnerName, string CompanyName, string GSTNo, string EmailID, string Address, int StateID, string Password, string MobileNo, string TNC, string BankName, string AccountNo, string IFSCCode, string BranchName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ManageMyProfile", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/ManageMyProfile", ReplyAction="*")]
         System.Threading.Tasks.Task ManageMyProfileAsync(int UserID, string OwnerName, string CompanyName, string GSTNo, string EmailID, string Address, int StateID, string Password, string MobileNo, string TNC, string BankName, string AccountNo, string IFSCCode, string BranchName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetMyProfile", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetMyProfile", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void GetMyProfile(int UserID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetMyProfile", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetMyProfile", ReplyAction="*")]
         System.Threading.Tasks.Task GetMyProfileAsync(int UserID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetPartPaymentList", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetPartPaymentList", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void GetPartPaymentList(string InvoiceNo, int CustomerID, int PaymentStatus);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetPartPaymentList", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetPartPaymentList", ReplyAction="*")]
         System.Threading.Tasks.Task GetPartPaymentListAsync(string InvoiceNo, int CustomerID, int PaymentStatus);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertPartPayment", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/InsertPartPayment", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void InsertPartPayment(string InvoiceNo, int InvoiceID, int CustomerID, string PaymentMode, string ChequeNo, System.DateTime TransactionDate, decimal PayAmount, int UserID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertPartPayment", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/InsertPartPayment", ReplyAction="*")]
         System.Threading.Tasks.Task InsertPartPaymentAsync(string InvoiceNo, int InvoiceID, int CustomerID, string PaymentMode, string ChequeNo, System.DateTime TransactionDate, decimal PayAmount, int UserID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetPartPaymentDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetPartPaymentDetails", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void GetPartPaymentDetails(int InvoiceID, int CustomerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetPartPaymentDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetPartPaymentDetails", ReplyAction="*")]
         System.Threading.Tasks.Task GetPartPaymentDetailsAsync(int InvoiceID, int CustomerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ManageHSNCode", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/ManageHSNCode", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void ManageHSNCode(string HSNCode, string HSNDescription, decimal CGST, decimal SGST, decimal IGST, int HSNID, int UserID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ManageHSNCode", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/ManageHSNCode", ReplyAction="*")]
         System.Threading.Tasks.Task ManageHSNCodeAsync(string HSNCode, string HSNDescription, decimal CGST, decimal SGST, decimal IGST, int HSNID, int UserID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetHSNDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetHSNDetails", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void GetHSNDetails();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetHSNDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetHSNDetails", ReplyAction="*")]
         System.Threading.Tasks.Task GetHSNDetailsAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DeletedHSNCode", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/DeletedHSNCode", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void DeletedHSNCode(int HSNID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DeletedHSNCode", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/DeletedHSNCode", ReplyAction="*")]
         System.Threading.Tasks.Task DeletedHSNCodeAsync(int HSNID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetInvoiceDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetInvoiceDetails", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void GetInvoiceDetails(System.DateTime FromDate, System.DateTime ToDate);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetInvoiceDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetInvoiceDetails", ReplyAction="*")]
         System.Threading.Tasks.Task GetInvoiceDetailsAsync(System.DateTime FromDate, System.DateTime ToDate);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ForgotEmailIDData", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/ForgotEmailIDData", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void ForgotEmailIDData(string ForgotEmailID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ForgotEmailIDData", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/ForgotEmailIDData", ReplyAction="*")]
         System.Threading.Tasks.Task ForgotEmailIDDataAsync(string ForgotEmailID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SendForgotPass", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/SendForgotPass", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void SendForgotPass(string ForgotEmailID, string Password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SendForgotPass", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/SendForgotPass", ReplyAction="*")]
         System.Threading.Tasks.Task SendForgotPassAsync(string ForgotEmailID, string Password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BINDSKU_Code", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BINDSKU_Code", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void BINDSKU_Code();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BINDSKU_Code", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BINDSKU_Code", ReplyAction="*")]
         System.Threading.Tasks.Task BINDSKU_CodeAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SaveOtherInfoiceDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/SaveOtherInfoiceDetails", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void SaveOtherInfoiceDetails(string parmInvoiceID, string parmReverseCharge, string parmTransportation_Mode, string parmVehicle_Number, string parmConsignee_Name, string parmConsignee_GST, string parmConsignee_StateID, string parmConsignee_Address, System.DateTime parmSupplyDate, string parmConsignee_PAN, string parmPlaceofSupply);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SaveOtherInfoiceDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/SaveOtherInfoiceDetails", ReplyAction="*")]
         System.Threading.Tasks.Task SaveOtherInfoiceDetailsAsync(string parmInvoiceID, string parmReverseCharge, string parmTransportation_Mode, string parmVehicle_Number, string parmConsignee_Name, string parmConsignee_GST, string parmConsignee_StateID, string parmConsignee_Address, System.DateTime parmSupplyDate, string parmConsignee_PAN, string parmPlaceofSupply);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetReportData", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetReportData", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Data.DataSet GetReportData(string InvoiceID, string PartyID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetReportData", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetReportData", ReplyAction="*")]
         System.Threading.Tasks.Task<System.Data.DataSet> GetReportDataAsync(string InvoiceID, string PartyID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindCGST", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindCGST", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void BindCGST();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindCGST", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindCGST", ReplyAction="*")]
         System.Threading.Tasks.Task BindCGSTAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindSGST", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindSGST", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void BindSGST();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindSGST", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindSGST", ReplyAction="*")]
         System.Threading.Tasks.Task BindSGSTAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindIGST", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindIGST", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void BindIGST();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/BindIGST", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindIGST", ReplyAction="*")]
         System.Threading.Tasks.Task BindIGSTAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSalesDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetSalesDetails", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void GetSalesDetails(string InvoiceID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSalesDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetSalesDetails", ReplyAction="*")]
         System.Threading.Tasks.Task GetSalesDetailsAsync(string InvoiceID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetBindInvoiceDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetBindInvoiceDetails", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void GetBindInvoiceDetails(string invoiceID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetBindInvoiceDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetBindInvoiceDetails", ReplyAction="*")]
         System.Threading.Tasks.Task GetBindInvoiceDetailsAsync(string invoiceID);
     }
     
@@ -415,6 +422,14 @@ namespace Invoicing_Application.Invoicing_Service {
         
         public System.Threading.Tasks.Task<bool> LoginAsync(string UserName, string Password) {
             return base.Channel.LoginAsync(UserName, Password);
+        }
+        
+        public System.Data.DataTable ValidateLogin(string UserName, string Password) {
+            return base.Channel.ValidateLogin(UserName, Password);
+        }
+        
+        public System.Threading.Tasks.Task<System.Data.DataTable> ValidateLoginAsync(string UserName, string Password) {
+            return base.Channel.ValidateLoginAsync(UserName, Password);
         }
         
         public string GetDefaultState() {

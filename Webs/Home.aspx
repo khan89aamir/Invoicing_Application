@@ -138,10 +138,8 @@
                         }
                         else {
 
-                          
                             if (form.id == "frmaccount") {
                                 if (DoLogin()) {
-
                                     alert('ok');
                                 }
                                 else {
@@ -156,7 +154,6 @@
                 });
             }, false);
         })();
-
 
         $(document).ready(function () {
 
@@ -355,6 +352,7 @@
                     // alert("Done : " + response);
                 });
             }
+
         });
 
         $.SendEmail = function (emailid, pass) {

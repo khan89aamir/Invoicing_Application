@@ -17,11 +17,12 @@ namespace Invoicing_Application.Webs
         [System.Web.Services.WebMethod]
         public static string SetLoginSession(string UserName, string DefaulStatetValue, int UserID)
         {
-            HttpContext.Current.Session["UserID"] = UserID;
-            HttpContext.Current.Session["UserName"] = UserName;
-            HttpContext.Current.Session["DefaultValue"] = DefaulStatetValue;
+            //HttpContext.Current.Session["UserID"] = UserID;
+            //HttpContext.Current.Session["UserName"] = UserName;
+            //HttpContext.Current.Session["DefaultValue"] = DefaulStatetValue;
 
-            return "Session Set Successfully. Deafult :"+ DefaulStatetValue;
+            //return "Session Set Successfully. Deafult :"+ DefaulStatetValue;
+            return "";
         }
 
         [System.Web.Services.WebMethod]
