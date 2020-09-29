@@ -1042,6 +1042,29 @@ namespace Invoicing_Application.Service
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void GetInvoiceDetailsByID(int InvoiceID)
+        {
+            // System.Threading.Thread.Sleep(2000);
+            string jsonData = "{}";
+
+            ObjDAL.SetStoreProcedureData("ParamInvoiceID", MySqlConnector.MySqlDbType.Int32, InvoiceID, clsMySQLCoreApp.ParamType.Input);
+
+            DataSet ds = ObjDAL.ExecuteStoreProcedure_Get("anjacreation.SPR_GetInvoiceDetailsByID");
+            if (ds != null && ds.Tables.Count > 0)
+            {
+                DataTable dataTable = ds.Tables[0];
+                jsonData = DataTableToJSONWithJSONNet(dataTable);
+            }
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.AddHeader("content-length", jsonData.Length.ToString());
+            Context.Response.Write(jsonData);
+            Context.Response.Flush();
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void ForgotEmailIDData(string ForgotEmailID)
         {
             // System.Threading.Thread.Sleep(2000);
