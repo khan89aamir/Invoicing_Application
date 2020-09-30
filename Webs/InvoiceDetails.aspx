@@ -83,6 +83,24 @@
                                 </table>
                             </div>
                         </div>
+
+                        <div id="dvdetails" style="display:none">
+                        <table id="dtdetail" class="table table-hover table-responsive-md" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th>SKU Code</th>
+                                            <th>SKU Name</th>
+                                            <th>HSN Code</th>
+                                            <th>Rate</th>
+                                            <th>QTY</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+
                     </form>
                 </div>
 
@@ -176,12 +194,6 @@
                     }
                 },
                 columns: [
-                    //{
-                    //    'className': 'details-control', // details for drop down selector column
-                    //    'orderable': false,
-                    //     'data': null,
-                    //     defaultContent': ''
-                    //},
                     {
                         data: 'Select',
                         render: function (data, type, row) {
@@ -264,9 +276,6 @@
                 else {
                     if (row.data() != undefined) {
 
-                        //if (table.row('.shown').length) {
-                        //    $('.details-control', table.row('.shown').node()).click();
-                        //}
                         // Closing previous opened td child
                         table.rows().eq(0).each(function (idx) {
 
@@ -276,6 +285,7 @@
                             }
                         });
                         row.child(GetInvoiceDetailsByID(row.data())).show();
+                        //row.child(testTable(row.data())).show();
                         tr.addClass('shown');
                         //this.src = "http://i.imgur.com/d4ICC.png";
                     }
@@ -302,6 +312,7 @@
         //});
 
         function GetInvoiceDetailsByID(rowData) {
+
             var div = $('<div/>')
                 .addClass('loading')
                 .text('Loading...');
@@ -330,6 +341,7 @@
                     test += tr;
 
                     div.html(test).removeClass('loading');
+                    
                 },
                 error: function (xhr, status, error) {
                     div.removeClass('loading').text('Error : ' + error);
@@ -339,6 +351,53 @@
             });
             return div;
         }
+        function testTable(rowData) {
+
+            var table = $('#dtdetail').DataTable({
+                fixedHeader: true,
+                processing: true,
+                responsive: true,
+                stateSave: true,
+                aLengthMenu: [
+                    [10, 25, 50, 100, 200, -1],
+                    [10, 25, 50, 100, 200, "All"]
+                ],
+                ajax: {
+
+                    url: "../Service/Invoicing_Service.asmx/GetInvoiceDetailsByID",
+                    type: 'POST',
+                    data: {
+                        InvoiceID: rowData.SaleInvoiceID
+                    },
+                    dataType: 'json',
+                    beforeSend: function () {
+
+                        $('#lblLoadingtxt').text("Fetching Invoice Details....");
+                        $('#loadingBox').modal('show');
+                    },
+                    complete: function () {
+
+                        $('#dvdetails').addClass('display:block');
+                        $('#dvdetails').removeClass('display:none');
+
+                        $('#loadingBox').modal('hide');
+                    },
+                    dataSrc: function (d) {
+
+                        return d
+                    }
+                },
+                columns: [
+                    { 'data': 'SKUCode' },
+                    { 'data': 'SKUName' },
+                    { 'data': 'HSNCode' },
+                    { 'data': 'Rate' },
+                    { 'data': 'QTY' },
+                    { 'data': 'Total' }
+                ],
+
+            }); // table ends here
+        };
 
         $(function () {
             $("#dtpFromDate").datepicker({
