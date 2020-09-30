@@ -2,13 +2,24 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <br />
-
+    <style>
+    .td.details-control {
+    background: url('https://datatables.net/dev/accessibility/DataTables_1_10/examples/resources/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+.tr.shown td.details-control {
+    background: url('https://datatables.net/dev/accessibility/DataTables_1_10/examples/resources/details_close.png') no-repeat center center;
+}
+        </style>
     <%--    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="table2excel.js" type="text/javascript"></script>--%>
 
-<%--<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"></script>--%>
-<%--<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css"></script>--%>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <%--<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"></script>--%>
+    <%--<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css"></script>--%>
+    <%--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>--%>
+    <script src="../assets/js/jszip.min.js"></script>
+    <link href="../assets/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <%--<link href="../assets/css/jquery.dataTables.min.css" rel="stylesheet" />--%>
 
     <div class="container">
         <div class="container d-flex justify-content-start">
@@ -22,7 +33,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
 
-                                    <label for="txtMail">From Date: </label>
+                                    <label for="dtpFromDate">From Date: </label>
                                     <input type="text" class="form-control text" autocomplete="off" id="dtpFromDate" required>
                                     <div class="invalid-feedback text-left">
                                         Select Invoice From Date
@@ -33,7 +44,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
 
-                                    <label for="txtMail">To Date: </label>
+                                    <label for="dtpToDate">To Date: </label>
                                     <input type="text" class="form-control text" autocomplete="off" id="dtpToDate" required>
                                     <div class="invalid-feedback text-left">
                                         Select Invoice To Date
@@ -105,7 +116,7 @@
                                 event.stopPropagation();
 
                                 $.GetInvoiceDetails();
-                                
+
                             }
                         }
                         form.classList.add('was-validated');
@@ -165,6 +176,12 @@
                     }
                 },
                 columns: [
+                    //{
+                    //    'className': 'details-control', // details for drop down selector column
+                    //    'orderable': false,
+                    //     'data': null,
+                    //     defaultContent': ''
+                    //},
                     {
                         data: 'Select',
                         render: function (data, type, row) {
@@ -189,11 +206,41 @@
 
                 dom: 'Bfrtip',
                 buttons: [
-                    //'copyHtml5',
-                    'excelHtml5',
-                    //'csvHtml5',
-                    //'pdfHtml5'
+                    {
+                        extend: 'csv',//csvHtml
+                        title: 'Invoice Details',
+                        //footer: false,
+                        exportOptions: {
+                            columns: [2, 3, 4, 5, 6]
+                            //columns: [0,':visible']
+                        }
+
+                    },
+                    {
+                        extend: 'excel', //excelHtml
+                        title: '',//Invoice Details
+                        filename: 'Invoice Details',
+                        text: '<i class="fa fa-download mr-1" aria-hidden="true"> Excel</i>',
+                        titleAttr: 'Export Excel',
+                        //text: 'Download Excel',
+                        //autoFilter: true,
+                        //footer: false,
+                        exportOptions: {
+                            modifier: {
+                                page: 'all'
+                            },
+                            columns: [2, 3, 4, 5, 6]
+                        },
+                        //customize: function (xlsx) {
+                        //    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        //    $('row:first c', sheet).attr('s', '42');
+                        //}
+                    }
                 ]
+                //, "bInfo": false,
+                //fixedHeader: true,
+                //"iDisplayLength": 100,
+
             }); // table ends here
 
             $('#example tbody').on('click', 'tr', function () {
@@ -204,6 +251,34 @@
                 else {
                     table.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
+                }
+
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+
+                if (row.child.isShown()) {
+                    row.child.hide();
+                    //this.src = "http://i.imgur.com/SD7Dz.png";
+                    tr.removeClass('shown');
+                }
+                else {
+                    if (row.data() != undefined) {
+
+                        //if (table.row('.shown').length) {
+                        //    $('.details-control', table.row('.shown').node()).click();
+                        //}
+                        // Closing previous opened td child
+                        table.rows().eq(0).each(function (idx) {
+
+                            var row = table.row(idx);
+                            if (row.child.isShown()) {
+                                row.child.hide();
+                            }
+                        });
+                        row.child(GetInvoiceDetailsByID(row.data())).show();
+                        tr.addClass('shown');
+                        //this.src = "http://i.imgur.com/d4ICC.png";
+                    }
                 }
             });
 
@@ -225,6 +300,45 @@
         //        filename: "Table.xlsx"
         //    });
         //});
+
+        function GetInvoiceDetailsByID(rowData) {
+            var div = $('<div/>')
+                .addClass('loading')
+                .text('Loading...');
+
+            $.ajax({
+                url: '../Service/Invoicing_Service.asmx/GetInvoiceDetailsByID',
+                type: 'POST',
+                data: {
+                    InvoiceID: rowData.SaleInvoiceID
+                },
+                dataType: 'json',
+                success: function (json) {
+
+                    var test = '<table id="InvoiceDetails" class="details-control table-responsive-md" style="width: 80%"><thead><tr><th>SKU Code</th><th>SKU Name</th><th>HSN Code</th><th>Rate</th><th>QTY</th><th>Total</th></tr></thead><tbody>';
+                    var tr = '';
+                    for (var i = 0; i < json.length; i++) {
+                        tr += '<tr>';
+                        tr += '<td>' + json[i].SKUCode + '</td>';
+                        tr += '<td>' + json[i].SKUName + '</td>';
+                        tr += '<td>' + json[i].HSNCode + '</td>';
+                        tr += '<td>' + json[i].Rate + '</td>';
+                        tr += '<td>' + json[i].QTY + '</td>';
+                        tr += '<td>' + json[i].Total + '</td>';
+                    }
+                    tr += '</tr></tbody></table>';
+                    test += tr;
+
+                    div.html(test).removeClass('loading');
+                },
+                error: function (xhr, status, error) {
+                    div.removeClass('loading').text('Error : ' + error);
+                    //alert("Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
+                }
+            });
+            return div;
+        }
 
         $(function () {
             $("#dtpFromDate").datepicker({
