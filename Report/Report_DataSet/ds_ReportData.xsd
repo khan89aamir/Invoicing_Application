@@ -22,6 +22,12 @@
               <xs:element name="Rate" msprop:Generator_ColumnVarNameInTable="columnRate" msprop:Generator_ColumnPropNameInRow="Rate" msprop:Generator_ColumnPropNameInTable="RateColumn" msprop:Generator_UserColumnName="Rate" type="xs:string" minOccurs="0" />
               <xs:element name="QTY" msprop:Generator_ColumnVarNameInTable="columnQTY" msprop:Generator_ColumnPropNameInRow="QTY" msprop:Generator_ColumnPropNameInTable="QTYColumn" msprop:Generator_UserColumnName="QTY" type="xs:string" minOccurs="0" />
               <xs:element name="Total" msprop:Generator_ColumnVarNameInTable="columnTotal" msprop:Generator_ColumnPropNameInRow="Total" msprop:Generator_ColumnPropNameInTable="TotalColumn" msprop:Generator_UserColumnName="Total" type="xs:string" minOccurs="0" />
+              <xs:element name="SGST" msprop:Generator_ColumnVarNameInTable="columnSGST" msprop:Generator_ColumnPropNameInRow="SGST" msprop:Generator_ColumnPropNameInTable="SGSTColumn" msprop:Generator_UserColumnName="SGST" type="xs:string" minOccurs="0" />
+              <xs:element name="SGSTamt" msprop:Generator_ColumnVarNameInTable="columnSGSTamt" msprop:Generator_ColumnPropNameInRow="SGSTamt" msprop:Generator_ColumnPropNameInTable="SGSTamtColumn" msprop:Generator_UserColumnName="SGSTamt" type="xs:string" minOccurs="0" />
+              <xs:element name="CGST" msprop:Generator_ColumnVarNameInTable="columnCGST" msprop:Generator_ColumnPropNameInRow="CGST" msprop:Generator_ColumnPropNameInTable="CGSTColumn" msprop:Generator_UserColumnName="CGST" type="xs:string" minOccurs="0" />
+              <xs:element name="CGSTamt" msprop:Generator_ColumnVarNameInTable="columnCGSTamt" msprop:Generator_ColumnPropNameInRow="CGSTamt" msprop:Generator_ColumnPropNameInTable="CGSTamtColumn" msprop:Generator_UserColumnName="CGSTamt" type="xs:string" minOccurs="0" />
+              <xs:element name="IGST" msprop:Generator_ColumnVarNameInTable="columnIGST" msprop:Generator_ColumnPropNameInRow="IGST" msprop:Generator_ColumnPropNameInTable="IGSTColumn" msprop:Generator_UserColumnName="IGST" type="xs:string" minOccurs="0" />
+              <xs:element name="IGSTamt" msprop:Generator_ColumnVarNameInTable="columnIGSTamt" msprop:Generator_ColumnPropNameInRow="IGSTamt" msprop:Generator_ColumnPropNameInTable="IGSTamtColumn" msprop:Generator_UserColumnName="IGSTamt" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -35,6 +41,14 @@
               <xs:element name="SGST" msprop:Generator_ColumnVarNameInTable="columnSGST" msprop:Generator_ColumnPropNameInRow="SGST" msprop:Generator_ColumnPropNameInTable="SGSTColumn" msprop:Generator_UserColumnName="SGST" type="xs:string" minOccurs="0" />
               <xs:element name="GST" msprop:Generator_ColumnVarNameInTable="columnGST" msprop:Generator_ColumnPropNameInRow="GST" msprop:Generator_ColumnPropNameInTable="GSTColumn" msprop:Generator_UserColumnName="GST" type="xs:string" minOccurs="0" />
               <xs:element name="AmountAfterGST" msprop:Generator_ColumnVarNameInTable="columnAmountAfterGST" msprop:Generator_ColumnPropNameInRow="AmountAfterGST" msprop:Generator_ColumnPropNameInTable="AmountAfterGSTColumn" msprop:Generator_UserColumnName="AmountAfterGST" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtGST" msprop:Generator_TableClassName="dtGSTDataTable" msprop:Generator_TableVarName="tabledtGST" msprop:Generator_TablePropName="dtGST" msprop:Generator_RowDeletingName="dtGSTRowDeleting" msprop:Generator_RowChangingName="dtGSTRowChanging" msprop:Generator_RowEvHandlerName="dtGSTRowChangeEventHandler" msprop:Generator_RowDeletedName="dtGSTRowDeleted" msprop:Generator_UserTableName="dtGST" msprop:Generator_RowChangedName="dtGSTRowChanged" msprop:Generator_RowEvArgName="dtGSTRowChangeEvent" msprop:Generator_RowClassName="dtGSTRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Percent" msprop:Generator_ColumnVarNameInTable="columnPercent" msprop:Generator_ColumnPropNameInRow="Percent" msprop:Generator_ColumnPropNameInTable="PercentColumn" msprop:Generator_UserColumnName="Percent" type="xs:string" minOccurs="0" />
+              <xs:element name="Amount" msprop:Generator_ColumnVarNameInTable="columnAmount" msprop:Generator_ColumnPropNameInRow="Amount" msprop:Generator_ColumnPropNameInTable="AmountColumn" msprop:Generator_UserColumnName="Amount" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

@@ -28,9 +28,11 @@ namespace Invoicing_Application.Report.Report_Pages
         {
             string invoiceID = Request.QueryString["InvoiceID"].ToString();
             string PartyID = Request.QueryString["PartyID"].ToString();
+            string IGST = Request.QueryString["IGST"].ToString();
 
-            //string invoiceID = "24";
-            //string PartyID = "11";
+            //string invoiceID = "108";
+            //string PartyID = "12";
+            //string IGST = "1";
 
 
             Invoicing_Application.Invoicing_Service.Invoicing_ServiceSoapClient ObjClient = new Invoicing_Service.Invoicing_ServiceSoapClient();
@@ -38,7 +40,15 @@ namespace Invoicing_Application.Report.Report_Pages
             try
             {
                 ReportViewer1.ProcessingMode = ProcessingMode.Local;
-                ReportViewer1.LocalReport.ReportPath = Server.MapPath("~/Report/RDLC_Files/InvoiceReport.rdlc");
+                if (IGST=="1")
+                {
+                    ReportViewer1.LocalReport.ReportPath = Server.MapPath("~/Report/RDLC_Files/InvoiceReport_IGST.rdlc");
+                }
+                else
+                {
+                    ReportViewer1.LocalReport.ReportPath = Server.MapPath("~/Report/RDLC_Files/InvoiceReport.rdlc");
+                }
+              
 
                 DataSet dsReportData = ObjClient.GetReportData(invoiceID, PartyID);
               
@@ -64,7 +74,7 @@ namespace Invoicing_Application.Report.Report_Pages
                 ReportParameter pGST = new ReportParameter("pGST", "GSTIN : "+ dtMyprofile.Rows[0]["GSTNO"].ToString());
                
                 ReportParameter pInvoiceNo = new ReportParameter("pInvoiceNo", dtInvoiceMaster.Rows[0]["InvoiceNumber"].ToString());
-                ReportParameter pInvoiceDate = new ReportParameter("pInvoiceDate", Convert.ToDateTime(dtInvoiceMaster.Rows[0]["InvoiceDate"]).ToShortDateString());
+                ReportParameter pInvoiceDate = new ReportParameter("pInvoiceDate", Convert.ToDateTime(dtInvoiceMaster.Rows[0]["InvoiceDate"]).ToString("dd-MM-yyyy"));
                 ReportParameter pOwnerState = new ReportParameter("pOwnerState", dtMyprofile.Rows[0]["StateName"].ToString());
 
                 ReportParameter pPartyState = new ReportParameter("pPartyState", dtPartyDetails.Rows[0]["StateName"].ToString());
@@ -99,7 +109,7 @@ namespace Invoicing_Application.Report.Report_Pages
                      pReverseCharge = new ReportParameter("pReverseCharge", dtInvoiceOther.Rows[0]["ReverseCharge"].ToString());
                      pTransportationMode = new ReportParameter("pTransportationMode", dtInvoiceOther.Rows[0]["Transportation_Mode"].ToString());
                      pVechicleNo = new ReportParameter("pVechicleNo", dtInvoiceOther.Rows[0]["Vehicle_Number"].ToString());
-                     pDateofSupply = new ReportParameter("pDateofSupply", Convert.ToDateTime(dtInvoiceOther.Rows[0]["SupplyDate"]).ToShortDateString());
+                     pDateofSupply = new ReportParameter("pDateofSupply", Convert.ToDateTime(dtInvoiceOther.Rows[0]["SupplyDate"]).ToString("dd-MM-yyyy"));
                      pPlaceofSupply = new ReportParameter("pPlaceofSupply", dtInvoiceOther.Rows[0]["SupplyPlace"].ToString());
 
                     pConName = new ReportParameter("pConName", dtInvoiceOther.Rows[0]["Consignee_Name"].ToString());
@@ -173,11 +183,24 @@ namespace Invoicing_Application.Report.Report_Pages
                 ReportViewer1.LocalReport.SetParameters(pSGST_Percent);
                 ReportViewer1.LocalReport.SetParameters(pIGST_Percent);
 
+                DataTable dtGST = new DataTable();
+                dtGST.Columns.Add("Percent");
+                dtGST.Columns.Add("Amount");
+
+                DataRow dRow=  dtGST.NewRow();
+                dRow["Percent"] = "Percent";
+                dRow["Amount"] = "Amount";
+
+                dtGST.Rows.Add(dRow);
+                
+
                 ReportDataSource datasource1 = new ReportDataSource("ds_SalesDetails", dtSalesDetails);
                 ReportDataSource datasource2 = new ReportDataSource("ds_TaxCalculation", dtInvoiceMaster);
+                ReportDataSource datasource3 = new ReportDataSource("ds_GST", dtGST);
 
                 ReportViewer1.LocalReport.DataSources.Add(datasource1);
                 ReportViewer1.LocalReport.DataSources.Add(datasource2);
+                ReportViewer1.LocalReport.DataSources.Add(datasource3);
 
                 return true;   
             }
