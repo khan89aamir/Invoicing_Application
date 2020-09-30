@@ -515,47 +515,46 @@ namespace Invoicing_Application.Service
             }
         }
 
-        public string LastRate(int ProductID, int PartyID)
-        {
-            string strRate = "";
-
-            string strQ = "SELECT  Rate FROM anjacreation.tblSalesInvoceMaster m join " +
-                            " anjacreation.tblSalesDetails s on m.SaleInvoiceID = s.InvoiceID " +
-                            " where m.PartyID = " + PartyID + " and s.ProductID = " + ProductID + "  order by SaleInvoiceID desc limit 1";
-
-            DataTable dtLastRecord = ObjDAL.ExecuteSelectStatement(strQ);
-            if (dtLastRecord.Rows.Count > 0)
-            {
-                strRate = dtLastRecord.Rows[0][0].ToString();
-            }
-
-            return strRate;
-
-        }
+     
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void GetSelectedProduct(int ProductID, int PartyID)
         {
+            string OldRate = "0";
 
-            string strQ = "SELECT SKUID,SKUName,Rate, SKUCode, (select HSNCode from tblHSNMaster  where HSNID=tb.HSNID ) as HSN_No   FROM   anjacreation.tblSKUMaster as tb " +
-                            "where SKUID = " + ProductID;
+            ObjDAL.SetStoreProcedureData("parmProductID", MySqlConnector.MySqlDbType.Int32, ProductID);
+            ObjDAL.SetStoreProcedureData("parmPartyID", MySqlConnector.MySqlDbType.Int32, PartyID);
+           DataSet dsProductDetails= ObjDAL.ExecuteStoreProcedure_Get("anjacreation.SPR_GetUerProduct");
+            if (dsProductDetails.Tables.Count>0)
+            {
+               
+                if (dsProductDetails.Tables[1].Rows.Count>0)
+                {
+                    OldRate = dsProductDetails.Tables[1].Rows[0]["Rate"].ToString();
+                }
+               
+            }
 
 
-            DataTable dataTable = ObjDAL.ExecuteSelectStatement(strQ);
-            if (dataTable != null && dataTable.Rows.Count > 0)
+          
+            if (dsProductDetails.Tables[0].Rows.Count >0)
             {
 
                 // if no last record found
-                if (LastRate(ProductID, PartyID) == "")
+                if ( OldRate == "0")
                 {
-                    var NameList = (from r in dataTable.AsEnumerable()
+                    var NameList = (from r in dsProductDetails.Tables[0].AsEnumerable()
                                     select new
                                     {
                                         SKUID = r.Field<int>("SKUID"),
+                                        SKUCode = r.Field<string>("SKUCode"),
                                         SKUName = r.Field<string>("SKUName"),
                                         Rate = r.Field<decimal>("Rate"),
-                                        SKUNumber = r.Field<string>("SKUCode"),
-                                        HSN_No = r.Field<string>("HSN_No"),
+                                        HSNID = r.Field<int>("HSNID"),
+                                        HSNCode = r.Field<string>("HSNCode"),
+                                        CGST = r.Field<decimal>("CGST"),
+                                        SGST = r.Field<decimal>("SGST"),
+                                        IGST = r.Field<decimal>("IGST"),
                                         IsOld = "0"
                                     });
 
@@ -568,17 +567,20 @@ namespace Invoicing_Application.Service
                 }
                 else
                 {
-                    var NameList = (from r in dataTable.AsEnumerable()
+                    var NameList = (from r in dsProductDetails.Tables[0].AsEnumerable()
                                     select new
                                     {
                                         SKUID = r.Field<int>("SKUID"),
+                                        SKUCode = r.Field<string>("SKUCode"),
                                         SKUName = r.Field<string>("SKUName"),
-                                        Rate = LastRate(ProductID, PartyID),
-                                        SKUNumber = r.Field<string>("SKUCode"),
-                                        HSN_No = r.Field<string>("HSN_No"),
+                                        Rate = r.Field<decimal>("Rate"),
+                                        HSNID = r.Field<int>("HSNID"),
+                                        HSNCode = r.Field<string>("HSNCode"),
+                                        CGST = r.Field<decimal>("CGST"),
+                                        SGST = r.Field<decimal>("SGST"),
+                                        IGST = r.Field<decimal>("IGST"),
                                         IsOld = "1"
                                     });
-
                     string strResponse = JsonConvert.SerializeObject(NameList);
                     Context.Response.Clear();
                     Context.Response.ContentType = "application/json";
@@ -722,10 +724,12 @@ namespace Invoicing_Application.Service
                 string parmInvoiceID = item.InvID;
                 string parmProductID = item.ProductID;
                 string parmSKU_Code = item.SKU_Code;
-                string parmHSN = item.HSN_NO;
+                string parmHSN = item.HSNID;
                 string parmRate = item.Rate;
                 string parmQTY = item.QTY;
-
+                string parmCGST =Convert.ToString(Convert.ToDouble(item.CGST)/100);
+                string parmSGST = Convert.ToString(Convert.ToDouble(item.SGST) / 100);
+                string parmIGST = Convert.ToString(Convert.ToDouble(item.IGST) / 100); 
 
                 ObjDAL.SetStoreProcedureData("parmInvoiceID", MySqlConnector.MySqlDbType.Int32, parmInvoiceID);
                 ObjDAL.SetStoreProcedureData("parmProductID", MySqlConnector.MySqlDbType.Int32, parmProductID);
@@ -733,6 +737,11 @@ namespace Invoicing_Application.Service
                 ObjDAL.SetStoreProcedureData("parmHSN", MySqlConnector.MySqlDbType.VarChar, parmHSN);
                 ObjDAL.SetStoreProcedureData("parmRate", MySqlConnector.MySqlDbType.Decimal, parmRate);
                 ObjDAL.SetStoreProcedureData("parmQTY", MySqlConnector.MySqlDbType.Int32, parmQTY);
+
+                ObjDAL.SetStoreProcedureData("parmCGST", MySqlConnector.MySqlDbType.Decimal, parmCGST);
+                ObjDAL.SetStoreProcedureData("parmSGST", MySqlConnector.MySqlDbType.Decimal, parmSGST);
+                ObjDAL.SetStoreProcedureData("parmIGST", MySqlConnector.MySqlDbType.Decimal, parmIGST);
+
                 ObjDAL.SetStoreProcedureData("parmCreatedBy", MySqlConnector.MySqlDbType.Int32, 1);
                 ObjDAL.SetStoreProcedureData("parmUpdateBy", MySqlConnector.MySqlDbType.Int32, 1);
 

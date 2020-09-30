@@ -15,9 +15,16 @@ namespace Invoicing_Application.Service
 
         public string InvID { get; set; }
 
-        public string HSN_NO { get; set; }
+        public string HSNID { get; set; }
 
         public string SKU_Code { get; set; }
+
+        public string CGST { get; set; }
+
+        public string SGST { get; set; }
+
+        public string IGST { get; set; }
+
 
 
 

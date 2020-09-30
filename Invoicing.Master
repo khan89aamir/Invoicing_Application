@@ -119,6 +119,15 @@
                     <div class="text-left text-dark ">
                         <i id="iconMsg" class="fa fa-check-circle fa-2x" style="color: green" runat="server"></i>
                         <span id="lblMessage" class="text-center " runat="server"></span>
+                        <br />
+                        <div id="pngInvoicePDF" class="invisible" >
+                                <div class="spinner-border text-primary mr-2" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        Generating PDF Please wait.....
+                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                        </div>
+                        
 
                     </div>
                     <div class="modal-footer">
