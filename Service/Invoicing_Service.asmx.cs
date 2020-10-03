@@ -1371,19 +1371,20 @@ namespace Invoicing_Application.Service
         {
             // System.Threading.Thread.Sleep(2000);
             string jsonData = "{}";
-            string strQ = "select s1.ProductID,sk.SKUName as Product_Name, SKU_Code,HSN,s1.Rate,QTY, (s1.Rate*QTY) as Total " +
-                         " from anjacreation.tblSalesDetails s1 join " +
-                         " anjacreation.tblSKUMaster sk on s1.ProductID = sk.SKUID " +
-                         " where InvoiceID = " + InvoiceID;
 
-            DataTable dataTable = ObjDAL.ExecuteSelectStatement(strQ);
-            if (dataTable != null && dataTable.Rows.Count > 0)
+            ObjDAL.SetStoreProcedureData("parmInvoiceID", MySqlConnector.MySqlDbType.Int32, InvoiceID);
+        DataSet dsSalesDetails=    ObjDAL.ExecuteStoreProcedure_Get("anjacreation.SPR_GetSalesDetails");
+            if (dsSalesDetails.Tables.Count>0)
             {
-                jsonData = DataTableToJSONWithJSONNet(dataTable);
-            }
-            //Context.Response.ContentType = "application/json";
-            //Context.Response.Write(jsonData);
+                DataTable dataTable = dsSalesDetails.Tables[0];
 
+                if (dataTable != null && dataTable.Rows.Count > 0)
+                {
+                    jsonData = DataTableToJSONWithJSONNet(dataTable);
+                }
+            }
+          
+         
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.AddHeader("content-length", jsonData.Length.ToString());

@@ -32,6 +32,11 @@ namespace Invoicing_Application.Report.Report_Pages
 
             //string invoiceID = "108";
             //string PartyID = "12";
+            //string IGST = "0";
+
+
+            //string invoiceID = "131";
+            //string PartyID = "12";
             //string IGST = "1";
 
 
@@ -68,10 +73,10 @@ namespace Invoicing_Application.Report.Report_Pages
                 ReportParameter pSGST_Percent = new ReportParameter("pSGST_Percent", "(" + dtInvoiceMaster.Rows[0]["SGST_Percent"].ToString()+"%)");
                 ReportParameter pIGST_Percent = new ReportParameter("pIGST_Percent", "(" + dtInvoiceMaster.Rows[0]["IGST_Percent"].ToString()+"%)");
 
-                ReportParameter pAddress = new ReportParameter("pAddress",  "Location: "+ dtMyprofile.Rows[0]["Address"].ToString());
+                ReportParameter pAddress = new ReportParameter("pAddress",  ""+ dtMyprofile.Rows[0]["Address"].ToString());
                 ReportParameter pEmail = new ReportParameter("pEmail", "Email :"+ dtMyprofile.Rows[0]["EmailID"].ToString());
                 ReportParameter pMobile = new ReportParameter("pMobile","Mobile: "+ dtMyprofile.Rows[0]["MobileNo"].ToString());
-                ReportParameter pGST = new ReportParameter("pGST", "GSTIN : "+ dtMyprofile.Rows[0]["GSTNO"].ToString());
+                ReportParameter pGST = new ReportParameter("pGST", "GSTIN :"+ dtMyprofile.Rows[0]["GSTNO"].ToString());
                
                 ReportParameter pInvoiceNo = new ReportParameter("pInvoiceNo", dtInvoiceMaster.Rows[0]["InvoiceNumber"].ToString());
                 ReportParameter pInvoiceDate = new ReportParameter("pInvoiceDate", Convert.ToDateTime(dtInvoiceMaster.Rows[0]["InvoiceDate"]).ToString("dd-MM-yyyy"));
