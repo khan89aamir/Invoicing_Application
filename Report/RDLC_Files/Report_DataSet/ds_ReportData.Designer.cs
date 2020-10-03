@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace Invoicing_Application.Report.Report_DataSet {
+namespace Invoicing_Application.Report.RDLC_Files.Report_DataSet {
     
     
     /// <summary>

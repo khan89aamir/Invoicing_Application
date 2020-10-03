@@ -36,8 +36,8 @@
                         <div class="col-md-4">
 
                             <div class="form-group">
-                                <input type="text" class="form-control-sm text" id="txtBindInvoiceID" value="0" runat="server"  />
-                                <input type="button" class="btn btn-sm btn-info" id="btnBindInvoice" value="Search Invoice" onclick="Test('abc')"  />
+                                <input type="text" class="form-control-sm text" id="txtBindInvoiceID"  runat="server" placeholder="0"  />
+                                <input type="button" class="btn btn-sm btn-info" id="btnBindInvoice" value="Search Invoice"  />
                             </div>
 
                         </div>
@@ -147,7 +147,7 @@
 
 
                             <div class="col-md-12">
-
+                                 
                                 <div class="form-group">
                                     <label for="txtFullName">Address </label>
                                     <input type="text" class="form-control text disableValue" id="txtAddress" name="txtAddress" autocomplete="off" placeholder="Enter Address">
@@ -434,7 +434,9 @@
     </div>
     <%-- <button id="btnTest" class="mb-4" onclick="SaveOtherInvoiceDetials(1)">Test</button>
     <button id="btnReport" type="submit">Report</button>--%>
-  <%--   <button id="btnTest" class="mb-4" onclick="SetVisbileControl()">Test</button>--%>
+     <button id="btnTest" class="mb-4" onclick="SetVisbileControl()">Test</button>
+
+    <button id="btnCalculateTax" class="mb-4" >CalculateText</button>
     <script>
 
         var UserID = <%= Session["UserID"] %>;
