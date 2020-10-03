@@ -444,9 +444,9 @@ namespace Invoicing_Application.Service
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void GetSelectedCustomer(int CustomerID)
         {
-
-            string strQ = "SELECT GSTNo,Address,c1.StateID, s1.StateName FROM   anjacreation.tblCustomerMaster c1 inner join " +
-                        "   anjacreation.tblStateMaster s1 on c1.StateID = s1.StateID where CustomerID=" + CustomerID;
+            string strResponse = "";
+            string strQ = "SELECT GSTNo,Address,c1.StateID, s1.StateName FROM anjacreation.tblCustomerMaster c1 inner join " +
+                        " anjacreation.tblStateMaster s1 on c1.StateID = s1.StateID where CustomerID=" + CustomerID+";";
 
             DataTable dataTable = ObjDAL.ExecuteSelectStatement(strQ);
             if (dataTable != null && dataTable.Rows.Count > 0)
@@ -459,9 +459,9 @@ namespace Invoicing_Application.Service
                                     StateID = r.Field<int>("StateID"),
                                     StateName = r.Field<string>("StateName"),
                                 });
-                string strResponse = JsonConvert.SerializeObject(NameList);
+                strResponse = JsonConvert.SerializeObject(NameList);
                 Context.Response.Clear();
-                Context.Response.ContentType = "application/json";
+                Context.Response.ContentType = "application/json; charset=utf-8";
                 Context.Response.AddHeader("content-length", strResponse.Length.ToString());
                 Context.Response.Write(strResponse);
                 Context.Response.Flush();
@@ -473,11 +473,15 @@ namespace Invoicing_Application.Service
 
                 message.strMessage = "No records found";
                 message.Result = true;
+                
+                strResponse = JsonConvert.SerializeObject(message);
 
                 Context.Response.Clear();
-                this.Context.Response.ContentType = "application/json; charset=utf-8";
-                this.Context.Response.Write(JsonConvert.SerializeObject(message));
+                Context.Response.ContentType = "application/json; charset=utf-8";
+                Context.Response.Write(strResponse);
+                Context.Response.Flush();
             }
+            //HttpContext.Current.ApplicationInstance.CompleteRequest();
         }
 
         [WebMethod]
@@ -515,7 +519,7 @@ namespace Invoicing_Application.Service
             }
         }
 
-     
+
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void GetSelectedProduct(int ProductID, int PartyID)
@@ -524,24 +528,24 @@ namespace Invoicing_Application.Service
 
             ObjDAL.SetStoreProcedureData("parmProductID", MySqlConnector.MySqlDbType.Int32, ProductID);
             ObjDAL.SetStoreProcedureData("parmPartyID", MySqlConnector.MySqlDbType.Int32, PartyID);
-           DataSet dsProductDetails= ObjDAL.ExecuteStoreProcedure_Get("anjacreation.SPR_GetUerProduct");
-            if (dsProductDetails.Tables.Count>0)
+            DataSet dsProductDetails = ObjDAL.ExecuteStoreProcedure_Get("anjacreation.SPR_GetUerProduct");
+            if (dsProductDetails.Tables.Count > 0)
             {
-               
-                if (dsProductDetails.Tables[1].Rows.Count>0)
+
+                if (dsProductDetails.Tables[1].Rows.Count > 0)
                 {
                     OldRate = dsProductDetails.Tables[1].Rows[0]["Rate"].ToString();
                 }
-               
+
             }
 
 
-          
-            if (dsProductDetails.Tables[0].Rows.Count >0)
+
+            if (dsProductDetails.Tables[0].Rows.Count > 0)
             {
 
                 // if no last record found
-                if ( OldRate == "0")
+                if (OldRate == "0")
                 {
                     var NameList = (from r in dsProductDetails.Tables[0].AsEnumerable()
                                     select new
@@ -727,9 +731,9 @@ namespace Invoicing_Application.Service
                 string parmHSN = item.HSNID;
                 string parmRate = item.Rate;
                 string parmQTY = item.QTY;
-                string parmCGST =Convert.ToString(Convert.ToDouble(item.CGST)/100);
+                string parmCGST = Convert.ToString(Convert.ToDouble(item.CGST) / 100);
                 string parmSGST = Convert.ToString(Convert.ToDouble(item.SGST) / 100);
-                string parmIGST = Convert.ToString(Convert.ToDouble(item.IGST) / 100); 
+                string parmIGST = Convert.ToString(Convert.ToDouble(item.IGST) / 100);
 
                 ObjDAL.SetStoreProcedureData("parmInvoiceID", MySqlConnector.MySqlDbType.Int32, parmInvoiceID);
                 ObjDAL.SetStoreProcedureData("parmProductID", MySqlConnector.MySqlDbType.Int32, parmProductID);

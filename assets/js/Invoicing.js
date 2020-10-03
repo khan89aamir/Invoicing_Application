@@ -1146,8 +1146,6 @@ $("#cmbCustomer").change(function () {
     var selectedText = $(this).find("option:selected").text();
     var selectedValue = $(this).val();
 
-
-    
     GetSelectedCustomer(selectedValue);
     //alert("Selected Text: " + selectedText + " Value: " + selectedValue);
 
@@ -1171,11 +1169,9 @@ $("#cmbProduct, #cmbSKU").change(function () {
     if (prID == null || prID == "0") {
         topFunction();
         alert("Please select the party first.");
-      
     }
     else {
 
-      
         GetSelectedProduct(selectedValue, prID);
     }
     //alert("Selected Text: " + selectedText + " Value: " + selectedValue);
@@ -1188,16 +1184,13 @@ $(document).ready(function () {   // dynamic Table
      
         InitDataTable();
         BindInitialData();
-        BindState();
-        BindConsigneeState();
+        //BindState();
+        //BindConsigneeState();
     }
-   
-  
-
 });
 
 function GetSelectedCustomer(custID) {
-
+    //alert('custID ' + custID);
     var objData = { CustomerID: custID };
     // drop down------
     $.ajax({
@@ -1205,7 +1198,8 @@ function GetSelectedCustomer(custID) {
         url: "../Service/Invoicing_Service.asmx/GetSelectedCustomer",
         dataType: "json",
         data: JSON.stringify(objData),
-        contentType: "application/json",
+        contentType: "application/json; charset=utf-8",
+        cache: false,
         beforeSend: function () {
 
             $('#lblLoadingtxt').text("Fetching Party Details....");
@@ -1218,13 +1212,11 @@ function GetSelectedCustomer(custID) {
         success: function (res) {
 
             // single row would come
-            $('#loadingBox').modal('hide');
+            //$('#loadingBox').modal('hide');
             $("#txtPartyState").val(res[0].StateName);
             $("#txtAddress").val(res[0].Address);
             $("#txtGSTNo").val(res[0].GSTNo);
             $("#txtPartyStateID").val(res[0].StateID);
-
-
         },
         error: function (xhr, status, error) {
 
