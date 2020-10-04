@@ -20,6 +20,53 @@ namespace Invoicing_Application.Service
     [System.Web.Script.Services.ScriptService]
     public class Invoicing_Service : System.Web.Services.WebService
     {
+
+        [WebMethod]
+        public string GetSelectedCustomer(int CustomerID)
+        {
+
+            string strQ = "SELECT GSTNo,Address,c1.StateID, s1.StateName FROM   anjacreation.tblCustomerMaster c1 inner join " +
+                        "   anjacreation.tblStateMaster s1 on c1.StateID = s1.StateID where CustomerID=" + CustomerID;
+
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement(strQ);
+            if (dataTable != null && dataTable.Rows.Count > 0)
+            {
+                var NameList = (from r in dataTable.AsEnumerable()
+                                select new
+                                {
+                                    GSTNo = r.Field<string>("GSTNo"),
+                                    Address = r.Field<string>("Address"),
+                                    StateID = r.Field<int>("StateID"),
+                                    StateName = r.Field<string>("StateName"),
+                                });
+                string strResponse = JsonConvert.SerializeObject(NameList);
+
+                strResponse = strResponse.Trim().Replace("\r\n", string.Empty);
+
+                return strResponse;
+
+                //Context.Response.Clear();
+                //Context.Response.ContentType = "application/json";
+                //Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+                //Context.Response.Write(strResponse);
+                //Context.Response.Flush();
+                //  Context.Response.Write(JsonConvert.SerializeObject(NameList));
+            }
+            else
+            {
+                clsMessage message = new clsMessage();
+
+                message.strMessage = "No records found";
+                message.Result = true;
+
+              return  JsonConvert.SerializeObject(message);
+                //Context.Response.Clear();
+                //this.Context.Response.ContentType = "application/json; charset=utf-8";
+                //this.Context.Response.Write(JsonConvert.SerializeObject(message));
+            }
+         
+           
+        }
         clsMySQLCoreApp ObjDAL = new clsMySQLCoreApp();
 
         [WebMethod]
@@ -1388,5 +1435,15 @@ namespace Invoicing_Application.Service
             Context.Response.Write(jsonData);
             Context.Response.Flush();
         }
+    }
+
+public class Customer
+    {
+        public string GSTNo { get; set; }
+        public string Address { get; set; }
+        public int StateID { get; set; }
+        public string StateName { get; set; }
+
+
     }
 }
