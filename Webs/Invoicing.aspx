@@ -36,8 +36,8 @@
                         <div class="col-md-4">
 
                             <div class="form-group">
-                                <input type="text" class="form-control-sm text" id="txtBindInvoiceID"  runat="server" placeholder="0"  />
-                                <input type="button" class="btn btn-sm btn-info" id="btnBindInvoice" value="Search Invoice"  />
+                                <input type="text" class="form-control-sm text" id="txtBindInvoiceID" runat="server" placeholder="0" />
+                                <input type="button" class="btn btn-sm btn-info" id="btnBindInvoice" value="Search Invoice" />
                             </div>
 
                         </div>
@@ -108,6 +108,15 @@
                                     <div class="invalid-feedback text-left">
                                         Please Enter Party Name
                                     </div>
+                                    <button id="btnGetCustomer" class="btn btn-primary btn-sm" type="button">Get Customer Details</button>
+                                    <br />
+                                    <div id="loadingPartyDiv" class="d-none">
+                                         <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    Fetching Party Details Please Wait....
+                                    </div>
+                                  
                                     <a href="Customer.aspx" target="_blank"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add New Customer</a>
                                     <br />
                                     <a id="lnkRefresh" href="#" target="_blank"><i class="fa fa-refresh mr-1" aria-hidden="true"></i>Refresh</a>
@@ -147,7 +156,7 @@
 
 
                             <div class="col-md-12">
-                                 
+
                                 <div class="form-group">
                                     <label for="txtFullName">Address </label>
                                     <input type="text" class="form-control text disableValue" id="txtAddress" name="txtAddress" autocomplete="off" placeholder="Enter Address">
@@ -177,6 +186,7 @@
                                 </div>
 
                             </div>
+
                             <div class="col-md-4">
 
                                 <div class="form-group">
@@ -191,8 +201,21 @@
                                 </div>
 
                             </div>
-                        </div>
 
+                            <div class="col-md-4">
+                                   <div class="form-group">
+                                         <div id="loadingProduct" class="invisible mt-2">
+                                         <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    Fetching Party Details Please Wait....
+                                    </div>
+                                         <button type="button" id="btnGetproduct"  class="btn btn-primary btn-sm">Get Product Details</button>
+                                       </div>
+                              
+                            </div>
+                        </div>
+                         
                         <div class="form-row">
 
                             <div class="col-md-3">
@@ -204,7 +227,7 @@
                                         Please Enter Product Name
                                     </div>
                                 </div>
-                             
+
 
                             </div>
                             <div class="col-md-3">
@@ -242,12 +265,12 @@
                             </div>
 
                             <input type="text" class="form-control text disableValue " id="txtSKUNumber" name="txtSKUNumber" placeholder="txtSKUNumber" hidden>
-                            <input type="text" class="form-control text disableValue" id="txtHSN_No" name="txtHSN_No" placeholder="txtHSN_No"hidden >
+                            <input type="text" class="form-control text disableValue" id="txtHSN_No" name="txtHSN_No" placeholder="txtHSN_No" hidden>
 
                             <input type="text" class="form-control text " id="txtHSNID" name="txtHSNID" placeholder="txtHSNID" hidden>
                             <input type="text" class="form-control text " id="txtCGST" name="txtCGST" placeholder="txtCGST" hidden>
                             <input type="text" class="form-control text " id="txtSGST" name="txtSGST" placeholder="txtSGST" hidden>
-                                  <input type="text" class="form-control text " id="txtIGST" name="txtIGST" placeholder="txtIGST" hidden>
+                            <input type="text" class="form-control text " id="txtIGST" name="txtIGST" placeholder="txtIGST" hidden>
                         </div>
                         <div class="form-row">
                             <div class="col-md-12 mb-2  text-right">
@@ -270,15 +293,15 @@
                                             <th>Product Name</th>
 
                                             <th>HSN Code</th>
-                                              <th>QTY</th>
-                                             <th>Rate</th>
-                                             <th>Total</th>
+                                            <th>QTY</th>
+                                            <th>Rate</th>
+                                            <th>Total</th>
                                             <th>CGST</th>
                                             <th>SGST</th>
                                             <th>IGST</th>
-                                          
+
                                             <th>Delete</th>
-                                             <th>CGST_amt</th>
+                                            <th>CGST_amt</th>
                                             <th>SGST_amt</th>
                                             <th>IGST_amt</th>
 
@@ -314,16 +337,16 @@
                             <label for="colFormLabel" class="col-sm-3 col-form-label  ">Total CGST : </label>
                             <div class="col-sm-2">
                                 <%--<input type="text" class="form-control form-control-sm " id="txtCGST" placeholder="0.00" onchange="MasterCalculation()">--%>
-                             
-                                <input type="text" class="form-control form-control-sm disableValue" id="txtstrCGST" value="0" placeholder="0.00" >
+
+                                <input type="text" class="form-control form-control-sm disableValue" id="txtstrCGST" value="0" placeholder="0.00">
                             </div>
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Total SGST : </label>
                             <div class="col-sm-2">
-                             
-                                <input type="text" class="form-control form-control-sm disableValue" id="txtstrSGST" value="0" placeholder="0.00" >
+
+                                <input type="text" class="form-control form-control-sm disableValue" id="txtstrSGST" value="0" placeholder="0.00">
                             </div>
 
                             <div class="col-7">
@@ -331,8 +354,8 @@
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Total IGST : </label>
                             <div class="col-sm-2">
-                             
-                                <input type="text" class="form-control form-control-sm disableValue" id="txtstrIGST" value="0" placeholder="0.00" >
+
+                                <input type="text" class="form-control form-control-sm disableValue" id="txtstrIGST" value="0" placeholder="0.00">
                             </div>
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
@@ -434,9 +457,9 @@
     </div>
     <%-- <button id="btnTest" class="mb-4" onclick="SaveOtherInvoiceDetials(1)">Test</button>
     <button id="btnReport" type="submit">Report</button>--%>
-     <button id="btnTest" class="mb-4" onclick="SetVisbileControl()">Test</button>
+    <%--<button id="btnTest" class="mb-4" onclick="SetVisbileControl()">Test</button>--%>
 
-    <button id="btnCalculateTax" class="mb-4" >CalculateText</button>
+    <%--<button id="btnCalculateTax" class="mb-4">CalculateText</button>--%>
     <script>
 
         var UserID = <%= Session["UserID"] %>;
