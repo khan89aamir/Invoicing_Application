@@ -393,12 +393,16 @@
                     $('#txtTNC').val(responseData.Table[0].TermCondition);
 
                     //Bank Details
-                    $('#txtBankName').val(responseData.Table1[0].BankName);
-                    $('#txtAccountNo').val(responseData.Table1[0].AccountNo);
-                    $('#txtIFSCCode').val(responseData.Table1[0].IFSC_Code);
-                    $('#txtBranchName').val(responseData.Table1[0].Branch);
+                    if (responseData.Table1[0] != null) {
+                        $('#txtBankName').val(responseData.Table1[0].BankName);
+                        $('#txtAccountNo').val(responseData.Table1[0].AccountNo);
+                        $('#txtIFSCCode').val(responseData.Table1[0].IFSC_Code);
+                        $('#txtBranchName').val(responseData.Table1[0].Branch);
+                    }
                 },
                 error: function (xhr, status, error) {
+                    $('#loadingBox').modal('hide');
+
                     alert("Error : " + error);
                     alert("Error Text: " + xhr.responseText);
                     console.log("Error Text: " + xhr.responseText);
@@ -407,7 +411,7 @@
                     alert("Fail:" + r.responseText);
                 }
             }).done(function (response) { //
-
+                $('#loadingBox').modal('hide');
                 // alert("Done : " + response);
             });
         };

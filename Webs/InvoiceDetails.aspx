@@ -74,11 +74,26 @@
                                             <th>Customer Name</th>
                                             <th>Total QTY</th>
                                             <th>Total Amount</th>
-                                            <th>Trouser</th>
+                                            <th>Pathani Top</th>
                                             <th>Kurta</th>
+                                            <th>Payjama Pant</th>
+                                            <th>Payjama</th>
+                                            <th>Churidaar</th>
+                                            <th>Pathani Salwar</th>
                                             <th>Shirt</th>
-                                            <th>T Shirt</th>
-                                            <th>Coat</th>
+                                            <th>Trouser</th>
+                                            <th>Jawahar bundy</th>
+                                            <th>Jacket</th>
+                                            <th>DB Blazer</th>
+                                            <th>2pcs Suit</th>
+                                            <th>jodhpuri Suit</th>
+                                            <th>DB suit</th>
+                                            <th>Tuxedo 2pcs Suit</th>
+                                            <th>Vest jacket</th>
+                                            <th>3pcs suit</th>
+                                            <th>Safari suit</th>
+                                            <th>Sherwani</th>
+                                            <th>Overcoat</th>
                                             <th>Delete</th>
                                         </tr>
                                     </thead>
@@ -129,6 +144,14 @@
                 });
             }, false);
         })();
+
+        $(document).ready(function () {
+
+            if ($('#example').DataTable() != null) {
+                $('#example').DataTable().columns([1, 7, 8, 9, 10, 11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26]).visible(false);
+            }
+
+        });
 
         $.GetInvoiceDetails = function () {
 
@@ -194,11 +217,26 @@
                     { 'data': 'CustomerName' },
                     { 'data': 'TotalQTY' },
                     { 'data': 'Total Amount' },
-                    { 'data': 'Trouser' },
+                    { 'data': 'Pathani Top' },
                     { 'data': 'Kurta' },
+                    { 'data': 'Payjama Pant' },
+                    { 'data': 'Payjama' },
+                    { 'data': 'Churidaar' },
+                    { 'data': 'Pathani Salwar' },
                     { 'data': 'Shirt' },
-                    { 'data': 'T Shirt' },
-                    { 'data': 'Coat' },
+                    { 'data': 'Trouser' },
+                    { 'data': 'Jawahar bundy' },
+                    { 'data': 'Jacket' },
+                    { 'data': 'DB Blazer' },
+                    { 'data': '2pcs Suit' },
+                    { 'data': 'jodhpuri Suit' },
+                    { 'data': 'DB suit' },
+                    { 'data': 'Tuxedo 2pcs Suit' },
+                    { 'data': 'Vest jacket' },
+                    { 'data': '3pcs suit' },
+                    { 'data': 'Safari suit' },
+                    { 'data': 'Sherwani' },
+                    { 'data': 'Overcoat' },
                     {
                         data: 'Delete',
                         render: function (data, type, row) {
@@ -215,7 +253,7 @@
                         title: 'Invoice Details',
                         //footer: false,
                         exportOptions: {
-                            columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                            columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
                             //columns: [2, 3,4, 5, 6,':visible'] // data will export all visible column and entered column index
                         }
 
@@ -233,7 +271,7 @@
                             modifier: {
                                 page: 'all'
                             },
-                            columns: [2, 3, 4, 5, 6,7,8,9,10,11]
+                            columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
                             //columns: ':gt(0)', orthogonal: 'export' // data will export all columns except get(0) index
                         },
                         //customize: function (xlsx) {
@@ -287,7 +325,7 @@
 
             //to invisble multipe columns
             // table.columns([1, 2]).visible(false);
-            table.columns([1,7,8,9,10,11]).visible(false);
+            table.columns([1, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]).visible(false);
 
             //var blob = new Blob([table], { type: 'data:application/vnd.ms-excel' }); 
             //var downloadUrl = URL.createObjectURL(blob);

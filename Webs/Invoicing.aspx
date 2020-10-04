@@ -344,6 +344,13 @@
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
+                            <label for="colFormLabel" class="col-sm-3 col-form-label ">Total Amount Before Round Off : </label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control form-control-sm disableValue" id="txtAmountRoundoff" placeholder="0.00">
+                            </div>
+                            <div class="col-7">
+                                <%--        blank col for shifting the content to right--%>
+                            </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Total Amount After Tax : </label>
                             <div class="col-sm-2">
                                 <input type="text" class="form-control form-control-sm disableValue" id="txtAmountafterTax" placeholder="0.00">

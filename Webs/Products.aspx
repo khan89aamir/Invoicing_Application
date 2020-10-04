@@ -210,6 +210,8 @@ rel = "Stylesheet" type="text/css" />
 
         function BindHSNCode() {
 
+            $("#cmbHSNCode").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select HSN Code'));
+            $("#cmbHSNCode").select2();
             // drop down------
             $.ajax({
                 type: "POST",
@@ -218,7 +220,7 @@ rel = "Stylesheet" type="text/css" />
                 contentType: "application/json",
                 success: function (res) {
 
-                    $("#cmbHSNCode").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select HSN Code'));
+                    //$("#cmbHSNCode").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select HSN Code'));
                     $.each(res, function (data, value) {
 
                         $("#cmbHSNCode").append($("<option></option>").val(value.HSNID).html(value.HSNCode));
@@ -226,11 +228,10 @@ rel = "Stylesheet" type="text/css" />
 
                     // set the deafult state from session
                     // Initialize select2
-                    $("#cmbHSNCode").select2();
+                    //$("#cmbHSNCode").select2();
 
                 },
                 error: function (xhr, status, error) {
-
                     alert("Error : " + error);
                     alert("Error Text: " + xhr.responseText);
                 },

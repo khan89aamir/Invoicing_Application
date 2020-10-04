@@ -26,6 +26,7 @@ namespace Invoicing_Application.Service
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void BindState()
         {
+            string strResponse = "{}";
             DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT StateID,StateName FROM   anjacreation.tblStateMaster");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
@@ -35,31 +36,34 @@ namespace Invoicing_Application.Service
                                     StateID = r.Field<int>("StateID"),
                                     StateName = r.Field<string>("StateName"),
                                 });
-                string strResponse = JsonConvert.SerializeObject(NameList);
+                strResponse = JsonConvert.SerializeObject(NameList);
                 Context.Response.Clear();
                 Context.Response.ContentType = "application/json";
-                Context.Response.AddHeader("content-length", strResponse.Length.ToString());
-                Context.Response.Write(strResponse);
-                Context.Response.Flush();
+
                 //  Context.Response.Write(JsonConvert.SerializeObject(NameList));
             }
             else
             {
-                clsMessage message = new clsMessage();
-
-                message.strMessage = "No records found";
-                message.Result = true;
+                //clsMessage message = new clsMessage();
+                //message.strMessage = "No records found";
+                //message.Result = true;
 
                 Context.Response.Clear();
-                this.Context.Response.ContentType = "application/json; charset=utf-8";
-                this.Context.Response.Write(JsonConvert.SerializeObject(message));
+                Context.Response.ContentType = "application/json";
+
+                //this.Context.Response.ContentType = "application/json; charset=utf-8";
+                //this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
+            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+            Context.Response.Write(strResponse);
+            Context.Response.Flush();
         }
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void BindHSNCode()
         {
+            string strResponse = "{}";
             DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT HSNID,HSNCode FROM anjacreation.tblHSNMaster;");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
@@ -69,25 +73,19 @@ namespace Invoicing_Application.Service
                                        HSNID = r.Field<int>("HSNID"),
                                        HSNCode = r.Field<string>("HSNCode"),
                                    });
-                string strResponse = JsonConvert.SerializeObject(HSNCodeList);
+                strResponse = JsonConvert.SerializeObject(HSNCodeList);
                 Context.Response.Clear();
-                Context.Response.ContentType = "application/json";
-                Context.Response.AddHeader("content-length", strResponse.Length.ToString());
-                Context.Response.Write(strResponse);
-                Context.Response.Flush();
+                Context.Response.ContentType = "application/json; charset=utf-8";
                 //  Context.Response.Write(JsonConvert.SerializeObject(NameList));
             }
             else
             {
-                clsMessage message = new clsMessage();
-
-                message.strMessage = "No records found";
-                message.Result = true;
-
                 Context.Response.Clear();
-                this.Context.Response.ContentType = "application/json; charset=utf-8";
-                this.Context.Response.Write(JsonConvert.SerializeObject(message));
+                Context.Response.ContentType = "application/json";
             }
+            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+            Context.Response.Write(strResponse);
+            Context.Response.Flush();
         }
 
         [WebMethod]
@@ -96,7 +94,7 @@ namespace Invoicing_Application.Service
         {
             clsMessage message = new clsMessage();
 
-            Description = Description.Length == 0 ? "0" : Description;
+            Description = Description.Length == 0 ? "0" : Description.Trim();
 
             ObjDAL.SetStoreProcedureData("ParmSKUCode", MySqlConnector.MySqlDbType.VarChar, SKUCode.Trim(), clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("ParmSKUName", MySqlConnector.MySqlDbType.VarChar, SKUName.Trim(), clsMySQLCoreApp.ParamType.Input);
@@ -446,7 +444,7 @@ namespace Invoicing_Application.Service
         {
             string strResponse = "";
             string strQ = "SELECT GSTNo,Address,c1.StateID, s1.StateName FROM anjacreation.tblCustomerMaster c1 inner join " +
-                        " anjacreation.tblStateMaster s1 on c1.StateID = s1.StateID where CustomerID=" + CustomerID+";";
+                        " anjacreation.tblStateMaster s1 on c1.StateID = s1.StateID where CustomerID=" + CustomerID + ";";
 
             DataTable dataTable = ObjDAL.ExecuteSelectStatement(strQ);
             if (dataTable != null && dataTable.Rows.Count > 0)
@@ -473,7 +471,7 @@ namespace Invoicing_Application.Service
 
                 message.strMessage = "No records found";
                 message.Result = true;
-                
+
                 strResponse = JsonConvert.SerializeObject(message);
 
                 Context.Response.Clear();
@@ -488,7 +486,8 @@ namespace Invoicing_Application.Service
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void BindProduct()
         {
-            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT SKUID,SKUName,SKUCode FROM  anjacreation.tblSKUMaster;");
+            string strResponse = "{}";
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT SKUID,SKUName FROM  anjacreation.tblSKUMaster;");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 var NameList = (from r in dataTable.AsEnumerable()
@@ -496,27 +495,24 @@ namespace Invoicing_Application.Service
                                 {
                                     SKUID = r.Field<int>("SKUID"),
                                     SKUName = r.Field<string>("SKUName"),
-                                    SKUCode = r.Field<string>("SKUCode"),
                                 });
-                string strResponse = JsonConvert.SerializeObject(NameList);
+                strResponse = JsonConvert.SerializeObject(NameList);
                 Context.Response.Clear();
                 Context.Response.ContentType = "application/json";
-                Context.Response.AddHeader("content-length", strResponse.Length.ToString());
-                Context.Response.Write(strResponse);
-                Context.Response.Flush();
-                //  Context.Response.Write(JsonConvert.SerializeObject(NameList));
             }
             else
             {
-                clsMessage message = new clsMessage();
-
-                message.strMessage = "No records found";
-                message.Result = true;
+                //clsMessage message = new clsMessage();
+                //message.strMessage = "No records found";
+                //message.Result = true;
 
                 Context.Response.Clear();
-                this.Context.Response.ContentType = "application/json; charset=utf-8";
-                this.Context.Response.Write(JsonConvert.SerializeObject(message));
+                Context.Response.ContentType = "application/json; charset=utf-8";
+                //Context.Response.Write(JsonConvert.SerializeObject(message));
             }
+            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+            Context.Response.Write(strResponse);
+            Context.Response.Flush();
         }
 
 
@@ -524,26 +520,21 @@ namespace Invoicing_Application.Service
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void GetSelectedProduct(int ProductID, int PartyID)
         {
-            string OldRate = "0";
+            string OldRate = "0", strResponse = "{}";
 
             ObjDAL.SetStoreProcedureData("parmProductID", MySqlConnector.MySqlDbType.Int32, ProductID);
             ObjDAL.SetStoreProcedureData("parmPartyID", MySqlConnector.MySqlDbType.Int32, PartyID);
             DataSet dsProductDetails = ObjDAL.ExecuteStoreProcedure_Get("anjacreation.SPR_GetUerProduct");
             if (dsProductDetails.Tables.Count > 0)
             {
-
                 if (dsProductDetails.Tables[1].Rows.Count > 0)
                 {
                     OldRate = dsProductDetails.Tables[1].Rows[0]["Rate"].ToString();
                 }
-
             }
-
-
 
             if (dsProductDetails.Tables[0].Rows.Count > 0)
             {
-
                 // if no last record found
                 if (OldRate == "0")
                 {
@@ -562,12 +553,9 @@ namespace Invoicing_Application.Service
                                         IsOld = "0"
                                     });
 
-                    string strResponse = JsonConvert.SerializeObject(NameList);
+                    strResponse = JsonConvert.SerializeObject(NameList);
                     Context.Response.Clear();
                     Context.Response.ContentType = "application/json";
-                    Context.Response.AddHeader("content-length", strResponse.Length.ToString());
-                    Context.Response.Write(strResponse);
-                    Context.Response.Flush();
                 }
                 else
                 {
@@ -585,27 +573,23 @@ namespace Invoicing_Application.Service
                                         IGST = r.Field<decimal>("IGST"),
                                         IsOld = "1"
                                     });
-                    string strResponse = JsonConvert.SerializeObject(NameList);
+                    strResponse = JsonConvert.SerializeObject(NameList);
                     Context.Response.Clear();
                     Context.Response.ContentType = "application/json";
-                    Context.Response.AddHeader("content-length", strResponse.Length.ToString());
-                    Context.Response.Write(strResponse);
-                    Context.Response.Flush();
-
                 }
-
-
             }
             else
             {
-                clsMessage message = new clsMessage();
-
-                message.strMessage = "No records found";
-                message.Result = true;
+                //clsMessage message = new clsMessage();
+                //message.strMessage = "No records found";
+                //message.Result = true;
                 Context.Response.Clear();
-                this.Context.Response.ContentType = "application/json; charset=utf-8";
-                this.Context.Response.Write(JsonConvert.SerializeObject(message));
+                Context.Response.ContentType = "application/json; charset=utf-8";
+                //Context.Response.Write(JsonConvert.SerializeObject(message));
             }
+            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+            Context.Response.Write(strResponse);
+            Context.Response.Flush();
         }
 
         [WebMethod]
@@ -721,7 +705,7 @@ namespace Invoicing_Application.Service
 
             bool result = false;
 
-            ObjDAL.ExecuteNonQuery("delete from tblSalesDetails where InvoiceID=" + SalesDetailsObj[0].InvID);
+            ObjDAL.ExecuteNonQuery("DELETE FROM tblSalesDetails WHERE InvoiceID=" + SalesDetailsObj[0].InvID);
 
             foreach (var item in SalesDetailsObj)
             {
@@ -746,8 +730,8 @@ namespace Invoicing_Application.Service
                 ObjDAL.SetStoreProcedureData("parmSGST", MySqlConnector.MySqlDbType.Decimal, parmSGST);
                 ObjDAL.SetStoreProcedureData("parmIGST", MySqlConnector.MySqlDbType.Decimal, parmIGST);
 
-                ObjDAL.SetStoreProcedureData("parmCreatedBy", MySqlConnector.MySqlDbType.Int32, 1);
-                ObjDAL.SetStoreProcedureData("parmUpdateBy", MySqlConnector.MySqlDbType.Int32, 1);
+                ObjDAL.SetStoreProcedureData("parmCreatedBy", MySqlConnector.MySqlDbType.Int32, item.CreatedBy);
+                ObjDAL.SetStoreProcedureData("parmUpdateBy", MySqlConnector.MySqlDbType.Int32, item.CreatedBy);
 
                 result = ObjDAL.ExecuteStoreProcedure_DML("anjacreation.SPR_Insert_SalesDetails");
                 if (result == false)
@@ -760,10 +744,6 @@ namespace Invoicing_Application.Service
                 }
             }
 
-
-
-
-
             if (result)
             {
                 message.Result = true;
@@ -772,9 +752,7 @@ namespace Invoicing_Application.Service
             else
             {
                 message.Result = false;
-
             }
-
 
             string strResponse = JsonConvert.SerializeObject(message);
             Context.Response.Clear();
@@ -1162,7 +1140,7 @@ namespace Invoicing_Application.Service
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void BINDSKU_Code()
         {
-            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT SKUID,SKUCode FROM anjacreation.tblSKUMaster;");
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT SKUID,SKUCode,SKUName FROM anjacreation.tblSKUMaster WHERE IF(SKUCode IS NULL || SKUCode='',0,1)=1;");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 var NameList = (from r in dataTable.AsEnumerable()
@@ -1235,7 +1213,7 @@ namespace Invoicing_Application.Service
             else
             {
                 message.Result = false;
-                message.strMessage = "Failed to save the dat";
+                message.strMessage = "Failed to save the data";
             }
             string strResponse = JsonConvert.SerializeObject(message);
 
@@ -1248,22 +1226,19 @@ namespace Invoicing_Application.Service
         }
 
         [WebMethod]
-
         public DataSet GetReportData(string InvoiceID, string PartyID)
         {
-
             ObjDAL.SetStoreProcedureData("parmSaleInvoiceID", MySqlConnector.MySqlDbType.Int32, InvoiceID);
             ObjDAL.SetStoreProcedureData("parmPartyID", MySqlConnector.MySqlDbType.Int32, PartyID);
             return ObjDAL.ExecuteStoreProcedure_Get("SPR_GetReportData");
-
         }
-
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void BindCGST()
         {
-            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT CGST as CGSTValue,CGST  FROM anjacreation.tblHSNMaster;");
+            string strResponse = "{}";
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT CGST as CGSTValue,CGST FROM anjacreation.tblHSNMaster;");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 var NameList = (from r in dataTable.AsEnumerable()
@@ -1271,33 +1246,33 @@ namespace Invoicing_Application.Service
                                 {
                                     CGSTValue = r.Field<decimal>("CGSTValue"),
                                     CGST = r.Field<decimal>("CGST").ToString("0.0") + "%"
-
                                 });
-                string strResponse = JsonConvert.SerializeObject(NameList);
+                strResponse = JsonConvert.SerializeObject(NameList);
                 Context.Response.Clear();
                 Context.Response.ContentType = "application/json";
-                Context.Response.AddHeader("content-length", strResponse.Length.ToString());
-                Context.Response.Write(strResponse);
-                Context.Response.Flush();
+
                 //  Context.Response.Write(JsonConvert.SerializeObject(NameList));
             }
             else
             {
-                clsMessage message = new clsMessage();
-
-                message.strMessage = "No records found";
-                message.Result = true;
+                //clsMessage message = new clsMessage();
+                //message.strMessage = "No records found";
+                //message.Result = true;
 
                 Context.Response.Clear();
-                this.Context.Response.ContentType = "application/json; charset=utf-8";
-                this.Context.Response.Write(JsonConvert.SerializeObject(message));
+                Context.Response.ContentType = "application/json; charset=utf-8";
+                //this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
+            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+            Context.Response.Write(strResponse);
+            Context.Response.Flush();
         }
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void BindSGST()
         {
+            string strResponse = "{}";
             DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT SGST, SGST as SGSTValue FROM anjacreation.tblHSNMaster;");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
@@ -1308,31 +1283,31 @@ namespace Invoicing_Application.Service
                                     SGST = r.Field<decimal>("SGST").ToString("0.0") + "%"
 
                                 });
-                string strResponse = JsonConvert.SerializeObject(NameList);
+                strResponse = JsonConvert.SerializeObject(NameList);
                 Context.Response.Clear();
                 Context.Response.ContentType = "application/json";
-                Context.Response.AddHeader("content-length", strResponse.Length.ToString());
-                Context.Response.Write(strResponse);
-                Context.Response.Flush();
                 //  Context.Response.Write(JsonConvert.SerializeObject(NameList));
             }
             else
             {
-                clsMessage message = new clsMessage();
-
-                message.strMessage = "No records found";
-                message.Result = true;
+                //clsMessage message = new clsMessage();
+                //message.strMessage = "No records found";
+                //message.Result = true;
 
                 Context.Response.Clear();
-                this.Context.Response.ContentType = "application/json; charset=utf-8";
-                this.Context.Response.Write(JsonConvert.SerializeObject(message));
+                Context.Response.ContentType = "application/json; charset=utf-8";
+                //Context.Response.Write(JsonConvert.SerializeObject(message));
             }
+            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+            Context.Response.Write(strResponse);
+            Context.Response.Flush();
         }
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void BindIGST()
         {
+            string strResponse = "{}";
             DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT IGST, IGST as IGSTValue FROM anjacreation.tblHSNMaster;");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
@@ -1341,27 +1316,25 @@ namespace Invoicing_Application.Service
                                 {
                                     IGSTValue = r.Field<decimal>("IGSTValue"),
                                     IGST = r.Field<decimal>("IGST").ToString("0.0") + "%"
-
                                 });
-                string strResponse = JsonConvert.SerializeObject(NameList);
+                strResponse = JsonConvert.SerializeObject(NameList);
                 Context.Response.Clear();
                 Context.Response.ContentType = "application/json";
-                Context.Response.AddHeader("content-length", strResponse.Length.ToString());
-                Context.Response.Write(strResponse);
-                Context.Response.Flush();
                 //  Context.Response.Write(JsonConvert.SerializeObject(NameList));
             }
             else
             {
-                clsMessage message = new clsMessage();
-
-                message.strMessage = "No records found";
-                message.Result = true;
+                //clsMessage message = new clsMessage();
+                //message.strMessage = "No records found";
+                //message.Result = true;
 
                 Context.Response.Clear();
-                this.Context.Response.ContentType = "application/json; charset=utf-8";
-                this.Context.Response.Write(JsonConvert.SerializeObject(message));
+                Context.Response.ContentType = "application/json; charset=utf-8";
+                //Context.Response.Write(JsonConvert.SerializeObject(message));
             }
+            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+            Context.Response.Write(strResponse);
+            Context.Response.Flush();
         }
 
 
@@ -1373,8 +1346,8 @@ namespace Invoicing_Application.Service
             string jsonData = "{}";
 
             ObjDAL.SetStoreProcedureData("parmInvoiceID", MySqlConnector.MySqlDbType.Int32, InvoiceID);
-        DataSet dsSalesDetails=    ObjDAL.ExecuteStoreProcedure_Get("anjacreation.SPR_GetSalesDetails");
-            if (dsSalesDetails.Tables.Count>0)
+            DataSet dsSalesDetails = ObjDAL.ExecuteStoreProcedure_Get("anjacreation.SPR_GetSalesDetails");
+            if (dsSalesDetails.Tables.Count > 0)
             {
                 DataTable dataTable = dsSalesDetails.Tables[0];
 
@@ -1383,30 +1356,24 @@ namespace Invoicing_Application.Service
                     jsonData = DataTableToJSONWithJSONNet(dataTable);
                 }
             }
-          
-         
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.AddHeader("content-length", jsonData.Length.ToString());
             Context.Response.Write(jsonData);
             Context.Response.Flush();
         }
+
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void GetBindInvoiceDetails(string invoiceID)
         {
-
             // get invoice master and invoice other details
             string strQ = "select *,sm.StateName,sm.GSTStateCode  from anjacreation.tblSalesInvoceMaster im left join  " +
                             " anjacreation.tblInvoiceOtherDetails ot on im.SaleInvoiceID = ot.InvoiceID " +
                             " left join anjacreation.tblStateMaster sm  on ot.Consignee_StateID = sm.StateID " +
                              " where im.SaleInvoiceID =" + invoiceID;
 
-
-
-
             DataTable dtInvoiceMaster = ObjDAL.ExecuteSelectStatement(strQ);
-
 
             string jsonData = "{}";
 
@@ -1414,18 +1381,12 @@ namespace Invoicing_Application.Service
             {
                 jsonData = DataTableToJSONWithJSONNet(dtInvoiceMaster);
             }
-            //Context.Response.ContentType = "application/json";
-            //Context.Response.Write(jsonData);
 
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.AddHeader("content-length", jsonData.Length.ToString());
             Context.Response.Write(jsonData);
             Context.Response.Flush();
-
-
-
         }
-
     }
 }
