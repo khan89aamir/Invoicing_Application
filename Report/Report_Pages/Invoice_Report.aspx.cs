@@ -81,6 +81,8 @@ namespace Invoicing_Application.Report.Report_Pages
                 ReportParameter pInvoiceNo = new ReportParameter("pInvoiceNo", dtInvoiceMaster.Rows[0]["InvoiceNumber"].ToString());
                 ReportParameter pInvoiceDate = new ReportParameter("pInvoiceDate", Convert.ToDateTime(dtInvoiceMaster.Rows[0]["InvoiceDate"]).ToString("dd-MM-yyyy"));
                 ReportParameter pOwnerState = new ReportParameter("pOwnerState", dtMyprofile.Rows[0]["StateName"].ToString());
+                ReportParameter parmOwnerStateCode = new ReportParameter("parmOwnerStateCode", dtInvoiceMaster.Rows[0]["GSTStateCode"].ToString());
+
 
                 ReportParameter pPartyState = new ReportParameter("pPartyState", dtPartyDetails.Rows[0]["StateName"].ToString());
 
@@ -99,11 +101,17 @@ namespace Invoicing_Application.Report.Report_Pages
                 ReportParameter pConGST;
                 ReportParameter pConStateCode;
                 ReportParameter pConState;
+                string strBankDetails = "";
 
-                string strBankDetails = "Bank Name:" + dtBankDetails.Rows[0]["BankName"].ToString() + ",Account No: " +
-                     dtBankDetails.Rows[0]["AccountNo"].ToString() + ",IFSC Code:" +
-                      dtBankDetails.Rows[0]["IFSC_Code"].ToString() + ",Branch: " +
-                       dtBankDetails.Rows[0]["Branch"].ToString();
+                if (dtBankDetails.Rows.Count>0)
+                {
+                    strBankDetails = "Bank Name:" + dtBankDetails.Rows[0]["BankName"].ToString() + ",Account No: " +
+                      dtBankDetails.Rows[0]["AccountNo"].ToString() + ",IFSC Code:" +
+                       dtBankDetails.Rows[0]["IFSC_Code"].ToString() + ",Branch: " +
+                        dtBankDetails.Rows[0]["Branch"].ToString();
+
+                }
+               
 
 
                 ReportParameter pBankDetails = new ReportParameter("pBankDetails", strBankDetails);
@@ -187,6 +195,9 @@ namespace Invoicing_Application.Report.Report_Pages
                 ReportViewer1.LocalReport.SetParameters(pCGST_Percent);
                 ReportViewer1.LocalReport.SetParameters(pSGST_Percent);
                 ReportViewer1.LocalReport.SetParameters(pIGST_Percent);
+                ReportViewer1.LocalReport.SetParameters(parmOwnerStateCode);
+
+              
 
                 DataTable dtGST = new DataTable();
                 dtGST.Columns.Add("Percent");
@@ -244,9 +255,14 @@ namespace Invoicing_Application.Report.Report_Pages
 
             string DefaultURL = "../../Webs/Invoicing.aspx";
 
-            ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage", "  window.open('"+ strURL + "');", true);
+           // ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage1", "window.location.href = '" + DefaultURL + "';", true);
 
-             ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage2", "window.location.href = '" + DefaultURL + "';", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage2", "window.location.href = '" + strURL + "';", true);
+
+            //  ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage", "  window.open('"+ strURL + "');", true);
+            
+
+          
 
 
         }

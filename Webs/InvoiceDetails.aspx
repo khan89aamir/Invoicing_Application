@@ -188,6 +188,8 @@
                             return "<a class='lnkSelect btn btn btn-primary' href='" + data + "'>Select</a>";
                         }
                     },
+
+                   
                     { 'data': 'SaleInvoiceID' },
                     { 'data': 'InvoiceNumber' },
                     { 'data': 'InvoiceDate' },

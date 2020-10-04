@@ -20,10 +20,19 @@
         .OldRate {
             background-color: yellow;
         }
+        /* For device width smaller than 600px: */
+        @media screen and (max-width: 600px) {
+
+          
+            .container{
+                padding-left:0px!important;
+                padding-right:0px!important;
+            }
+        }
     </style>
 
     <br />
-    <div class="container">
+    <div id="mainContainer" class="container">
         <div class="container d-flex justify-content-start">
             <div class="card border-info" style="width: 100%">
                 <div class="card-header">
@@ -108,15 +117,15 @@
                                     <div class="invalid-feedback text-left">
                                         Please Enter Party Name
                                     </div>
-                                    <button id="btnGetCustomer" class="btn btn-primary btn-sm" type="button">Get Customer Details</button>
+                                    <button id="btnGetCustomer" class="btn btn-primary btn-sm mt-1" type="button">Get Customer Details</button>
                                     <br />
                                     <div id="loadingPartyDiv" class="d-none">
-                                         <div class="spinner-border spinner-border-sm text-primary" role="status">
-                                        <span class="sr-only">Loading...</span>
+                                        <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        Fetching Party Details Please Wait....
                                     </div>
-                                    Fetching Party Details Please Wait....
-                                    </div>
-                                  
+
                                     <a href="Customer.aspx" target="_blank"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add New Customer</a>
                                     <br />
                                     <a id="lnkRefresh" href="#" target="_blank"><i class="fa fa-refresh mr-1" aria-hidden="true"></i>Refresh</a>
@@ -203,19 +212,19 @@
                             </div>
 
                             <div class="col-md-4">
-                                   <div class="form-group">
-                                         <div id="loadingProduct" class="invisible mt-2">
-                                         <div class="spinner-border spinner-border-sm text-primary" role="status">
-                                        <span class="sr-only">Loading...</span>
+                                <div class="form-group">
+                                    <div id="loadingProduct" class="invisible mt-2">
+                                        <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        Fetching Party Details Please Wait....
                                     </div>
-                                    Fetching Party Details Please Wait....
-                                    </div>
-                                         <button type="button" id="btnGetproduct"  class="btn btn-primary btn-sm">Get Product Details</button>
-                                       </div>
-                              
+                                    <button type="button" id="btnGetproduct" class="btn btn-primary btn-sm">Get Product Details</button>
+                                </div>
+
                             </div>
                         </div>
-                         
+
                         <div class="form-row">
 
                             <div class="col-md-3">
@@ -382,28 +391,28 @@
 
                                 <label for="colFormLabel" class="col-sm-3 col-form-label ">Reverse Charge: </label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm " id="txtReverseCharge" placeholder="0.00">
+                                    <input type="text" class="form-control form-control-sm " id="txtReverseCharge" placeholder="0.00" autocomplete="off">
                                 </div>
 
                                 <label for="colFormLabel" class="col-sm-3 col-form-label ">Transportation Mode: </label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm " id="txtTransportationMode">
+                                    <input type="text" class="form-control form-control-sm " id="txtTransportationMode" autocomplete="off">
                                 </div>
 
                                 <label for="colFormLabel" class="col-sm-3 col-form-label ">Vehicle Number: </label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm " id="txtVehicleNumber">
+                                    <input type="text" class="form-control form-control-sm " id="txtVehicleNumber" autocomplete="off">
                                 </div>
 
 
                                 <label for="colFormLabel" class="col-sm-3 col-form-label ">Date of Supply: </label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm " id="txtDateofSupply">
+                                    <input type="text" class="form-control form-control-sm " id="txtDateofSupply" autocomplete="off">
                                 </div>
 
                                 <label for="colFormLabel" class="col-sm-3 col-form-label ">Place of Supply: </label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm " id="txtPlaceofSupply">
+                                    <input type="text" class="form-control form-control-sm " id="txtPlaceofSupply" autocomplete="off">
                                 </div>
 
                             </div>
