@@ -61,7 +61,7 @@
                             </div>
                         </div>
                         <hr />
-                        <div class="row">
+                        <div class="row" id="dvTable">
                             <div class="col-12">
                                 <table id="example" class="table table-hover table-responsive-md" style="width: 100%">
                                     <thead>
@@ -74,6 +74,11 @@
                                             <th>Customer Name</th>
                                             <th>Total QTY</th>
                                             <th>Total Amount</th>
+                                            <th>Trouser</th>
+                                            <th>Kurta</th>
+                                            <th>Shirt</th>
+                                            <th>T Shirt</th>
+                                            <th>Coat</th>
                                             <th>Delete</th>
                                         </tr>
                                     </thead>
@@ -83,24 +88,6 @@
                                 </table>
                             </div>
                         </div>
-
-                        <div id="dvdetails" style="display:none">
-                        <table id="dtdetail" class="table table-hover table-responsive-md" style="width: 100%">
-                                    <thead>
-                                        <tr>
-                                            <th>SKU Code</th>
-                                            <th>SKU Name</th>
-                                            <th>HSN Code</th>
-                                            <th>Rate</th>
-                                            <th>QTY</th>
-                                            <th>Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-
                     </form>
                 </div>
 
@@ -134,7 +121,7 @@
                                 event.stopPropagation();
 
                                 $.GetInvoiceDetails();
-
+                                //$.GetInvoiceDetails_Test();
                             }
                         }
                         form.classList.add('was-validated');
@@ -182,7 +169,7 @@
                     },
                     dataSrc: function (d) {
 
-                        //var blob = new Blob([d.data], { type: 'data:application/vnd.ms-excel' }); 
+                        //var blob = new Blob([d], { type: 'data:application/vnd.ms-excel' }); 
                         //var downloadUrl = URL.createObjectURL(blob);
                         //var a = document.createElement("a");
                         //a.href = downloadUrl;
@@ -207,6 +194,11 @@
                     { 'data': 'CustomerName' },
                     { 'data': 'TotalQTY' },
                     { 'data': 'Total Amount' },
+                    { 'data': 'Trouser' },
+                    { 'data': 'Kurta' },
+                    { 'data': 'Shirt' },
+                    { 'data': 'T Shirt' },
+                    { 'data': 'Coat' },
                     {
                         data: 'Delete',
                         render: function (data, type, row) {
@@ -223,8 +215,8 @@
                         title: 'Invoice Details',
                         //footer: false,
                         exportOptions: {
-                            columns: [2, 3, 4, 5, 6]
-                            //columns: [0,':visible']
+                            columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                            //columns: [2, 3,4, 5, 6,':visible'] // data will export all visible column and entered column index
                         }
 
                     },
@@ -232,7 +224,7 @@
                         extend: 'excel', //excelHtml
                         title: '',//Invoice Details
                         filename: 'Invoice Details',
-                        text: '<i class="fa fa-download mr-1" aria-hidden="true"> Excel</i>',
+                        text: '<i class="fa fa-download mr-1" aria-hidden="true"> XLSX</i>',
                         titleAttr: 'Export Excel',
                         //text: 'Download Excel',
                         //autoFilter: true,
@@ -241,7 +233,8 @@
                             modifier: {
                                 page: 'all'
                             },
-                            columns: [2, 3, 4, 5, 6]
+                            columns: [2, 3, 4, 5, 6,7,8,9,10,11]
+                            //columns: ':gt(0)', orthogonal: 'export' // data will export all columns except get(0) index
                         },
                         //customize: function (xlsx) {
                         //    var sheet = xlsx.xl.worksheets['sheet1.xml'];
@@ -294,7 +287,7 @@
 
             //to invisble multipe columns
             // table.columns([1, 2]).visible(false);
-            table.columns([1]).visible(false);
+            table.columns([1,7,8,9,10,11]).visible(false);
 
             //var blob = new Blob([table], { type: 'data:application/vnd.ms-excel' }); 
             //var downloadUrl = URL.createObjectURL(blob);
@@ -480,6 +473,77 @@
 
             $('#confirmationModel').modal('hide');
         });
+
+
+        $.GetInvoiceDetails_Test = function () {
+
+            var vardtpFromDate = $('#dtpFromDate').val();
+            var vardtpToDate = $('#dtpToDate').val();
+
+            var SearchFilterData = { FromDate: vardtpFromDate, ToDate: vardtpToDate };
+
+            $.ajax({
+                type: "POST",
+                url: "../Service/Invoicing_Service.asmx/GetInvoiceDetails",
+                dataType: "json",
+                data: SearchFilterData,
+                //contentType: "application/json",
+                success: function (res) {
+
+                    //Create a HTML Table element.
+                    var table = $("<table class='table table - hover table - responsive - md' style='width: 100 %' />");
+                    table[0].border = "1";
+                    
+                    var columnCount = res[0];
+                    columnCount = Object.keys(columnCount).length;
+                    console.log('columnCount ' + Object.keys(columnCount).length);
+                    //Add the header row.
+                    var row = $(table[0].insertRow(-1));
+
+                    var jsonObject = JSON.stringify(res[0]);
+                    console.log('jsonObject ' + jsonObject);
+                    //var count = JSON.parse(jsonObject).length;
+
+                    //let a =  res[0] ;
+                    //console.log('res ' + Object.keys(a).length);
+                    //$.each(res, function (data, value) {
+
+                    //})
+                    console.log('res.length ' + res.length);
+                    //Add the data rows.
+                    //for (var i = 0; i < res.length; i++) {
+                    //    row = $(table[0].insertRow(-1));
+                    //    for (var j = 0; j < columnCount; j++) {
+                    //        var cell = $("<td />");
+                    //        cell.html(res[i][j]);
+                    //        row.append(cell);
+                    //    }
+                    //}
+                    var result = JSON.parse(jsonObject);
+                    row = $(table[0].insertRow(-1));
+                    $.each(result, function (k, v) {
+                        //display the key and value pair
+
+                        var cell = $("<td />");
+                        cell.html(k,v);
+                        //cell.html(v);
+                        row.append(cell);
+                    });
+
+                    var dvTable = $("#dvTable");
+                    dvTable.html("");
+                    dvTable.append(table);
+                },
+                error: function (xhr, status, error) {
+
+                    alert("Error : " + error);
+                    alert("Error Text: " + xhr.responseText);
+                },
+                failure: function (r) {
+                    alert("Fail:" + r.responseText);
+                }
+            });
+        };
 
     </script>
 </asp:Content>
