@@ -191,7 +191,8 @@
                     </button>
                     <div class="dropdown-menu" style="font-family: 'Times New Roman'" aria-labelledby="dropdownMenuButton">
                         <a id="btnMyProfile" class="dropdown-item" href="MyProfile.aspx"><i class="fa fa-user mr-1" aria-hidden="true"></i>My Profile</a>
-                       <a id="btnLogout" class="dropdown-item" href='#'"><i class="fa fa-sign-out mr-1" aria-hidden="true"></i>Logout</a>
+                       <button class="dropdown-item" runat="server" type="button" id="btnLogout2" onserverclick="btnLogout_ServerClick" ><i class="fa fa-sign-out mr-1" aria-hidden="true"></i>Logout</button>
+
                        
                     </div>
                 </div>
