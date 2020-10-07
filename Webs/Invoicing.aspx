@@ -117,7 +117,7 @@
                                     <div class="invalid-feedback text-left">
                                         Please Enter Party Name
                                     </div>
-                                    <button id="btnGetCustomer" class="btn btn-primary btn-sm mt-1" type="button">Get Customer Details</button>
+                                    <button id="btnGetCustomer" class="btn btn-primary btn-sm mt-1" type="button" hidden>Get Customer Details</button>
                                     <br />
                                     <div id="loadingPartyDiv" class="d-none">
                                         <div class="spinner-border spinner-border-sm text-primary" role="status">
@@ -219,7 +219,7 @@
                                         </div>
                                         Fetching Party Details Please Wait....
                                     </div>
-                                    <button type="button" id="btnGetproduct" class="btn btn-primary btn-sm">Get Product Details</button>
+                                    <button type="button" id="btnGetproduct" class="btn btn-primary btn-sm" hidden>Get Product Details</button>
                                 </div>
 
                             </div>
@@ -478,9 +478,9 @@
     <%--<button id="btnCalculateTax" class="mb-4">CalculateText</button>--%>
     <script>
 
-        var UserID = <%= Session["UserID"] %>;
-        var StateName = '<%  Response.Write(Session["StateName"].ToString()); %>';
-        var DefaultState = '<%  Response.Write(Session["DefaultValue"].ToString()); %>';
+        var UserID = <% if(Session["UserID"]!=null){ Response.Write(Session["UserID"].ToString());  } %>;
+        var StateName = '<% if(Session["StateName"]!=null){ Response.Write(Session["StateName"].ToString());  } %>'; 
+        var DefaultState = '<% if(Session["DefaultValue"]!=null){ Response.Write(Session["DefaultValue"].ToString());  } %>'; 
 
     </script>
     <script src="../assets/js/Invoicing.js"></script>

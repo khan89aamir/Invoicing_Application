@@ -30,6 +30,7 @@ namespace Invoicing_Application.Webs
         {
             HttpContext.Current.Session.Clear();
             HttpContext.Current.Session.Abandon();
+         
             //Session.Clear();
             //Session.Abandon();
             //Session.Remove("UserID");

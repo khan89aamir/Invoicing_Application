@@ -14,6 +14,17 @@ namespace Invoicing_Application
 
         }
 
+        protected void btnLogout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+          
 
+            string DefaultURL = "Home.aspx";
+
+            ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage2", "window.location.href = '" + DefaultURL + "';", true);
+
+
+        }
     }
 }
