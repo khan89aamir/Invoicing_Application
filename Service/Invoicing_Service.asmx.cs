@@ -1138,25 +1138,25 @@ namespace Invoicing_Application.Service
             clsMessage message = new clsMessage();
 
             string bodyHTML = string.Empty;
-            bodyHTML = "Hi, This is Test Message.";
-            //bodyHTML = "<p>Dear Anja Creation,</p>";
-            //bodyHTML += "<p>We've received a request to reset your password.</p>";
-            //bodyHTML += "<p>PFB Reset Password for " + ForgotEmailID + ".</p>";
-            //bodyHTML += @" <html><table width = '300' cellpadding = '0' cellspacing = '0' align = 'left' border = '1' >"
-            // + "<tr>"
-            // + "<td align ='center'>"
-            // + "<tr>"
-            // + " <td> Email ID </td>"
-            // + "<td> Password </td>"
-            // + " </tr>"
-            // + "<tr>"
-            // + "<td> " + ForgotEmailID + " </td>"
-            // + "<td> " + Password + " </td>"
-            // + " </tr>"
-            // + " </td>"
-            // + " </tr>"
-            // + " </table>"
-            // + " </html>";
+            //bodyHTML = "Hi, This is Test Message.";
+            bodyHTML = "<p>Dear Anja Creation,</p>";
+            bodyHTML += "<p>We've received a request to reset your password.</p>";
+            bodyHTML += "<p>PFB Reset Password for " + ForgotEmailID + ".</p>";
+            bodyHTML += @" <html><table width = '300' cellpadding = '0' cellspacing = '0' align = 'left' border = '1' >"
+             + "<tr>"
+             + "<td align ='center'>"
+             + "<tr>"
+             + " <td> Email ID </td>"
+             + "<td> Password </td>"
+             + " </tr>"
+             + "<tr>"
+             + "<td> " + ForgotEmailID + " </td>"
+             + "<td> " + Password + " </td>"
+             + " </tr>"
+             + " </td>"
+             + " </tr>"
+             + " </table>"
+             + " </html>";
             CoreApp.SendMail snd = new CoreApp.SendMail();
             //snd.From = stremail;
             snd.Sub = "Forgot Password";
