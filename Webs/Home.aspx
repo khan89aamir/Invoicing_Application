@@ -114,7 +114,7 @@
                             </div>
                         </div>
                         <br />
-                        <button id="btnforgotemail" class="btn btn-primary" type="submit">Submit</button>
+                        <button id="btnforgotemail" class="btn btn-primary" type="button">Submit</button>
                     </form>
                 </div>
             </div>
@@ -324,6 +324,11 @@
                     data: JSON.stringify(ForgotEmailData),
                     contentType: "application/json",
                     dataType: "json",
+                    beforeSend: function () {
+
+                        $('#pnlforgotpassLoading').removeClass("d-none");
+                        $('#pnlforgotpassLoading').addClass("d-block");
+                    },
                     success: function (responseData) {
 
                         if (responseData.Result) {
@@ -372,11 +377,11 @@
                 data: JSON.stringify(AccountData),
                 contentType: "application/json",
                 dataType: "json",
-                beforeSend: function () {
+                //beforeSend: function () {
 
-                    $('#pnlforgotpassLoading').removeClass("d-none");
-                    $('#pnlforgotpassLoading').addClass("d-block");
-                },
+                //    $('#pnlforgotpassLoading').removeClass("d-none");
+                //    $('#pnlforgotpassLoading').addClass("d-block");
+                //},
                 complete: function () {
 
                     $('#pnlforgotpassLoading').removeClass("d-block");

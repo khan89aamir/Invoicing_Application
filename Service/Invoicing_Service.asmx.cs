@@ -20,6 +20,7 @@ namespace Invoicing_Application.Service
     [System.Web.Script.Services.ScriptService]
     public class Invoicing_Service : System.Web.Services.WebService
     {
+        clsMySQLCoreApp ObjDAL = new clsMySQLCoreApp();
 
         [WebMethod]
         public string GetSelectedCustomer(int CustomerID)
@@ -50,12 +51,11 @@ namespace Invoicing_Application.Service
                 //Context.Response.AddHeader("content-length", strResponse.Length.ToString());
                 //Context.Response.Write(strResponse);
                 //Context.Response.Flush();
-                //  Context.Response.Write(JsonConvert.SerializeObject(NameList));
+                //Context.Response.Write(JsonConvert.SerializeObject(NameList));
             }
             else
             {
                 clsMessage message = new clsMessage();
-
                 message.strMessage = "No records found";
                 message.Result = true;
 
@@ -64,11 +64,8 @@ namespace Invoicing_Application.Service
                 //this.Context.Response.ContentType = "application/json; charset=utf-8";
                 //this.Context.Response.Write(JsonConvert.SerializeObject(message));
             }
-         
-           
         }
-        clsMySQLCoreApp ObjDAL = new clsMySQLCoreApp();
-
+        
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void BindState()
@@ -226,7 +223,7 @@ namespace Invoicing_Application.Service
         {
             clsMessage message = new clsMessage();
 
-            int result = ObjDAL.ExecuteNonQuery("DELETE from  anjacreation.tblSKUMaster WHERE SKUID=" + SKUID);
+            int result = ObjDAL.ExecuteNonQuery("DELETE FROM  anjacreation.tblSKUMaster WHERE SKUID=" + SKUID);
             if (result > 0)
             {
                 message.Result = true;
@@ -243,6 +240,7 @@ namespace Invoicing_Application.Service
             Context.Response.ContentType = "application/json";
             Context.Response.Write(js.Serialize(message));
         }
+
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void DeleteInvoice(int InvoiceID)
@@ -441,7 +439,6 @@ namespace Invoicing_Application.Service
             else
             {
                 clsMessage message = new clsMessage();
-
                 message.strMessage = "No records found";
                 message.Result = true;
 
@@ -455,6 +452,7 @@ namespace Invoicing_Application.Service
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void BindCustomer()
         {
+            string strResponse = "{}";
             DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT CustomerID,CustomerName FROM anjacreation.tblCustomerMaster");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
@@ -464,70 +462,68 @@ namespace Invoicing_Application.Service
                                     CustomerID = r.Field<int>("CustomerID"),
                                     CustomerName = r.Field<string>("CustomerName"),
                                 });
-                string strResponse = JsonConvert.SerializeObject(NameList);
-                Context.Response.Clear();
-                Context.Response.ContentType = "application/json";
-                Context.Response.AddHeader("content-length", strResponse.Length.ToString());
-                Context.Response.Write(strResponse);
-                Context.Response.Flush();
-                //  Context.Response.Write(JsonConvert.SerializeObject(NameList));
-            }
-            else
-            {
-                clsMessage message = new clsMessage();
-
-                message.strMessage = "No records found";
-                message.Result = true;
-
-                Context.Response.Clear();
-                this.Context.Response.ContentType = "application/json; charset=utf-8";
-                this.Context.Response.Write(JsonConvert.SerializeObject(message));
-            }
-        }
-
-        [WebMethod]
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void GetSelectedCustomer(int CustomerID)
-        {
-            string strResponse = "";
-            string strQ = "SELECT GSTNo,Address,c1.StateID, s1.StateName FROM anjacreation.tblCustomerMaster c1 inner join " +
-                        " anjacreation.tblStateMaster s1 on c1.StateID = s1.StateID where CustomerID=" + CustomerID + ";";
-
-            DataTable dataTable = ObjDAL.ExecuteSelectStatement(strQ);
-            if (dataTable != null && dataTable.Rows.Count > 0)
-            {
-                var NameList = (from r in dataTable.AsEnumerable()
-                                select new
-                                {
-                                    GSTNo = r.Field<string>("GSTNo"),
-                                    Address = r.Field<string>("Address"),
-                                    StateID = r.Field<int>("StateID"),
-                                    StateName = r.Field<string>("StateName"),
-                                });
                 strResponse = JsonConvert.SerializeObject(NameList);
                 Context.Response.Clear();
-                Context.Response.ContentType = "application/json; charset=utf-8";
-                Context.Response.AddHeader("content-length", strResponse.Length.ToString());
-                Context.Response.Write(strResponse);
-                Context.Response.Flush();
-                //  Context.Response.Write(JsonConvert.SerializeObject(NameList));
+                Context.Response.ContentType = "application/json";
             }
             else
             {
-                clsMessage message = new clsMessage();
-
-                message.strMessage = "No records found";
-                message.Result = true;
-
-                strResponse = JsonConvert.SerializeObject(message);
+                //clsMessage message = new clsMessage();
+                //message.strMessage = "No records found";
+                //message.Result = true;
 
                 Context.Response.Clear();
                 Context.Response.ContentType = "application/json; charset=utf-8";
-                Context.Response.Write(strResponse);
-                Context.Response.Flush();
+                //Context.Response.Write(JsonConvert.SerializeObject(message));
             }
-            //HttpContext.Current.ApplicationInstance.CompleteRequest();
+            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+            Context.Response.Write(strResponse);
+            Context.Response.Flush();
         }
+
+        //[WebMethod]
+        //[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        //public void GetSelectedCustomer(int CustomerID)
+        //{
+        //    string strResponse = "";
+        //    string strQ = "SELECT GSTNo,Address,c1.StateID, s1.StateName FROM anjacreation.tblCustomerMaster c1 inner join " +
+        //                " anjacreation.tblStateMaster s1 on c1.StateID = s1.StateID where CustomerID=" + CustomerID + ";";
+
+        //    DataTable dataTable = ObjDAL.ExecuteSelectStatement(strQ);
+        //    if (dataTable != null && dataTable.Rows.Count > 0)
+        //    {
+        //        var NameList = (from r in dataTable.AsEnumerable()
+        //                        select new
+        //                        {
+        //                            GSTNo = r.Field<string>("GSTNo"),
+        //                            Address = r.Field<string>("Address"),
+        //                            StateID = r.Field<int>("StateID"),
+        //                            StateName = r.Field<string>("StateName"),
+        //                        });
+        //        strResponse = JsonConvert.SerializeObject(NameList);
+        //        Context.Response.Clear();
+        //        Context.Response.ContentType = "application/json; charset=utf-8";
+        //        Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+        //        Context.Response.Write(strResponse);
+        //        Context.Response.Flush();
+        //        //  Context.Response.Write(JsonConvert.SerializeObject(NameList));
+        //    }
+        //    else
+        //    {
+        //        clsMessage message = new clsMessage();
+
+        //        message.strMessage = "No records found";
+        //        message.Result = true;
+
+        //        strResponse = JsonConvert.SerializeObject(message);
+
+        //        Context.Response.Clear();
+        //        Context.Response.ContentType = "application/json; charset=utf-8";
+        //        Context.Response.Write(strResponse);
+        //        Context.Response.Flush();
+        //    }
+        //    //HttpContext.Current.ApplicationInstance.CompleteRequest();
+        //}
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -1142,38 +1138,38 @@ namespace Invoicing_Application.Service
             clsMessage message = new clsMessage();
 
             string bodyHTML = string.Empty;
-
-            bodyHTML = "<p>Dear Anja Creation,</p>";
-            bodyHTML += "<p>We've received a request to reset your password.</p>";
-            bodyHTML += "<p>PFB Reset Password for " + ForgotEmailID + ".</p>";
-            bodyHTML += @" <html><table width = '300' cellpadding = '0' cellspacing = '0' align = 'left' border = '1' >"
-             + "<tr>"
-             + "<td align ='center'>"
-             + "<tr>"
-             + " <td> Email ID </td>"
-             + "<td> Password </td>"
-             + " </tr>"
-             + "<tr>"
-             + "<td> " + ForgotEmailID + " </td>"
-             + "<td> " + Password + " </td>"
-             + " </tr>"
-             + " </td>"
-             + " </tr>"
-             + " </table>"
-             + " </html>";
+            bodyHTML = "Hi, This is Test Message.";
+            //bodyHTML = "<p>Dear Anja Creation,</p>";
+            //bodyHTML += "<p>We've received a request to reset your password.</p>";
+            //bodyHTML += "<p>PFB Reset Password for " + ForgotEmailID + ".</p>";
+            //bodyHTML += @" <html><table width = '300' cellpadding = '0' cellspacing = '0' align = 'left' border = '1' >"
+            // + "<tr>"
+            // + "<td align ='center'>"
+            // + "<tr>"
+            // + " <td> Email ID </td>"
+            // + "<td> Password </td>"
+            // + " </tr>"
+            // + "<tr>"
+            // + "<td> " + ForgotEmailID + " </td>"
+            // + "<td> " + Password + " </td>"
+            // + " </tr>"
+            // + " </td>"
+            // + " </tr>"
+            // + " </table>"
+            // + " </html>";
             CoreApp.SendMail snd = new CoreApp.SendMail();
             //snd.From = stremail;
             snd.Sub = "Forgot Password";
             snd.Body = bodyHTML;
             snd.To = ForgotEmailID;
             snd.SendEMail();
-
+            
             message.Result = snd.IsMail;
             if (message.Result)
                 message.strMessage = "Email Send Successfully";
 
             else
-                message.strMessage = "Unable to Send an Email";
+                message.strMessage = "Unable to Send an Email\n"+ snd.Message;
 
             strResponse = JsonConvert.SerializeObject(message);
             Context.Response.Clear();
@@ -1185,36 +1181,35 @@ namespace Invoicing_Application.Service
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void BINDSKU_Code()
+        public void BindSKU_Code()
         {
-            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT SKUID,SKUCode,SKUName FROM anjacreation.tblSKUMaster WHERE IF(SKUCode IS NULL || SKUCode='',0,1)=1;");
+            string strResponse = "{}";
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT SKUID,SKUCode FROM anjacreation.tblSKUMaster WHERE IF(SKUCode IS NULL || SKUCode='',0,1)=1;");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 var NameList = (from r in dataTable.AsEnumerable()
                                 select new
                                 {
                                     SKUID = r.Field<int>("SKUID"),
-                                    SKUName = r.Field<string>("SKUCode"),
+                                    SKUCode = r.Field<string>("SKUCode"),
                                 });
-                string strResponse = JsonConvert.SerializeObject(NameList);
+                strResponse = JsonConvert.SerializeObject(NameList);
                 Context.Response.Clear();
                 Context.Response.ContentType = "application/json";
-                Context.Response.AddHeader("content-length", strResponse.Length.ToString());
-                Context.Response.Write(strResponse);
-                Context.Response.Flush();
-                //  Context.Response.Write(JsonConvert.SerializeObject(NameList));
             }
             else
             {
-                clsMessage message = new clsMessage();
-
-                message.strMessage = "No records found";
-                message.Result = true;
+                //clsMessage message = new clsMessage();
+                //message.strMessage = "No records found";
+                //message.Result = true;
 
                 Context.Response.Clear();
-                this.Context.Response.ContentType = "application/json; charset=utf-8";
-                this.Context.Response.Write(JsonConvert.SerializeObject(message));
+                Context.Response.ContentType = "application/json; charset=utf-8";
+                //Context.Response.Write(JsonConvert.SerializeObject(message));
             }
+            Context.Response.AddHeader("content-length", strResponse.Length.ToString());
+            Context.Response.Write(strResponse);
+            Context.Response.Flush();
         }
 
         [WebMethod]
