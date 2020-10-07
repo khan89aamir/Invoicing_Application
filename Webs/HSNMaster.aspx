@@ -249,7 +249,6 @@
                         $('#mdlNormalMessage').modal('show');
 
                         $('#frmHSN').trigger("reset");
-
                         //$('#example').DataTable().ajax.reload(null, false);// getting invalid json request on server
 
                         $.GetHSNDetails();

@@ -298,7 +298,7 @@ rel = "Stylesheet" type="text/css" />
                             $('#mdlNormalMessage').modal('show');
 
                             $('#frmSKU').trigger("reset");
-
+                            $("#select2-cmbHSNCode-container").text("Select HSN Code");
                             //$('#example').DataTable().ajax.reload(null, false);// getting invalid json request on server
 
                             $.GetSKUDetails();
