@@ -21,24 +21,6 @@ namespace Invoicing_Application.Webs
         {
             Invoicing_Service.Invoicing_ServiceSoapClient objClient = new Invoicing_Service.Invoicing_ServiceSoapClient();
 
-            //if (objClient.Login(txtUserName.Value, txtPassword.Value))
-            //{
-            //    Session["UserID"] = "1";
-            //    Session["UserName"] = txtUserName.Value;
-
-            //    string strStateResult = objClient.GetDefaultState();
-            //    string[] StateInfo = strStateResult.Split(',');
-            //    if (StateInfo.Length > 0)
-            //    {
-            //        Session["DefaultValue"] = StateInfo[0];
-            //        Session["StateName"] = StateInfo[1];
-            //    }
-            //    else
-            //    {
-            //        Session["DefaultValue"] = "0";
-            //        Session["StateName"] = "NA";
-            //    }
-            //}
             System.Data.DataTable dt = objClient.ValidateLogin(txtUserName.Value, txtPassword.Value);
             if (dt != null && dt.Rows.Count > 0)
             {

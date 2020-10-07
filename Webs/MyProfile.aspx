@@ -22,7 +22,7 @@
 
                                 <div class="form-group">
                                     <label for="txtCompanyName">Company Name : </label>
-                                    <input type="text" class="form-control text " id="txtCompanyName" placeholder="Please Enter Company Name" required>
+                                    <input type="text" class="form-control text " id="txtCompanyName" autocomplete="off" placeholder="Please Enter Company Name" required>
                                     <div class="invalid-feedback text-left">
                                         Please Enter Company Name.
                                     </div>
@@ -33,7 +33,7 @@
 
                                 <div class="form-group">
                                     <label for="txtOwnerName">Owner Name : </label>
-                                    <input type="text" class="form-control text " id="txtOwnerName" placeholder="Please Enter Owner Name" required>
+                                    <input type="text" class="form-control text " id="txtOwnerName" autocomplete="off" placeholder="Please Enter Owner Name" required>
                                     <div class="invalid-feedback text-left">
                                         Please Enter Owner Name.
                                     </div>
@@ -47,7 +47,7 @@
 
                                 <div class="form-group">
                                     <label for="txtEmail">E-Mail: </label>
-                                    <input type="text" class="form-control text " id="txtEmail" placeholder="Enter Email Address" required>
+                                    <input type="text" class="form-control text " id="txtEmail" autocomplete="off" placeholder="Enter Email Address" required>
                                     <div class="invalid-feedback text-left">
                                         Please Enter Email Address.
                                     </div>
@@ -73,7 +73,7 @@
 
                                 <div class="form-group">
                                     <label for="txtAddress">Address : </label>
-                                    <textarea runat="server" rows="4" class="form-control text" id="txtAddress" placeholder="Enter Address" required></textarea>
+                                    <textarea runat="server" rows="4" class="form-control text" id="txtAddress" autocomplete="off" placeholder="Enter Address" required></textarea>
                                     <div class="invalid-feedback text-left">
                                         Please Enter Address.
                                     </div>
@@ -99,7 +99,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="txtGSTNo">GST No. : </label>
-                                    <input type="text" class="form-control text " id="txtGSTNo" placeholder="Enter GST No" required>
+                                    <input type="text" class="form-control text " id="txtGSTNo" autocomplete="off" placeholder="Enter GST No" required>
                                     <div class="invalid-feedback text-left">
                                         Please Enter GST No.
                                     </div>
@@ -108,7 +108,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="txtMobileNo">Mobile No. : </label>
-                                    <input type="text" class="form-control text " id="txtMobileNo" placeholder="Enter Mobile No" required>
+                                    <input type="text" class="form-control text " id="txtMobileNo" autocomplete="off" placeholder="Enter Mobile No" required>
                                     <div class="invalid-feedback text-left">
                                         Please Enter Mobile No.
                                     </div>
@@ -119,7 +119,7 @@
 
                                 <div class="form-group">
                                     <label for="txtTNC">Term and Condition : </label>
-                                    <textarea runat="server" rows="4" class="form-control text" id="txtTNC" placeholder="Enter Term and Condition" required></textarea>
+                                    <textarea runat="server" rows="4" class="form-control text" id="txtTNC" autocomplete="off" placeholder="Enter Term and Condition" required></textarea>
                                     <div class="invalid-feedback text-left">
                                         Please Enter Term and Condition.
                                     </div>
@@ -137,7 +137,7 @@
 
                                 <div class="form-group">
                                     <label for="txtBankName">Bank Name : </label>
-                                    <input type="text" class="form-control text " id="txtBankName" placeholder="Enter Bank Name" required>
+                                    <input type="text" class="form-control text " id="txtBankName" autocomplete="off" placeholder="Enter Bank Name" required>
                                     <div class="invalid-feedback text-left">
                                         Please Enter Bank Name.
                                     </div>
@@ -148,7 +148,7 @@
 
                                 <div class="form-group">
                                     <label for="txtAccountNo">Account No : </label>
-                                    <input type="text" class="form-control text " id="txtAccountNo" placeholder="Enter Account No" required>
+                                    <input type="text" class="form-control text " id="txtAccountNo" autocomplete="off" placeholder="Enter Account No" required>
                                     <div class="invalid-feedback text-left">
                                         Please Enter Account No.
                                     </div>
@@ -159,7 +159,7 @@
 
                                 <div class="form-group">
                                     <label for="txtIFSCCode">IFSC Code : </label>
-                                    <input type="text" class="form-control text " id="txtIFSCCode" placeholder="Enter IFSC Code" required>
+                                    <input type="text" class="form-control text " id="txtIFSCCode" autocomplete="off" placeholder="Enter IFSC Code" required>
                                     <div class="invalid-feedback text-left">
                                         Please Enter IFSC Code.
                                     </div>
@@ -170,7 +170,7 @@
 
                                 <div class="form-group">
                                     <label for="txtBranchName">Branch: </label>
-                                    <input type="text" class="form-control text " id="txtBranchName" placeholder="Enter Branch Name" required>
+                                    <input type="text" class="form-control text " id="txtBranchName" autocomplete="off" placeholder="Enter Branch Name" required>
                                     <div class="invalid-feedback text-left">
                                         Please Enter Branch Name.
                                     </div>

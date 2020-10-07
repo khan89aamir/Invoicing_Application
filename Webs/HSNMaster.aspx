@@ -40,7 +40,8 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label for="txtHSNDescription">HSN Description </label>
-                                <textarea id="txtHSNDescription" class="form-control text " placeholder="Enter HSN Description."></textarea>
+                                <textarea id="txtHSNDescription" runat="server" class="form-control text " rows="4" placeholder="Enter HSN Description." autocomplete="off"></textarea>
+
                             </div>
                         </div>
 

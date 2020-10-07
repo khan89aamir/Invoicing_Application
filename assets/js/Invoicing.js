@@ -140,6 +140,7 @@ function BindCustomer() {
         contentType: "application/json",
         success: function (res) {
 
+            $("#cmbCustomer").empty();
             $("#cmbCustomer").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select Customer'));
             $.each(res, function (data, value) {
 
@@ -909,7 +910,7 @@ $(function () {
 $("#lnkRefresh").click(function () {
     event.preventDefault();
     BindCustomer();
-    alert("customer loaded");
+
 });
 
 $("#btnCancel").click(function () {
@@ -1163,6 +1164,7 @@ function OnQTYChange() {
     var QTY = $("#txtQTY").val();
     if (QTY <= 0) {
         alert('Please Enter Postive QTY');
+        $("#txtQTY").val("1");
     }
     else {
         var Rate = $("#txtRate").val();

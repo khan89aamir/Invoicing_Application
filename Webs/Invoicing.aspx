@@ -139,7 +139,7 @@
                                     <input type="text" class="form-control text " autocomplete="off" id="txtPartyStateID" name="txtPartyStateID" placeholder="Enter GST Number" hidden>
 
                                     <label for="txtFullName">GST No </label>
-                                    <input type="text" class="form-control text disableValue" autocomplete="off" id="txtGSTNo" name="txtGSTNo" placeholder="Enter GST Number">
+                                    <input type="text" class="form-control text disableValue" autocomplete="off" id="txtGSTNo" name="txtGSTNo" placeholder="Customer GST No.">
 
                                     <div class="invalid-feedback text-left">
                                         Please Enter GST No
@@ -152,9 +152,9 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">State </label>
-                                    <input type="text" class="form-control text disableValue " id="txtPartyState" name="txtPartyState" autocomplete="off" placeholder="Enter Your State">
+                                    <input type="text" class="form-control text disableValue " id="txtPartyState" name="txtPartyState" autocomplete="off" placeholder="Customer State">
                                     <div class="invalid-feedback text-left">
-                                        Please Enter State 
+                                        Please Select State 
                                     </div>
                                 </div>
 

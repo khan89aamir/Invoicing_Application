@@ -29,7 +29,10 @@ rel = "Stylesheet" type="text/css" />
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="txtSkuCode">SKU Code : </label>
-                                <input type="text" runat="server" class="form-control text" id="txtSkuCode" placeholder="Enter SKU Code" autocomplete="off">
+                                <input type="text" runat="server" class="form-control text" id="txtSkuCode" placeholder="Enter SKU Code" autocomplete="off" required>
+                                <div class="invalid-feedback text-left">
+                                    Please Enter SKU Code.
+                                </div>
                             </div>
                         </div>
 
@@ -39,7 +42,7 @@ rel = "Stylesheet" type="text/css" />
 
                                 <input type="text" runat="server" class="form-control text" id="txtSkuName" placeholder="Enter SKU Name" autocomplete="off" required>
                                 <div class="invalid-feedback text-left">
-                                    Enter SKU Name.
+                                    Please Enter SKU Name.
                                 </div>
                             </div>
                         </div>
@@ -64,15 +67,17 @@ rel = "Stylesheet" type="text/css" />
                                 <div class="invalid-feedback text-left">
                                     Please Select HSN Code.
                                 </div>
+                            <a href="HSNMaster.aspx" target="_blank"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add New HSN Code</a>
+                            <br />
+                            <a id="lnkRefreshHSN" href="#" target="_blank"><i class="fa fa-refresh mr-1" aria-hidden="true"></i>Refresh</a>
                             </div>
-
                         </div>
 
                         <div class="col-md-8">
                             <div class="form-group">
 
                                 <label for="txtMobile">Description : </label>
-                                <textarea runat="server" class="form-control" id="txtDescription" name="Description" placeholder="Enter Description"></textarea>
+                                <textarea runat="server" class="form-control" id="txtDescription" name="Description" autocomplete="off" placeholder="Enter Description"></textarea>
                                 <%--<div class="invalid-feedback text-left">
                                     Please Enter Description.
                                 </div>--%>
@@ -96,7 +101,6 @@ rel = "Stylesheet" type="text/css" />
 
         </div>
     </div>
-
 
     <hr />
 
@@ -208,8 +212,13 @@ rel = "Stylesheet" type="text/css" />
             $('#iconMsg').css('color', 'red');
         };
 
-        function BindHSNCode() {
+        $("#lnkRefreshHSN").click(function () {
+            event.preventDefault();
+            BindHSNCode();
+        });
 
+        function BindHSNCode() {
+            $("#cmbHSNCode").empty();
             $("#cmbHSNCode").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select HSN Code'));
             $("#cmbHSNCode").select2();
             // drop down------
