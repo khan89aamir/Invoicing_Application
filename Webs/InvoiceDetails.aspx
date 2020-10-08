@@ -74,26 +74,31 @@
                                             <th>Customer Name</th>
                                             <th>Total QTY</th>
                                             <th>Total Amount</th>
-                                            <th>Pathani Top</th>
-                                            <th>Kurta</th>
-                                            <th>Payjama Pant</th>
-                                            <th>Payjama</th>
-                                            <th>Churidaar</th>
-                                            <th>Pathani Salwar</th>
-                                            <th>Shirt</th>
-                                            <th>Trouser</th>
-                                            <th>Jawahar bundy</th>
-                                            <th>Jacket</th>
-                                            <th>DB Blazer</th>
-                                            <th>2pcs Suit</th>
-                                            <th>jodhpuri Suit</th>
-                                            <th>DB suit</th>
-                                            <th>Tuxedo 2pcs Suit</th>
-                                            <th>Vest jacket</th>
-                                            <th>3pcs suit</th>
-                                            <th>Safari suit</th>
-                                            <th>Sherwani</th>
-                                            <th>Overcoat</th>
+                                            <th>PATHANI SUIT</th>
+                                            <th>PATHANI TOP</th>
+                                            <th>PATHANI SALWAR</th>
+                                            <th>PYJAMA</th>
+                                            <th>JAWAHAR BUNDI</th>
+                                            <th>SHERWANI</th>
+                                            <th>TROUSER</th>
+                                            <th>3 PC SUIT</th>
+                                            <th>KURTA</th>
+                                            <th>DB BLAZER</th>
+                                            <th>SAFARI SUIT</th>
+                                            <th>2 PC SUIT</th>
+                                            <th>VEST JACKET</th>
+                                            <th>KURTA PYJAMA</th>
+                                            <th>TUXEDO SUIT</th>
+                                            <th>JACKET </th>
+                                            <th>OVERCOAT</th>
+                                            <th>JODHPURI SUIT</th>
+                                            <th>CHUDIDAR</th>
+                                            <th>DB SUIT</th>
+                                            <th>SHIRT</th>
+                                            <th>Indowestern</th>
+                                            <th>Embroidery</th>
+                                            <th>Suiting Fabric</th>
+                                            <th>Shirting Fabric</th>
                                             <th>Delete</th>
                                         </tr>
                                     </thead>
@@ -148,7 +153,7 @@
         $(document).ready(function () {
 
             if ($('#example').DataTable() != null) {
-                $('#example').DataTable().columns([1, 7, 8, 9, 10, 11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26]).visible(false);
+                $('#example').DataTable().columns([1, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]).visible(false);
             }
 
         });
@@ -211,34 +216,37 @@
                             return "<a class='lnkSelect btn btn btn-primary' href='" + data + "'>Select</a>";
                         }
                     },
-
-                   
                     { 'data': 'SaleInvoiceID' },
                     { 'data': 'InvoiceNumber' },
                     { 'data': 'InvoiceDate' },
                     { 'data': 'CustomerName' },
                     { 'data': 'TotalQTY' },
                     { 'data': 'Total Amount' },
-                    { 'data': 'Pathani Top' },
-                    { 'data': 'Kurta' },
-                    { 'data': 'Payjama Pant' },
-                    { 'data': 'Payjama' },
-                    { 'data': 'Churidaar' },
-                    { 'data': 'Pathani Salwar' },
-                    { 'data': 'Shirt' },
-                    { 'data': 'Trouser' },
-                    { 'data': 'Jawahar bundy' },
-                    { 'data': 'Jacket' },
-                    { 'data': 'DB Blazer' },
-                    { 'data': '2pcs Suit' },
-                    { 'data': 'jodhpuri Suit' },
-                    { 'data': 'DB suit' },
-                    { 'data': 'Tuxedo 2pcs Suit' },
-                    { 'data': 'Vest jacket' },
-                    { 'data': '3pcs suit' },
-                    { 'data': 'Safari suit' },
-                    { 'data': 'Sherwani' },
-                    { 'data': 'Overcoat' },
+                    { 'data': 'PATHANI SUIT' },
+                    { 'data': 'PATHANI TOP' },
+                    { 'data': 'PATHANI SALWAR' },
+                    { 'data': 'PYJAMA' },
+                    { 'data': 'JAWAHAR BUNDI' },
+                    { 'data': 'SHERWANI' },
+                    { 'data': 'TROUSER' },
+                    { 'data': '3 PC SUIT' },
+                    { 'data': 'KURTA' },
+                    { 'data': 'DB BLAZER' },
+                    { 'data': 'SAFARI SUIT' },
+                    { 'data': '2 PC SUIT' },
+                    { 'data': 'VEST JACKET' },
+                    { 'data': 'KURTA PYJAMA' },
+                    { 'data': 'TUXEDO SUIT' },
+                    { 'data': 'JACKET ' },
+                    { 'data': 'OVERCOAT' },
+                    { 'data': 'JODHPURI SUIT' },
+                    { 'data': 'CHUDIDAR' },
+                    { 'data': 'DB SUIT' },
+                    { 'data': 'SHIRT' },
+                    { 'data': 'Indowestern' },
+                    { 'data': 'Embroidery' },
+                    { 'data': 'Suiting Fabric' },
+                    { 'data': 'Shirting Fabric' },
                     {
                         data: 'Delete',
                         render: function (data, type, row) {
@@ -255,7 +263,7 @@
                         title: 'Invoice Details',
                         //footer: false,
                         exportOptions: {
-                            columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+                            columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,27,28,29,30,31]
                             //columns: [2, 3,4, 5, 6,':visible'] // data will export all visible column and entered column index
                         }
 
@@ -273,7 +281,7 @@
                             modifier: {
                                 page: 'all'
                             },
-                            columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+                            columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
                             //columns: ':gt(0)', orthogonal: 'export' // data will export all columns except get(0) index
                         },
                         //customize: function (xlsx) {
@@ -327,7 +335,7 @@
 
             //to invisble multipe columns
             // table.columns([1, 2]).visible(false);
-            table.columns([1, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]).visible(false);
+            table.columns([1, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]).visible(false);
 
             //var blob = new Blob([table], { type: 'data:application/vnd.ms-excel' }); 
             //var downloadUrl = URL.createObjectURL(blob);

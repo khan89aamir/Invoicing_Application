@@ -213,7 +213,7 @@ function BindProducts() {
             $("#cmbSKU").append($("<option selected='selected' disabled='disabled'></option>").val('-1').html('Select SKU'));
             $.each(res, function (data, value) {
 
-                $("#cmbProduct").append($("<option></option>").val(value.SKUID).html(value.SKUName));
+                $("#cmbProduct").append($("<option></option>").val(value.SKUID).html(value.SKUName + "&nbsp;&nbsp;&nbsp;" + value.SKUDescription));
                 $("#cmbSKU").append($("<option></option>").val(value.SKUID).html(value.SKUCode));
             })
 

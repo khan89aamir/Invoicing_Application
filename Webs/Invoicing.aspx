@@ -190,7 +190,7 @@
                                     </select>
 
                                     <div class="invalid-feedback text-left">
-                                        Please Select your product.
+                                        Please Select product.
                                     </div>
                                 </div>
 
@@ -200,12 +200,12 @@
 
                                 <div class="form-group">
 
-                                    <label for="cmbSKU">Select SKU No: </label>
+                                    <label for="cmbSKU">Select SKU Code: </label>
                                     <select id='cmbSKU' class="custom-select">
                                     </select>
 
                                     <div class="invalid-feedback text-left">
-                                        Please Enter SKU.
+                                        Please Select SKU Code.
                                     </div>
                                 </div>
 

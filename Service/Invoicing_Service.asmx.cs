@@ -537,7 +537,7 @@ namespace Invoicing_Application.Service
         public void BindProduct()
         {
             string strResponse = "{}";
-            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT SKUID,SKUCode,SKUName FROM  anjacreation.tblSKUMaster;");
+            DataTable dataTable = ObjDAL.ExecuteSelectStatement("SELECT SKUID,SKUCode,SKUName,Description FROM  anjacreation.tblSKUMaster;");
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 var NameList = (from r in dataTable.AsEnumerable()
@@ -546,6 +546,7 @@ namespace Invoicing_Application.Service
                                     SKUID = r.Field<int>("SKUID"),
                                     SKUCode = r.Field<string>("SKUCode"),
                                     SKUName = r.Field<string>("SKUName"),
+                                    SKUDescription = r.Field<string>("Description"),
                                 });
                 strResponse = JsonConvert.SerializeObject(NameList);
                 Context.Response.Clear();

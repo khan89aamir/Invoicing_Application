@@ -330,11 +330,14 @@
                         $('#pnlforgotpassLoading').addClass("d-block");
                     },
                     success: function (responseData) {
-
+                        $('#pnlforgotEmailMessage').html(responseData.strMessage);
                         if (responseData.Result) {
 
                             $('#lblforgotEmailMessage').removeClass("d-block");
                             $('#lblforgotEmailMessage').addClass("d-none");
+
+                            $('#pnlforgotpassLoading').removeClass("d-block");
+                            $('#pnlforgotpassLoading').addClass("d-none");
 
                             var varforgotpass = responseData.strMessage;
                             $.SendEmail(varforgotEmailID, varforgotpass);
@@ -343,6 +346,9 @@
 
                             $('#lblforgotEmailMessage').removeClass("d-none");
                             $('#lblforgotEmailMessage').addClass("d-block");
+
+                            $('#pnlforgotpassLoading').removeClass("d-block");
+                            $('#pnlforgotpassLoading').addClass("d-none");
                         }
                     },
                     error: function (xhr, status, error) {
@@ -416,7 +422,9 @@
                 },
                 error: function (xhr, status, error) {
 
-                    $('#loadingBox').modal('hide');
+                    //$('#loadingBox').modal('hide');
+                    $('#pnlforgotpassLoading').removeClass("d-block");
+                    $('#pnlforgotpassLoading').addClass("d-none");
                     //alert("Error : " + error);
                     //alert("Error Text: " + xhr.responseText);
                 },
@@ -428,6 +436,19 @@
                 // alert("Done : " + response);
             });
         };
+
+        $("#exampleModal").on('hide.bs.modal', function () {
+
+            $("#txtforgotEmailID").val("");
+
+            $('#pnlforgotpassLoading').removeClass("d-block");
+            $('#pnlforgotpassLoading').addClass("d-none");
+
+            $('#lblforgotEmailMessage').removeClass("text-danger d-block");
+            $('#lblforgotEmailMessage').addClass("d-none");
+
+            $('#txtUserName').focus();
+        });
 
     </script>
 </asp:Content>
