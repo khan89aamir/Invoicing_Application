@@ -102,7 +102,7 @@
     </div>
 
     <!-- Modal -- Normal Message Model--->
-    <div class="modal fade" id="mdlNormalMessage" role="dialog" data-backdrop="static">
+    <div class="modal " id="mdlNormalMessage" role="dialog" data-backdrop="static">
         <div class="modal-dialog">
 
             <!-- Modal content-->

@@ -32,6 +32,8 @@
     </style>
 
     <br />
+    <a id="reportPage" href="https://www.w3schools.com" target="_blank" hidden>Visit W3Schools.com!</a> 
+
     <div id="mainContainer" class="container">
         <div class="container d-flex justify-content-start">
             <div class="card border-info" style="width: 100%">

@@ -3,6 +3,7 @@
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+
     <form id="form1" runat="server">
    <%--       <asp:Button ID="Button1" runat="server" Text="Show Report" OnClick="Button1_Click" /><br />
          <asp:Button ID="PrintButton" Text="Print" runat="server" OnClientClick="return Print();" />--%>
@@ -16,5 +17,17 @@
         
     </form>
 
+
+   <script>
+        $(document).ready(function () {
+
+
+            $('#lblMessage').html("Invoice have been created successfully");            $('#pngInvoicePDF').removeClass("invisible");
+            $('#mdlNormalMessage').modal('show');
+
+            window.location.href = 'Invoice_Report.aspx?PDF=1';
+        });
+
+   </script> 
 
 </asp:Content>

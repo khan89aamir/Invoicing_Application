@@ -17,28 +17,38 @@ namespace Invoicing_Application.Report.Report_Pages
 
         protected void Page_Load(object sender, EventArgs e)
         {
-           
-            if(LoadReport())
-            { 
-                PrintToPDF(strpartyName, strInvoiceID);
+            if (Request.QueryString["PDF"] != null)
+            {
+                if (LoadReport())
+                {
+                    PrintToPDF(strpartyName, strInvoiceID);
+                }
             }
-           
+            else
+            {
+
+                Session["invoiceID"] = Request.QueryString["InvoiceID"].ToString();
+                Session["PartyID"] = Request.QueryString["PartyID"].ToString();
+                Session["IGST"] = Request.QueryString["IGST"].ToString();
+                //
+            }
+
+
         }
         public bool LoadReport()
         {
-            string invoiceID = Request.QueryString["InvoiceID"].ToString();
-            string PartyID = Request.QueryString["PartyID"].ToString();
-            string IGST = Request.QueryString["IGST"].ToString();
+            string invoiceID = Session["InvoiceID"].ToString();
+            string PartyID = Session["PartyID"].ToString();
+            string IGST = Session["IGST"].ToString();
 
             //string invoiceID = "108";
             //string PartyID = "12";
             //string IGST = "0";
 
 
-            //string invoiceID = "131";
-            //string PartyID = "12";
-            //string IGST = "1";
-
+            //string invoiceID = "3";
+            //string PartyID = "1";
+            //string IGST = "0";
 
             Invoicing_Application.Invoicing_Service.Invoicing_ServiceSoapClient ObjClient = new Invoicing_Service.Invoicing_ServiceSoapClient();
 
@@ -255,14 +265,23 @@ namespace Invoicing_Application.Report.Report_Pages
 
             string DefaultURL = "../../Webs/Invoicing.aspx";
 
-           // ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage1", "window.location.href = '" + DefaultURL + "';", true);
+
+
+            //Response.ContentType = "application/pdf";
+            //Response.AppendHeader("Content-Disposition", "attachment; filename="+ fileName + ".pdf");
+            //Response.TransmitFile(Server.MapPath("~/Temp/" + fileName + ".pdf"));
+            //Response.End();
+
+        
+            //ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage1", "window.location.href = '" + DefaultURL + "';", true);
 
             ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage2", "window.location.href = '" + strURL + "';", true);
 
-            //  ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage", "  window.open('"+ strURL + "');", true);
-            
+            // ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage", "  window.open('"+ strURL + "');", true);
 
-          
+           // Response.Write("<script>window.open('"+ strURL + "','_blank');</script>");
+
+
 
 
         }
