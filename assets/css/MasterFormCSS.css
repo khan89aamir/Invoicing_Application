@@ -4,6 +4,10 @@
     text-decoration: none !important;
 }
 
+textarea {
+    resize: none;
+}
+
 td {
     text-align: center;
     padding: 1px !important;

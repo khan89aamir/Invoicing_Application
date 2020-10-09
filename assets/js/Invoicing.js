@@ -901,10 +901,11 @@ function SaveOtherInvoiceDetials(InvoiceID) {
 $(function () {
     $("#datepicker").datepicker({
         maxDate: 0
-    });
+    }).attr('readonly', 'readonly');
+
     $("#txtDateofSupply").datepicker({
         maxDate: 0
-    });
+    }).attr('readonly', 'readonly');
 });
 
 $("#lnkRefresh").click(function () {

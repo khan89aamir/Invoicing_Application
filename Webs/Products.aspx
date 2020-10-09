@@ -77,7 +77,7 @@ rel = "Stylesheet" type="text/css" />
                             <div class="form-group">
 
                                 <label for="txtMobile">Description : </label>
-                                <textarea runat="server" class="form-control" id="txtDescription" name="Description" autocomplete="off" placeholder="Enter Description"></textarea>
+                                <textarea runat="server" class="form-control" rows="2" id="txtDescription" name="Description" autocomplete="off" placeholder="Enter Description"></textarea>
                                 <%--<div class="invalid-feedback text-left">
                                     Please Enter Description.
                                 </div>--%>
@@ -452,7 +452,8 @@ rel = "Stylesheet" type="text/css" />
             $('#txtProductID').val(varSKUID);
             $('#cmbHSNCode').val(varHSNID);
             $('#select2-cmbHSNCode-container').text(varHSNCode);
-            
+
+            topFunction();
             return false; // <---------or this if you want to prevent bubbling as well
         });
 

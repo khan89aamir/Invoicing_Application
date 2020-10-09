@@ -11,13 +11,10 @@ namespace Invoicing_Application.Webs
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-          
-
-
-            if (Session["UserID"] == null)
-            {
-                Response.Redirect("Home.aspx");
-            }
+            //if (Session["UserID"] == null)
+            //{
+            //    Response.Redirect("Home.aspx");
+            //}
             if (Page.IsPostBack)
             {
                 Response.Write("Page psoted back");
@@ -32,10 +29,7 @@ namespace Invoicing_Application.Webs
                   
                    // ClientScript.RegisterStartupScript(this.GetType(), "updateProgress", "Test('" + InvoiceID + "');", true);
                 }
-             
             }
-
-
         }
     }
 }

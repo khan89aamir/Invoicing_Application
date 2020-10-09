@@ -10,6 +10,7 @@
             border-radius: 6px;
             padding: 5px;
         }
+
     </style>
     <br />
 
@@ -154,14 +155,14 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="txtInvoiceNo">Invoice Number : </label>
-                                <input type="text" runat="server" class="form-control text" id="txtInvoiceNo" disabled autocomplete="off">
+                                <input type="text" runat="server" class="form-control text" id="txtInvoiceNo" disabled tabindex="-1" autocomplete="off">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="txtCustomerName">Customer Name : </label>
-                                <input type="text" runat="server" class="form-control text" id="txtCustomerName" disabled autocomplete="off">
+                                <input type="text" runat="server" class="form-control text" id="txtCustomerName" disabled tabindex="-1" autocomplete="off">
                             </div>
                         </div>
 
@@ -169,7 +170,7 @@
                             <div class="form-group">
                                 <label for="txtCompanyName">Company Name : </label>
 
-                                <input type="text" runat="server" class="form-control text" id="txtCompanyName" disabled autocomplete="off">
+                                <input type="text" runat="server" class="form-control text" id="txtCompanyName" disabled tabindex="-1" autocomplete="off">
                             </div>
                         </div>
 
@@ -177,7 +178,7 @@
                             <div class="form-group">
 
                                 <label for="txtRemaningAmt">Remaining Amt : </label>
-                                <input runat="server" type="text" class="form-control" id="txtRemainingAmt" name="txtRemainingAmt" disabled autocomplete="off">
+                                <input runat="server" type="text" class="form-control" id="txtRemainingAmt" name="txtRemainingAmt" disabled tabindex="-1" autocomplete="off">
                             </div>
                         </div>
 
@@ -370,7 +371,8 @@
         $(function () {
             $("#dtpTranDate").datepicker({
                 maxDate: 0
-            });
+            }).attr('Readonly', 'Readonly');
+
         });
 
         function sucess() {
