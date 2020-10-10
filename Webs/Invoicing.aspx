@@ -32,7 +32,7 @@
     </style>
 
     <br />
-    <a id="reportPage" href="https://www.w3schools.com" target="_blank" hidden>Visit W3Schools.com!</a> 
+    <a id="reportPage" href="https://www.w3schools.com"  hidden>Visit W3Schools.com!</a> 
 
     <div id="mainContainer" class="container">
         <div class="container d-flex justify-content-start">
@@ -63,7 +63,7 @@
                     </div>
                     <form id="frmInvoice" class="needs-validation" novalidate runat="server">
 
-                        <h5 class="PnlHeading">Invoice Header</h5>
+                      
                         <div class="form-row">
                             <div class="col-md-4">
 
@@ -338,9 +338,9 @@
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
-                            <label for="colFormLabel" class="col-sm-3 col-form-label ">Discount Amount (%) :</label>
+                            <label for="colFormLabel" class="col-sm-3 col-form-label " hidden>Discount Amount (%) :</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control form-control-sm " id="txtDiscountAmt" placeholder="0.00" onfocus="OnDiscountFocus()" onchange="MasterCalculation()">
+                                <input type="text" class="form-control form-control-sm " id="txtDiscountAmt" placeholder="0.00" onfocus="OnDiscountFocus()" onchange="MasterCalculation()" hidden>
                             </div>
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>

@@ -16,24 +16,19 @@ namespace Invoicing_Application.Report.Report_Pages
         string strpartyName;
         DateTime InvoiceDate = DateTime.Now;
 
-        public bool IsMobileBrowser()
-        {
-        
-            System.Web.HttpBrowserCapabilities myBrowserCaps = Request.Browser;
-            if (((System.Web.Configuration.HttpCapabilitiesBase)myBrowserCaps).IsMobileDevice)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-         
-        }
+     
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.QueryString["PDF"] != null)
+            if (!IsPostBack)
             {
+          
+
+
+                Session["invoiceID"] = Request.QueryString["InvoiceID"].ToString();
+                Session["PartyID"] = Request.QueryString["PartyID"].ToString();
+                Session["IGST"] = Request.QueryString["IGST"].ToString();
+                Session["IsMobile"] = Request.QueryString["isMobile"].ToString();
+
                 if (LoadReport())
                 {
                     PrintToPDF(strpartyName, strInvoiceID);
@@ -41,12 +36,10 @@ namespace Invoicing_Application.Report.Report_Pages
             }
             else
             {
+              
 
-                Session["invoiceID"] = Request.QueryString["InvoiceID"].ToString();
-                Session["PartyID"] = Request.QueryString["PartyID"].ToString();
-                Session["IGST"] = Request.QueryString["IGST"].ToString();
-                //
             }
+           
 
 
         }
@@ -133,7 +126,7 @@ namespace Invoicing_Application.Report.Report_Pages
 
                      parmBankName = new ReportParameter("parmBankName", "Bank Name: " + dtBankDetails.Rows[0]["BankName"].ToString());
                      parmAccountNo = new ReportParameter("parmAccountNo","Account No: " +dtBankDetails.Rows[0]["AccountNo"].ToString());
-                     parmIFSCCode = new ReportParameter("parmIFSCCode","IFSCCode: "+ dtBankDetails.Rows[0]["IFSC_Code"].ToString());
+                     parmIFSCCode = new ReportParameter("parmIFSCCode","IFSC Code: "+ dtBankDetails.Rows[0]["IFSC_Code"].ToString());
                      ParmBranch = new ReportParameter("ParmBranch","Branch : "+ dtBankDetails.Rows[0]["Branch"].ToString());
 
                 }
@@ -276,17 +269,18 @@ namespace Invoicing_Application.Report.Report_Pages
 
             string DefaultURL = "../../Webs/Invoicing.aspx";
 
-
-            if (IsMobileBrowser())
+           
+            if (Session["IsMobile"].ToString()=="1")
             {
-                Response.ContentType = "application/pdf";
-                Response.AppendHeader("Content-Disposition", "attachment; filename=" + fileName + ".pdf");
-                Response.TransmitFile(Server.MapPath("~/Temp/" + fileName + ".pdf"));
-                Response.End();
+                //ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage2", "window.location.href = '" + strURL + "';", true);
+
+
+                Session["FileName"] = fileName;
+
             }
             else
             {
-
+                
                 //ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage1", "window.location.href = '" + DefaultURL + "';", true);
 
                 ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage2", "window.location.href = '" + strURL + "';", true);
@@ -300,6 +294,18 @@ namespace Invoicing_Application.Report.Report_Pages
 
 
 
+
+
+        }
+
+        protected void Button1_Click1(object sender, EventArgs e)
+        {
+           
+            Response.ContentType = "application/pdf";
+            Response.AppendHeader("Content-Disposition", "attachment; filename=" + Session["FileName"].ToString() + ".pdf");
+            Response.TransmitFile(Server.MapPath("~/Temp/" + Session["FileName"].ToString() + ".pdf"));
+            
+            Response.End();
 
 
         }
