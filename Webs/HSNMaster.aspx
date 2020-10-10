@@ -30,7 +30,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="txtHSNCode">HSN Code </label>
-                                <input type="text" id="txtHSNCode" class="form-control text " placeholder="Enter HSN Code." required>
+                                <input type="text" id="txtHSNCode" class="form-control text " autocomplete="off" placeholder="Enter HSN Code." required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter HSN Code.
                                 </div>
@@ -40,14 +40,15 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label for="txtHSNDescription">HSN Description </label>
-                                <textarea id="txtHSNDescription" class="form-control text " placeholder="Enter HSN Description."></textarea>
+                                <textarea id="txtHSNDescription" runat="server" class="form-control text " rows="4" placeholder="Enter HSN Description." autocomplete="off"></textarea>
+
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="txtCGST">CGST </label>
-                                <input type="text" class="form-control text " id="txtCGST" placeholder="Enter CGST." required>
+                                <input type="text" class="form-control text disableValue " id="txtCGST" autocomplete="off" placeholder="0.00" required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter CGST.
                                 </div>
@@ -57,7 +58,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="txtSGST">SGST </label>
-                                <input type="text" class="form-control text " id="txtSGST" placeholder="Enter SGST." required>
+                                <input type="text" class="form-control text disableValue " id="txtSGST" autocomplete="off" placeholder="0.00" required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter SGST.
                                 </div>
@@ -67,7 +68,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="txtIGST">IGST </label>
-                                <input type="text" class="form-control text " id="txtIGST" placeholder="Enter IGST." required>
+                                <input type="text" class="form-control text " id="txtIGST" autocomplete="off" placeholder="Enter IGST." required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter IGST.
                                 </div>
@@ -187,10 +188,18 @@
                 return isINT(event, this);
             });
 
-            //if ($('#example').DataTable() != null) {
-            //    $('#example').DataTable().columns([1]).visible(false);
-            //}
+            if ($('#example').DataTable() != null) {
+                $('#example').DataTable().columns([1]).visible(false);
+            }
             $.GetHSNDetails();
+        });
+
+        $("#txtIGST").keyup(function () {
+
+            var igst = $("#txtIGST").val();
+            var cgst = (igst / 2).toFixed(2);
+            $("#txtCGST").val(cgst);
+            $("#txtSGST").val(cgst);
         });
 
         $.ManageHSNCode = function () {
@@ -241,7 +250,6 @@
                         $('#mdlNormalMessage').modal('show');
 
                         $('#frmHSN').trigger("reset");
-
                         //$('#example').DataTable().ajax.reload(null, false);// getting invalid json request on server
 
                         $.GetHSNDetails();

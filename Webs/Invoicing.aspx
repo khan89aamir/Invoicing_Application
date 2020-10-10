@@ -141,7 +141,7 @@
                                     <input type="text" class="form-control text " autocomplete="off" id="txtPartyStateID" name="txtPartyStateID" placeholder="Enter GST Number" hidden>
 
                                     <label for="txtFullName">GST No </label>
-                                    <input type="text" class="form-control text disableValue" autocomplete="off" id="txtGSTNo" name="txtGSTNo" placeholder="Enter GST Number">
+                                    <input type="text" class="form-control text disableValue" autocomplete="off" id="txtGSTNo" name="txtGSTNo" placeholder="Customer GST No.">
 
                                     <div class="invalid-feedback text-left">
                                         Please Enter GST No
@@ -154,9 +154,9 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">State </label>
-                                    <input type="text" class="form-control text disableValue " id="txtPartyState" name="txtPartyState" autocomplete="off" placeholder="Enter Your State">
+                                    <input type="text" class="form-control text disableValue " id="txtPartyState" name="txtPartyState" autocomplete="off" placeholder="Customer State">
                                     <div class="invalid-feedback text-left">
-                                        Please Enter State 
+                                        Please Select State 
                                     </div>
                                 </div>
 
@@ -192,7 +192,7 @@
                                     </select>
 
                                     <div class="invalid-feedback text-left">
-                                        Please Select your product.
+                                        Please Select product.
                                     </div>
                                 </div>
 
@@ -202,12 +202,12 @@
 
                                 <div class="form-group">
 
-                                    <label for="cmbSKU">Select SKU No: </label>
+                                    <label for="cmbSKU">Select SKU Code: </label>
                                     <select id='cmbSKU' class="custom-select">
                                     </select>
 
                                     <div class="invalid-feedback text-left">
-                                        Please Enter SKU.
+                                        Please Select SKU Code.
                                     </div>
                                 </div>
 
@@ -374,6 +374,13 @@
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Tax Amount: GST : </label>
                             <div class="col-sm-2">
                                 <input type="text" class="form-control form-control-sm disableValue" id="txtGST" placeholder="0.00">
+                            </div>
+                            <div class="col-7">
+                                <%--        blank col for shifting the content to right--%>
+                            </div>
+                            <label for="colFormLabel" class="col-sm-3 col-form-label ">Total Amount Before Round Off : </label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control form-control-sm disableValue" id="txtAmountRoundoff" placeholder="0.00">
                             </div>
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>

@@ -30,18 +30,19 @@ namespace CoreApp
         /// <summary>
         /// Sender email id.
         /// </summary>
+        //public string From = "sayed.javed@anjacreation.in";
         public string From = "mat.test1989@gmail.com";
-
         /// <summary>
         /// Sender email pass.
         /// </summary>
+        //public string Password = "";
         public string Password = "mattest1989";
-
         /// <summary>
         /// set the whether email is sent or not.
         /// </summary>
         public bool IsMail = false;
 
+        public string Message = string.Empty;
         /// <summary>
         /// set the pass of email.
         /// </summary>
@@ -62,7 +63,7 @@ namespace CoreApp
                     message.From = new MailAddress(From);
                     message.To.Add(To);
                     message.Subject = Sub;
-                    message.IsBodyHtml = true;
+                    //message.IsBodyHtml = true;
                     message.Body = Body;
 
                     smtp.Host = System.Configuration.ConfigurationManager.AppSettings["HostName"];
@@ -81,6 +82,7 @@ namespace CoreApp
             catch (Exception ex)
             {
                 IsMail = false;
+                Message = ex.Message;
                 //return false;
             }
         }

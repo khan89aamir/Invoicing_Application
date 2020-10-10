@@ -14,6 +14,7 @@ namespace Invoicing_Application.Report.Report_Pages
     {
         string strInvoiceID;
         string strpartyName;
+        DateTime InvoiceDate = DateTime.Now;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -64,7 +65,6 @@ namespace Invoicing_Application.Report.Report_Pages
                     ReportViewer1.LocalReport.ReportPath = Server.MapPath("~/Report/RDLC_Files/InvoiceReport.rdlc");
                 }
               
-
                 DataSet dsReportData = ObjClient.GetReportData(invoiceID, PartyID);
               
                 DataTable dtInvoiceMaster = dsReportData.Tables[0];
@@ -75,9 +75,8 @@ namespace Invoicing_Application.Report.Report_Pages
 
                 DataTable dtBankDetails = dsReportData.Tables[5];
 
-
                 strInvoiceID = dtInvoiceMaster.Rows[0]["InvoiceNumber"].ToString();
-
+                InvoiceDate = Convert.ToDateTime(dtInvoiceMaster.Rows[0]["InvoiceDate"]);
 
                 ReportParameter pCGST_Percent = new ReportParameter("pCGST_Percent", "(" + dtInvoiceMaster.Rows[0]["CGST_Percent"].ToString()+"%)");
                 ReportParameter pSGST_Percent = new ReportParameter("pSGST_Percent", "(" + dtInvoiceMaster.Rows[0]["SGST_Percent"].ToString()+"%)");
@@ -89,22 +88,19 @@ namespace Invoicing_Application.Report.Report_Pages
                 ReportParameter pGST = new ReportParameter("pGST", "GSTIN :"+ dtMyprofile.Rows[0]["GSTNO"].ToString());
                
                 ReportParameter pInvoiceNo = new ReportParameter("pInvoiceNo", dtInvoiceMaster.Rows[0]["InvoiceNumber"].ToString());
-                ReportParameter pInvoiceDate = new ReportParameter("pInvoiceDate", Convert.ToDateTime(dtInvoiceMaster.Rows[0]["InvoiceDate"]).ToString("dd-MM-yyyy"));
+                ReportParameter pInvoiceDate = new ReportParameter("pInvoiceDate", InvoiceDate.ToString("dd-MM-yyyy"));
                 ReportParameter pOwnerState = new ReportParameter("pOwnerState", dtMyprofile.Rows[0]["StateName"].ToString());
                 ReportParameter parmOwnerStateCode = new ReportParameter("parmOwnerStateCode", dtInvoiceMaster.Rows[0]["GSTStateCode"].ToString());
-
 
                 ReportParameter pPartyState = new ReportParameter("pPartyState", dtPartyDetails.Rows[0]["StateName"].ToString());
 
                 ReportParameter parmNote = new ReportParameter("parmNote", dtMyprofile.Rows[0]["TermCondition"].ToString());
-
 
                 ReportParameter pReverseCharge;
                 ReportParameter pTransportationMode;
                 ReportParameter pVechicleNo;
                 ReportParameter pDateofSupply;
                 ReportParameter pPlaceofSupply;
-
 
                 ReportParameter pConName;
                 ReportParameter pConAddress;
@@ -122,8 +118,6 @@ namespace Invoicing_Application.Report.Report_Pages
 
                 }
                
-
-
                 ReportParameter pBankDetails = new ReportParameter("pBankDetails", strBankDetails);
 
 
@@ -149,16 +143,13 @@ namespace Invoicing_Application.Report.Report_Pages
                     pDateofSupply = new ReportParameter("pDateofSupply", "");
                     pPlaceofSupply = new ReportParameter("pPlaceofSupply", "");
 
-
                     pConName = new ReportParameter("pConName", "");
                     pConAddress = new ReportParameter("pConAddress", "");
                     pConGST = new ReportParameter("pConGST", "");
                     pConStateCode = new ReportParameter("pConStateCode", "");
 
                     pConState = new ReportParameter("pConStateCode", "");
-
                 }
-
 
                 string GrandTotal = dtInvoiceMaster.Rows[0]["AmountAfterGST"].ToString();
                 string NetAmt = new NumberToEnglish().changeCurrencyToWords(GrandTotal)+"/-";
@@ -207,8 +198,6 @@ namespace Invoicing_Application.Report.Report_Pages
                 ReportViewer1.LocalReport.SetParameters(pIGST_Percent);
                 ReportViewer1.LocalReport.SetParameters(parmOwnerStateCode);
 
-              
-
                 DataTable dtGST = new DataTable();
                 dtGST.Columns.Add("Percent");
                 dtGST.Columns.Add("Amount");
@@ -219,7 +208,6 @@ namespace Invoicing_Application.Report.Report_Pages
 
                 dtGST.Rows.Add(dRow);
                 
-
                 ReportDataSource datasource1 = new ReportDataSource("ds_SalesDetails", dtSalesDetails);
                 ReportDataSource datasource2 = new ReportDataSource("ds_TaxCalculation", dtInvoiceMaster);
                 ReportDataSource datasource3 = new ReportDataSource("ds_GST", dtGST);
@@ -253,8 +241,8 @@ namespace Invoicing_Application.Report.Report_Pages
 
             string str = PartyName;
             str = str.Replace(" ", "");
-            string fileName = str + "_" + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + "_"+ invoiceID; 
-
+            //string fileName = str + "_" + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + "_"+ invoiceID;
+            string fileName = str + "_" + InvoiceDate.Day + "-" + InvoiceDate.Month + "-" + InvoiceDate.Year + "_" + invoiceID;
 
             //Export the RDLC Report to Byte Array.
             byte[] bytes = ReportViewer1.LocalReport.Render("PDF", null, out contentType, out encoding, out extension, out streamIds, out warnings);

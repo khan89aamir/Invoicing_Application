@@ -114,7 +114,7 @@
                             </div>
                         </div>
                         <br />
-                        <button id="btnforgotemail" class="btn btn-primary" type="submit">Submit</button>
+                        <button id="btnforgotemail" class="btn btn-primary" type="button">Submit</button>
                     </form>
                 </div>
             </div>
@@ -324,12 +324,20 @@
                     data: JSON.stringify(ForgotEmailData),
                     contentType: "application/json",
                     dataType: "json",
-                    success: function (responseData) {
+                    beforeSend: function () {
 
+                        $('#pnlforgotpassLoading').removeClass("d-none");
+                        $('#pnlforgotpassLoading').addClass("d-block");
+                    },
+                    success: function (responseData) {
+                        $('#pnlforgotEmailMessage').html(responseData.strMessage);
                         if (responseData.Result) {
 
                             $('#lblforgotEmailMessage').removeClass("d-block");
                             $('#lblforgotEmailMessage').addClass("d-none");
+
+                            $('#pnlforgotpassLoading').removeClass("d-block");
+                            $('#pnlforgotpassLoading').addClass("d-none");
 
                             var varforgotpass = responseData.strMessage;
                             $.SendEmail(varforgotEmailID, varforgotpass);
@@ -338,6 +346,9 @@
 
                             $('#lblforgotEmailMessage').removeClass("d-none");
                             $('#lblforgotEmailMessage').addClass("d-block");
+
+                            $('#pnlforgotpassLoading').removeClass("d-block");
+                            $('#pnlforgotpassLoading').addClass("d-none");
                         }
                     },
                     error: function (xhr, status, error) {
@@ -372,11 +383,11 @@
                 data: JSON.stringify(AccountData),
                 contentType: "application/json",
                 dataType: "json",
-                beforeSend: function () {
+                //beforeSend: function () {
 
-                    $('#pnlforgotpassLoading').removeClass("d-none");
-                    $('#pnlforgotpassLoading').addClass("d-block");
-                },
+                //    $('#pnlforgotpassLoading').removeClass("d-none");
+                //    $('#pnlforgotpassLoading').addClass("d-block");
+                //},
                 complete: function () {
 
                     $('#pnlforgotpassLoading').removeClass("d-block");
@@ -411,7 +422,9 @@
                 },
                 error: function (xhr, status, error) {
 
-                    $('#loadingBox').modal('hide');
+                    //$('#loadingBox').modal('hide');
+                    $('#pnlforgotpassLoading').removeClass("d-block");
+                    $('#pnlforgotpassLoading').addClass("d-none");
                     //alert("Error : " + error);
                     //alert("Error Text: " + xhr.responseText);
                 },
@@ -423,6 +436,19 @@
                 // alert("Done : " + response);
             });
         };
+
+        $("#exampleModal").on('hide.bs.modal', function () {
+
+            $("#txtforgotEmailID").val("");
+
+            $('#pnlforgotpassLoading').removeClass("d-block");
+            $('#pnlforgotpassLoading').addClass("d-none");
+
+            $('#lblforgotEmailMessage').removeClass("text-danger d-block");
+            $('#lblforgotEmailMessage').addClass("d-none");
+
+            $('#txtUserName').focus();
+        });
 
     </script>
 </asp:Content>

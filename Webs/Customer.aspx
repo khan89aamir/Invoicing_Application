@@ -53,10 +53,10 @@
 
                                 <label for="txtGSTNo">GST No : </label>
 
-                                <input type="text" runat="server" class="form-control text" id="txtGSTNo" placeholder="Enter GST No" autocomplete="off" required>
-                                <div class="invalid-feedback text-left">
+                                <input type="text" runat="server" class="form-control text" id="txtGSTNo" placeholder="Enter GST No" autocomplete="off">
+                                <%--<div class="invalid-feedback text-left">
                                     Please Enter GST No
-                                </div>
+                                </div>--%>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -86,7 +86,7 @@
                             <div class="form-group">
 
                                 <label for="txtAddress">Address </label>
-                                <textarea runat="server" rows="4" class="form-control text" id="txtAddress" placeholder="Enter Address" required></textarea>
+                                <textarea runat="server" rows="4" class="form-control text" id="txtAddress" autocomplete="off" placeholder="Enter Address" required></textarea>
 
                                 <div class="invalid-feedback text-left">
                                     Please Enter Address

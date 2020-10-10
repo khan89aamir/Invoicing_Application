@@ -25,7 +25,7 @@ namespace Invoicing_Application.Service
 
         public string IGST { get; set; }
 
-
+        public int CreatedBy { get; set; }
 
 
     }
