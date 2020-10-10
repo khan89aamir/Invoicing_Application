@@ -30,7 +30,7 @@
 
 
     </style>
-
+      <div class="container text-center">
     <form id="form1" runat="server">
         <%--       <asp:Button ID="Button1" runat="server" Text="Show Report" OnClick="Button1_Click" /><br />
          <asp:Button ID="PrintButton" Text="Print" runat="server" OnClientClick="return Print();" />--%>
@@ -43,10 +43,10 @@
 
         </div>
         <br />
-        <div class="container text-center">
+      
             <br />
             <br />
-             <p runat="server" class="text-success">Your Invoice is ready, Click Download button to start download.</p>
+             <p runat="server" class="text-info">Your Invoice is ready, Click Download button to start downloading.</p>
 
             
                     <span class="btn btn-outline-primary ParentSpan">
@@ -55,12 +55,13 @@
                     </span>
            
              <br />
-            <button onclick="goBack()" class="btn btn-outline-primary mt-2"><i class="fa fa-arrow-circle-left mr-1" aria-hidden="true"></i>Go Back</button>
-        </div>
+         
+       
 
     </form>
-
-
+   
+       <button onclick="goBack()" class="btn btn-outline-primary mt-2"><i class="fa fa-arrow-circle-left mr-1" aria-hidden="true"></i>Go Back</button>
+  </div>
     <script>
         $(document).ready(function () {
 
@@ -68,7 +69,8 @@
             $('#mdlNormalMessage').modal('hide');
         });
         function goBack() {
-            window.history.back();
+          
+            window.location.href = "../../Webs/Invoicing.aspx";
         }
     </script>
 
