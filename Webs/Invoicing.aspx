@@ -141,7 +141,7 @@
                                     <input type="text" class="form-control text " autocomplete="off" id="txtPartyStateID" name="txtPartyStateID" placeholder="Enter GST Number" hidden>
 
                                     <label for="txtFullName">GST No </label>
-                                    <input type="text" class="form-control text disableValue" autocomplete="off" id="txtGSTNo" name="txtGSTNo" placeholder="Customer GST No.">
+                                    <input type="text" class="form-control text disableValue" autocomplete="off" id="txtGSTNo" name="txtGSTNo" tabindex="-1" placeholder="Customer GST No.">
 
                                     <div class="invalid-feedback text-left">
                                         Please Enter GST No
@@ -154,7 +154,7 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">State </label>
-                                    <input type="text" class="form-control text disableValue " id="txtPartyState" name="txtPartyState" autocomplete="off" placeholder="Customer State">
+                                    <input type="text" class="form-control text disableValue " id="txtPartyState" name="txtPartyState" autocomplete="off" tabindex="-1" placeholder="Customer State">
                                     <div class="invalid-feedback text-left">
                                         Please Select State 
                                     </div>
@@ -233,7 +233,7 @@
                                 <input type="text" class="form-control text " id="txtProductID" name="txtProductID" placeholder="ProductID" hidden>
                                 <div class="form-group">
                                     <label for="txtFullName">Product Name </label>
-                                    <input type="text" class="form-control text disableValue " id="txtProductName" name="txtProductName" autocomplete="off" placeholder="Enter Product Name">
+                                    <input type="text" class="form-control text disableValue " id="txtProductName" name="txtProductName" autocomplete="off" placeholder="Enter Product Name" tabindex="-1">
                                     <div class="invalid-feedback text-left">
                                         Please Enter Product Name
                                     </div>
@@ -267,7 +267,7 @@
 
                                 <div class="form-group">
                                     <label for="txtFullName">Total </label>
-                                    <input type="text" class="form-control text disableValue" id="txtTotal" name="txtTotal" autocomplete="off" placeholder="0.00">
+                                    <input type="text" class="form-control text disableValue" id="txtTotal" name="txtTotal" autocomplete="off" tabindex="-1" placeholder="0.00">
                                     <div class="invalid-feedback text-left">
                                         Total Value Missing
                                     </div>
@@ -333,7 +333,7 @@
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Total Amount Before Tax :</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control form-control-sm disableValue" id="txtAmountBeforeTax" value="0.00">
+                                <input type="text" class="form-control form-control-sm disableValue" id="txtAmountBeforeTax" tabindex="-1" value="0.00">
                             </div>
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
@@ -349,7 +349,7 @@
                             <div class="col-sm-2">
                                 <%--<input type="text" class="form-control form-control-sm " id="txtCGST" placeholder="0.00" onchange="MasterCalculation()">--%>
 
-                                <input type="text" class="form-control form-control-sm disableValue" id="txtstrCGST" value="0" placeholder="0.00">
+                                <input type="text" class="form-control form-control-sm disableValue" id="txtstrCGST" value="0" tabindex="-1" placeholder="0.00">
                             </div>
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
@@ -357,7 +357,7 @@
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Total SGST : </label>
                             <div class="col-sm-2">
 
-                                <input type="text" class="form-control form-control-sm disableValue" id="txtstrSGST" value="0" placeholder="0.00">
+                                <input type="text" class="form-control form-control-sm disableValue" id="txtstrSGST" value="0" tabindex="-1" placeholder="0.00">
                             </div>
 
                             <div class="col-7">
@@ -366,28 +366,28 @@
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Total IGST : </label>
                             <div class="col-sm-2">
 
-                                <input type="text" class="form-control form-control-sm disableValue" id="txtstrIGST" value="0" placeholder="0.00">
+                                <input type="text" class="form-control form-control-sm disableValue" id="txtstrIGST" value="0" tabindex="-1" placeholder="0.00">
                             </div>
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Tax Amount: GST : </label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control form-control-sm disableValue" id="txtGST" placeholder="0.00">
+                                <input type="text" class="form-control form-control-sm disableValue" id="txtGST" tabindex="-1" placeholder="0.00">
                             </div>
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Total Amount Before Round Off : </label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control form-control-sm disableValue" id="txtAmountRoundoff" placeholder="0.00">
+                                <input type="text" class="form-control form-control-sm disableValue" id="txtAmountRoundoff" tabindex="-1" placeholder="0.00">
                             </div>
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
                             <label for="colFormLabel" class="col-sm-3 col-form-label ">Total Amount After Tax : </label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control form-control-sm disableValue" id="txtAmountafterTax" placeholder="0.00">
+                                <input type="text" class="form-control form-control-sm disableValue" id="txtAmountafterTax" tabindex="-1" placeholder="0.00">
                             </div>
 
                         </div>

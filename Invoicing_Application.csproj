@@ -130,6 +130,19 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="CustomErrors\414.aspx" />
+    <Content Include="CustomErrors\500.aspx" />
+    <Content Include="CustomErrors\404.aspx" />
+    <Content Include="CustomErrors\bad_gateway_502.html" />
+    <Content Include="CustomErrors\bad_request_400.html" />
+    <Content Include="CustomErrors\css\style.css" />
+    <Content Include="CustomErrors\internal_server_error_500.html" />
+    <Content Include="CustomErrors\maintenance_503.html" />
+    <Content Include="CustomErrors\not_acceptable_406.html" />
+    <Content Include="CustomErrors\not_found_404.html" />
+    <Content Include="CustomErrors\not_implemented_501.html" />
+    <Content Include="CustomErrors\request-uri_too_long_414.html" />
+    <Content Include="CustomErrors\unauthorized_401.html" />
     <Content Include="Report\Report_Pages\Invoice_Report.aspx" />
     <Content Include="Service\Invoicing_Service.asmx" />
     <Content Include="SqlServerTypes\x64\SqlServerSpatial110.dll" />
@@ -152,6 +165,27 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="CustomErrors\414.aspx.cs">
+      <DependentUpon>414.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomErrors\414.aspx.designer.cs">
+      <DependentUpon>414.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomErrors\500.aspx.cs">
+      <DependentUpon>500.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomErrors\500.aspx.designer.cs">
+      <DependentUpon>500.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomErrors\404.aspx.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomErrors\404.aspx.designer.cs">
+      <DependentUpon>404.aspx</DependentUpon>
     </Compile>
     <Compile Include="Invoicing.Master.cs">
       <DependentUpon>Invoicing.Master</DependentUpon>

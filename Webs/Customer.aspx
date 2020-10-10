@@ -401,6 +401,7 @@
             $('#cmdState').val(varStateID)
             $('#txtCustomerID').val(varCustomerID);
 
+            topFunction();
             return false; // <---------or this if you want to prevent bubbling as well
         });
 

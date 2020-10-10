@@ -34,7 +34,7 @@
                                 <div class="form-group">
 
                                     <label for="dtpFromDate">From Date: </label>
-                                    <input type="text" class="form-control text" autocomplete="off" id="dtpFromDate" required>
+                                    <input type="text" class="form-control text" autocomplete="off" id="dtpFromDate" placeholder="Select From Date" required>
                                     <div class="invalid-feedback text-left">
                                         Select Invoice From Date
                                     </div>
@@ -45,7 +45,7 @@
                                 <div class="form-group">
 
                                     <label for="dtpToDate">To Date: </label>
-                                    <input type="text" class="form-control text" autocomplete="off" id="dtpToDate" required>
+                                    <input type="text" class="form-control text" autocomplete="off" id="dtpToDate" placeholder="Select To Date" required>
                                     <div class="invalid-feedback text-left">
                                         Select Invoice To Date
                                     </div>
@@ -443,11 +443,11 @@
         $(function () {
             $("#dtpFromDate").datepicker({
                 maxDate: 0
-            });
+            }).attr('readonly', 'readonly');
 
             $("#dtpToDate").datepicker({
                 maxDate: 0
-            });
+            }).attr('readonly', 'readonly');
         });
 
         $("#example").on("click", ".lnkSelect", function () {

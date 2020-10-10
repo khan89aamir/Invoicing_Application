@@ -40,7 +40,7 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label for="txtHSNDescription">HSN Description </label>
-                                <textarea id="txtHSNDescription" runat="server" class="form-control text " rows="4" placeholder="Enter HSN Description." autocomplete="off"></textarea>
+                                <textarea id="txtHSNDescription" runat="server" class="form-control text " rows="2" placeholder="Enter HSN Description." autocomplete="off"></textarea>
 
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="txtCGST">CGST </label>
-                                <input type="text" class="form-control text disableValue " id="txtCGST" autocomplete="off" placeholder="0.00" required>
+                                <input type="text" class="form-control text disableValue " id="txtCGST" autocomplete="off" placeholder="0.00" tabindex="-1" required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter CGST.
                                 </div>
@@ -58,7 +58,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="txtSGST">SGST </label>
-                                <input type="text" class="form-control text disableValue " id="txtSGST" autocomplete="off" placeholder="0.00" required>
+                                <input type="text" class="form-control text disableValue " id="txtSGST" autocomplete="off" placeholder="0.00" tabindex="-1" required>
                                 <div class="invalid-feedback text-left">
                                     Please Enter SGST.
                                 </div>
@@ -379,6 +379,7 @@
             $('#txtIGST').val(varIGST);
             $('#txtHSNID').val(varHSNID);
 
+            topFunction();
             return false; // <---------or this if you want to prevent bubbling as well
         });
 
