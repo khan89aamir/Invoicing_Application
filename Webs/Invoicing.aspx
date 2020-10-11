@@ -473,7 +473,7 @@
         <div class="container">
         </div>
     </div>
-     <button id="btnTest" class="mb-4" onclick="PostSalesInvioceDetails(1)">Test</button>
+    <%-- <button id="btnTest" class="mb-4" onclick="PostSalesInvioceDetails(1)">Test</button>--%>
     <%--<button id="btnReport" type="submit">Report</button>--%>
     <%--<button id="btnTest" class="mb-4" onclick="SetVisbileControl()">Test</button>--%>
 
