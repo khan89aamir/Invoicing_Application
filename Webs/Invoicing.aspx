@@ -331,7 +331,7 @@
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
-                            <label for="colFormLabel" class="col-sm-3 col-form-label ">Total Amount Before Tax :</label>
+                            <label for="colFormLabel" class="col-sm-3 col-form-label ">Taxable Amount :</label>
                             <div class="col-sm-2">
                                 <input type="text" class="form-control form-control-sm disableValue" id="txtAmountBeforeTax" tabindex="-1" value="0.00">
                             </div>
@@ -385,7 +385,7 @@
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
-                            <label for="colFormLabel" class="col-sm-3 col-form-label ">Total Amount After Tax : </label>
+                            <label for="colFormLabel" class="col-sm-3 col-form-label ">Total Amount : </label>
                             <div class="col-sm-2">
                                 <input type="text" class="form-control form-control-sm disableValue" id="txtAmountafterTax" tabindex="-1" placeholder="0.00">
                             </div>
@@ -473,8 +473,8 @@
         <div class="container">
         </div>
     </div>
-    <%-- <button id="btnTest" class="mb-4" onclick="SaveOtherInvoiceDetials(1)">Test</button>
-    <button id="btnReport" type="submit">Report</button>--%>
+     <button id="btnTest" class="mb-4" onclick="PostSalesInvioceDetails(1)">Test</button>
+    <%--<button id="btnReport" type="submit">Report</button>--%>
     <%--<button id="btnTest" class="mb-4" onclick="SetVisbileControl()">Test</button>--%>
 
     <%--<button id="btnCalculateTax" class="mb-4">CalculateText</button>--%>

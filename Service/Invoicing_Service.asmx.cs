@@ -616,7 +616,7 @@ namespace Invoicing_Application.Service
                                         SKUID = r.Field<int>("SKUID"),
                                         SKUCode = r.Field<string>("SKUCode"),
                                         SKUName = r.Field<string>("SKUName"),
-                                        Rate = r.Field<decimal>("Rate"),
+                                        Rate =OldRate,
                                         HSNID = r.Field<int>("HSNID"),
                                         HSNCode = r.Field<string>("HSNCode"),
                                         CGST = r.Field<decimal>("CGST"),
