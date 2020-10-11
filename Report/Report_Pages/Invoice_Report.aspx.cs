@@ -258,7 +258,7 @@ namespace Invoicing_Application.Report.Report_Pages
             string str = PartyName;
             str = str.Replace(" ", "");
             //string fileName = str + "_" + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + "_"+ invoiceID;
-            string fileName = str + "_" + InvoiceDate.Day + "-" + InvoiceDate.Month + "-" + InvoiceDate.Year + "_" + invoiceID;
+            string fileName = str + "_" + InvoiceDate.Day + "_" + InvoiceDate.Month + "_" + InvoiceDate.Year + "_" + invoiceID.Replace("/","_");
 
             //Export the RDLC Report to Byte Array.
             byte[] bytes = ReportViewer1.LocalReport.Render("PDF", null, out contentType, out encoding, out extension, out streamIds, out warnings);

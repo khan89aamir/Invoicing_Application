@@ -70,7 +70,7 @@
                                 <div class="form-group">
                                     <label for="txtFullName">Invoice No : </label>
                                     <input type="text" id="txtInvoiceID" value="0" hidden />
-                                    <input type="text" class="form-control text " autocomplete="off" id="txtInvoiceNumber" name="txtInvoiceNumber" value="INV-{AUTO}" placeholder="Enter Invoice Number" disabled required>
+                                    <input type="text" class="form-control text " autocomplete="off" id="txtInvoiceNumber" name="txtInvoiceNumber" value="AC{AUTO}/Year-Year+1" placeholder="Enter Invoice Number" disabled required>
                                     <div class="invalid-feedback text-left">
                                         Please Enter Invoice No
                                     </div>

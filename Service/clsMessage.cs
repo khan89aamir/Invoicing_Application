@@ -14,5 +14,7 @@ namespace Invoicing_Application.Service
         public int Value { get; set; }
 
         public int UserID { get; set; }
+         
+      
     }
 }

@@ -24,9 +24,12 @@ namespace Invoicing_Application.Webs
             {
                 if (Request.QueryString["InvoiceID"]!=null)
                 {
+
                     string InvoiceID = Request.QueryString["InvoiceID"].ToString();
-                    txtBindInvoiceID.Value = InvoiceID;
                   
+                    Invoicing_Service.Invoicing_ServiceSoapClient objService = new Invoicing_Service.Invoicing_ServiceSoapClient();
+                    txtBindInvoiceID.Value= objService.GetInvoiceNumber(InvoiceID);
+
                    // ClientScript.RegisterStartupScript(this.GetType(), "updateProgress", "Test('" + InvoiceID + "');", true);
                 }
             }
