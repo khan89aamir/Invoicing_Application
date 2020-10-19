@@ -16,6 +16,13 @@ namespace Invoicing_Application.Invoicing_Service {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://anjacreation.in/Service", ConfigurationName="Invoicing_Service.Invoicing_ServiceSoap")]
     public interface Invoicing_ServiceSoap {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetSelectedCustomer", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        string GetSelectedCustomer(int CustomerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetSelectedCustomer", ReplyAction="*")]
+        System.Threading.Tasks.Task<string> GetSelectedCustomerAsync(int CustomerID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindState", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void BindState();
@@ -79,13 +86,6 @@ namespace Invoicing_Application.Invoicing_Service {
         [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/DeleteCustomer", ReplyAction="*")]
         System.Threading.Tasks.Task DeleteCustomerAsync(int CustomerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/Login", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        bool Login(string UserName, string Password);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/Login", ReplyAction="*")]
-        System.Threading.Tasks.Task<bool> LoginAsync(string UserName, string Password);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/ValidateLogin", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Data.DataTable ValidateLogin(string UserName, string Password);
@@ -113,13 +113,6 @@ namespace Invoicing_Application.Invoicing_Service {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindCustomer", ReplyAction="*")]
         System.Threading.Tasks.Task BindCustomerAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetSelectedCustomer", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        void GetSelectedCustomer(int CustomerID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetSelectedCustomer", ReplyAction="*")]
-        System.Threading.Tasks.Task GetSelectedCustomerAsync(int CustomerID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BindProduct", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -246,6 +239,13 @@ namespace Invoicing_Application.Invoicing_Service {
         [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetInvoiceDetails", ReplyAction="*")]
         System.Threading.Tasks.Task GetInvoiceDetailsAsync(System.DateTime FromDate, System.DateTime ToDate);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetInvoiceDetailsByID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void GetInvoiceDetailsByID(int InvoiceID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetInvoiceDetailsByID", ReplyAction="*")]
+        System.Threading.Tasks.Task GetInvoiceDetailsByIDAsync(int InvoiceID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/ForgotEmailIDData", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void ForgotEmailIDData(string ForgotEmailID);
@@ -259,13 +259,6 @@ namespace Invoicing_Application.Invoicing_Service {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/SendForgotPass", ReplyAction="*")]
         System.Threading.Tasks.Task SendForgotPassAsync(string ForgotEmailID, string Password);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BINDSKU_Code", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        void BINDSKU_Code();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/BINDSKU_Code", ReplyAction="*")]
-        System.Threading.Tasks.Task BINDSKU_CodeAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/SaveOtherInfoiceDetails", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -309,6 +302,13 @@ namespace Invoicing_Application.Invoicing_Service {
         [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetSalesDetails", ReplyAction="*")]
         System.Threading.Tasks.Task GetSalesDetailsAsync(string InvoiceID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetInvoiceNumber", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        string GetInvoiceNumber(string invoiceID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetInvoiceNumber", ReplyAction="*")]
+        System.Threading.Tasks.Task<string> GetInvoiceNumberAsync(string invoiceID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetBindInvoiceDetails", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void GetBindInvoiceDetails(string invoiceID);
@@ -342,6 +342,14 @@ namespace Invoicing_Application.Invoicing_Service {
         
         public Invoicing_ServiceSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public string GetSelectedCustomer(int CustomerID) {
+            return base.Channel.GetSelectedCustomer(CustomerID);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetSelectedCustomerAsync(int CustomerID) {
+            return base.Channel.GetSelectedCustomerAsync(CustomerID);
         }
         
         public void BindState() {
@@ -416,14 +424,6 @@ namespace Invoicing_Application.Invoicing_Service {
             return base.Channel.DeleteCustomerAsync(CustomerID);
         }
         
-        public bool Login(string UserName, string Password) {
-            return base.Channel.Login(UserName, Password);
-        }
-        
-        public System.Threading.Tasks.Task<bool> LoginAsync(string UserName, string Password) {
-            return base.Channel.LoginAsync(UserName, Password);
-        }
-        
         public System.Data.DataTable ValidateLogin(string UserName, string Password) {
             return base.Channel.ValidateLogin(UserName, Password);
         }
@@ -454,14 +454,6 @@ namespace Invoicing_Application.Invoicing_Service {
         
         public System.Threading.Tasks.Task BindCustomerAsync() {
             return base.Channel.BindCustomerAsync();
-        }
-        
-        public void GetSelectedCustomer(int CustomerID) {
-            base.Channel.GetSelectedCustomer(CustomerID);
-        }
-        
-        public System.Threading.Tasks.Task GetSelectedCustomerAsync(int CustomerID) {
-            return base.Channel.GetSelectedCustomerAsync(CustomerID);
         }
         
         public void BindProduct() {
@@ -602,6 +594,14 @@ namespace Invoicing_Application.Invoicing_Service {
             return base.Channel.GetInvoiceDetailsAsync(FromDate, ToDate);
         }
         
+        public void GetInvoiceDetailsByID(int InvoiceID) {
+            base.Channel.GetInvoiceDetailsByID(InvoiceID);
+        }
+        
+        public System.Threading.Tasks.Task GetInvoiceDetailsByIDAsync(int InvoiceID) {
+            return base.Channel.GetInvoiceDetailsByIDAsync(InvoiceID);
+        }
+        
         public void ForgotEmailIDData(string ForgotEmailID) {
             base.Channel.ForgotEmailIDData(ForgotEmailID);
         }
@@ -616,14 +616,6 @@ namespace Invoicing_Application.Invoicing_Service {
         
         public System.Threading.Tasks.Task SendForgotPassAsync(string ForgotEmailID, string Password) {
             return base.Channel.SendForgotPassAsync(ForgotEmailID, Password);
-        }
-        
-        public void BINDSKU_Code() {
-            base.Channel.BINDSKU_Code();
-        }
-        
-        public System.Threading.Tasks.Task BINDSKU_CodeAsync() {
-            return base.Channel.BINDSKU_CodeAsync();
         }
         
         public void SaveOtherInfoiceDetails(string parmInvoiceID, string parmReverseCharge, string parmTransportation_Mode, string parmVehicle_Number, string parmConsignee_Name, string parmConsignee_GST, string parmConsignee_StateID, string parmConsignee_Address, System.DateTime parmSupplyDate, string parmConsignee_PAN, string parmPlaceofSupply) {
@@ -672,6 +664,14 @@ namespace Invoicing_Application.Invoicing_Service {
         
         public System.Threading.Tasks.Task GetSalesDetailsAsync(string InvoiceID) {
             return base.Channel.GetSalesDetailsAsync(InvoiceID);
+        }
+        
+        public string GetInvoiceNumber(string invoiceID) {
+            return base.Channel.GetInvoiceNumber(invoiceID);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetInvoiceNumberAsync(string invoiceID) {
+            return base.Channel.GetInvoiceNumberAsync(invoiceID);
         }
         
         public void GetBindInvoiceDetails(string invoiceID) {

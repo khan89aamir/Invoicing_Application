@@ -2,6 +2,20 @@
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://anjacreation.in/Service" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://anjacreation.in/Service" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://anjacreation.in/Service">
+      <s:element name="GetSelectedCustomer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CustomerID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSelectedCustomerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSelectedCustomerResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="BindState">
         <s:complexType />
       </s:element>
@@ -89,21 +103,6 @@
       <s:element name="DeleteCustomerResponse">
         <s:complexType />
       </s:element>
-      <s:element name="Login">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="LoginResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="LoginResult" type="s:boolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
       <s:element name="ValidateLogin">
         <s:complexType>
           <s:sequence>
@@ -146,16 +145,6 @@
         <s:complexType />
       </s:element>
       <s:element name="BindCustomerResponse">
-        <s:complexType />
-      </s:element>
-      <s:element name="GetSelectedCustomer">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="CustomerID" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetSelectedCustomerResponse">
         <s:complexType />
       </s:element>
       <s:element name="BindProduct">
@@ -327,6 +316,16 @@
       <s:element name="GetInvoiceDetailsResponse">
         <s:complexType />
       </s:element>
+      <s:element name="GetInvoiceDetailsByID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InvoiceID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInvoiceDetailsByIDResponse">
+        <s:complexType />
+      </s:element>
       <s:element name="ForgotEmailIDData">
         <s:complexType>
           <s:sequence>
@@ -346,12 +345,6 @@
         </s:complexType>
       </s:element>
       <s:element name="SendForgotPassResponse">
-        <s:complexType />
-      </s:element>
-      <s:element name="BINDSKU_Code">
-        <s:complexType />
-      </s:element>
-      <s:element name="BINDSKU_CodeResponse">
         <s:complexType />
       </s:element>
       <s:element name="SaveOtherInfoiceDetails">
@@ -424,6 +417,20 @@
       <s:element name="GetSalesDetailsResponse">
         <s:complexType />
       </s:element>
+      <s:element name="GetInvoiceNumber">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="invoiceID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInvoiceNumberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetInvoiceNumberResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="GetBindInvoiceDetails">
         <s:complexType>
           <s:sequence>
@@ -436,6 +443,12 @@
       </s:element>
     </s:schema>
   </wsdl:types>
+  <wsdl:message name="GetSelectedCustomerSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSelectedCustomer" />
+  </wsdl:message>
+  <wsdl:message name="GetSelectedCustomerSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSelectedCustomerResponse" />
+  </wsdl:message>
   <wsdl:message name="BindStateSoapIn">
     <wsdl:part name="parameters" element="tns:BindState" />
   </wsdl:message>
@@ -490,12 +503,6 @@
   <wsdl:message name="DeleteCustomerSoapOut">
     <wsdl:part name="parameters" element="tns:DeleteCustomerResponse" />
   </wsdl:message>
-  <wsdl:message name="LoginSoapIn">
-    <wsdl:part name="parameters" element="tns:Login" />
-  </wsdl:message>
-  <wsdl:message name="LoginSoapOut">
-    <wsdl:part name="parameters" element="tns:LoginResponse" />
-  </wsdl:message>
   <wsdl:message name="ValidateLoginSoapIn">
     <wsdl:part name="parameters" element="tns:ValidateLogin" />
   </wsdl:message>
@@ -519,12 +526,6 @@
   </wsdl:message>
   <wsdl:message name="BindCustomerSoapOut">
     <wsdl:part name="parameters" element="tns:BindCustomerResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetSelectedCustomerSoapIn">
-    <wsdl:part name="parameters" element="tns:GetSelectedCustomer" />
-  </wsdl:message>
-  <wsdl:message name="GetSelectedCustomerSoapOut">
-    <wsdl:part name="parameters" element="tns:GetSelectedCustomerResponse" />
   </wsdl:message>
   <wsdl:message name="BindProductSoapIn">
     <wsdl:part name="parameters" element="tns:BindProduct" />
@@ -604,6 +605,12 @@
   <wsdl:message name="GetInvoiceDetailsSoapOut">
     <wsdl:part name="parameters" element="tns:GetInvoiceDetailsResponse" />
   </wsdl:message>
+  <wsdl:message name="GetInvoiceDetailsByIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetInvoiceDetailsByID" />
+  </wsdl:message>
+  <wsdl:message name="GetInvoiceDetailsByIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetInvoiceDetailsByIDResponse" />
+  </wsdl:message>
   <wsdl:message name="ForgotEmailIDDataSoapIn">
     <wsdl:part name="parameters" element="tns:ForgotEmailIDData" />
   </wsdl:message>
@@ -615,12 +622,6 @@
   </wsdl:message>
   <wsdl:message name="SendForgotPassSoapOut">
     <wsdl:part name="parameters" element="tns:SendForgotPassResponse" />
-  </wsdl:message>
-  <wsdl:message name="BINDSKU_CodeSoapIn">
-    <wsdl:part name="parameters" element="tns:BINDSKU_Code" />
-  </wsdl:message>
-  <wsdl:message name="BINDSKU_CodeSoapOut">
-    <wsdl:part name="parameters" element="tns:BINDSKU_CodeResponse" />
   </wsdl:message>
   <wsdl:message name="SaveOtherInfoiceDetailsSoapIn">
     <wsdl:part name="parameters" element="tns:SaveOtherInfoiceDetails" />
@@ -658,6 +659,12 @@
   <wsdl:message name="GetSalesDetailsSoapOut">
     <wsdl:part name="parameters" element="tns:GetSalesDetailsResponse" />
   </wsdl:message>
+  <wsdl:message name="GetInvoiceNumberSoapIn">
+    <wsdl:part name="parameters" element="tns:GetInvoiceNumber" />
+  </wsdl:message>
+  <wsdl:message name="GetInvoiceNumberSoapOut">
+    <wsdl:part name="parameters" element="tns:GetInvoiceNumberResponse" />
+  </wsdl:message>
   <wsdl:message name="GetBindInvoiceDetailsSoapIn">
     <wsdl:part name="parameters" element="tns:GetBindInvoiceDetails" />
   </wsdl:message>
@@ -665,6 +672,10 @@
     <wsdl:part name="parameters" element="tns:GetBindInvoiceDetailsResponse" />
   </wsdl:message>
   <wsdl:portType name="Invoicing_ServiceSoap">
+    <wsdl:operation name="GetSelectedCustomer">
+      <wsdl:input message="tns:GetSelectedCustomerSoapIn" />
+      <wsdl:output message="tns:GetSelectedCustomerSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="BindState">
       <wsdl:input message="tns:BindStateSoapIn" />
       <wsdl:output message="tns:BindStateSoapOut" />
@@ -701,10 +712,6 @@
       <wsdl:input message="tns:DeleteCustomerSoapIn" />
       <wsdl:output message="tns:DeleteCustomerSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="Login">
-      <wsdl:input message="tns:LoginSoapIn" />
-      <wsdl:output message="tns:LoginSoapOut" />
-    </wsdl:operation>
     <wsdl:operation name="ValidateLogin">
       <wsdl:input message="tns:ValidateLoginSoapIn" />
       <wsdl:output message="tns:ValidateLoginSoapOut" />
@@ -720,10 +727,6 @@
     <wsdl:operation name="BindCustomer">
       <wsdl:input message="tns:BindCustomerSoapIn" />
       <wsdl:output message="tns:BindCustomerSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetSelectedCustomer">
-      <wsdl:input message="tns:GetSelectedCustomerSoapIn" />
-      <wsdl:output message="tns:GetSelectedCustomerSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="BindProduct">
       <wsdl:input message="tns:BindProductSoapIn" />
@@ -777,6 +780,10 @@
       <wsdl:input message="tns:GetInvoiceDetailsSoapIn" />
       <wsdl:output message="tns:GetInvoiceDetailsSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="GetInvoiceDetailsByID">
+      <wsdl:input message="tns:GetInvoiceDetailsByIDSoapIn" />
+      <wsdl:output message="tns:GetInvoiceDetailsByIDSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="ForgotEmailIDData">
       <wsdl:input message="tns:ForgotEmailIDDataSoapIn" />
       <wsdl:output message="tns:ForgotEmailIDDataSoapOut" />
@@ -784,10 +791,6 @@
     <wsdl:operation name="SendForgotPass">
       <wsdl:input message="tns:SendForgotPassSoapIn" />
       <wsdl:output message="tns:SendForgotPassSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="BINDSKU_Code">
-      <wsdl:input message="tns:BINDSKU_CodeSoapIn" />
-      <wsdl:output message="tns:BINDSKU_CodeSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="SaveOtherInfoiceDetails">
       <wsdl:input message="tns:SaveOtherInfoiceDetailsSoapIn" />
@@ -813,6 +816,10 @@
       <wsdl:input message="tns:GetSalesDetailsSoapIn" />
       <wsdl:output message="tns:GetSalesDetailsSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="GetInvoiceNumber">
+      <wsdl:input message="tns:GetInvoiceNumberSoapIn" />
+      <wsdl:output message="tns:GetInvoiceNumberSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="GetBindInvoiceDetails">
       <wsdl:input message="tns:GetBindInvoiceDetailsSoapIn" />
       <wsdl:output message="tns:GetBindInvoiceDetailsSoapOut" />
@@ -820,6 +827,15 @@
   </wsdl:portType>
   <wsdl:binding name="Invoicing_ServiceSoap" type="tns:Invoicing_ServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetSelectedCustomer">
+      <soap:operation soapAction="http://anjacreation.in/Service/GetSelectedCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="BindState">
       <soap:operation soapAction="http://anjacreation.in/Service/BindState" style="document" />
       <wsdl:input>
@@ -901,15 +917,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Login">
-      <soap:operation soapAction="http://anjacreation.in/Service/Login" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="ValidateLogin">
       <soap:operation soapAction="http://anjacreation.in/Service/ValidateLogin" style="document" />
       <wsdl:input>
@@ -939,15 +946,6 @@
     </wsdl:operation>
     <wsdl:operation name="BindCustomer">
       <soap:operation soapAction="http://anjacreation.in/Service/BindCustomer" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetSelectedCustomer">
-      <soap:operation soapAction="http://anjacreation.in/Service/GetSelectedCustomer" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1072,6 +1070,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetInvoiceDetailsByID">
+      <soap:operation soapAction="http://anjacreation.in/Service/GetInvoiceDetailsByID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ForgotEmailIDData">
       <soap:operation soapAction="http://anjacreation.in/Service/ForgotEmailIDData" style="document" />
       <wsdl:input>
@@ -1083,15 +1090,6 @@
     </wsdl:operation>
     <wsdl:operation name="SendForgotPass">
       <soap:operation soapAction="http://anjacreation.in/Service/SendForgotPass" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="BINDSKU_Code">
-      <soap:operation soapAction="http://anjacreation.in/Service/BINDSKU_Code" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1153,6 +1151,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetInvoiceNumber">
+      <soap:operation soapAction="http://anjacreation.in/Service/GetInvoiceNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetBindInvoiceDetails">
       <soap:operation soapAction="http://anjacreation.in/Service/GetBindInvoiceDetails" style="document" />
       <wsdl:input>
@@ -1165,6 +1172,15 @@
   </wsdl:binding>
   <wsdl:binding name="Invoicing_ServiceSoap12" type="tns:Invoicing_ServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetSelectedCustomer">
+      <soap12:operation soapAction="http://anjacreation.in/Service/GetSelectedCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="BindState">
       <soap12:operation soapAction="http://anjacreation.in/Service/BindState" style="document" />
       <wsdl:input>
@@ -1246,15 +1262,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Login">
-      <soap12:operation soapAction="http://anjacreation.in/Service/Login" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="ValidateLogin">
       <soap12:operation soapAction="http://anjacreation.in/Service/ValidateLogin" style="document" />
       <wsdl:input>
@@ -1284,15 +1291,6 @@
     </wsdl:operation>
     <wsdl:operation name="BindCustomer">
       <soap12:operation soapAction="http://anjacreation.in/Service/BindCustomer" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetSelectedCustomer">
-      <soap12:operation soapAction="http://anjacreation.in/Service/GetSelectedCustomer" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1417,6 +1415,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetInvoiceDetailsByID">
+      <soap12:operation soapAction="http://anjacreation.in/Service/GetInvoiceDetailsByID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ForgotEmailIDData">
       <soap12:operation soapAction="http://anjacreation.in/Service/ForgotEmailIDData" style="document" />
       <wsdl:input>
@@ -1428,15 +1435,6 @@
     </wsdl:operation>
     <wsdl:operation name="SendForgotPass">
       <soap12:operation soapAction="http://anjacreation.in/Service/SendForgotPass" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="BINDSKU_Code">
-      <soap12:operation soapAction="http://anjacreation.in/Service/BINDSKU_Code" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1491,6 +1489,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetSalesDetails">
       <soap12:operation soapAction="http://anjacreation.in/Service/GetSalesDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvoiceNumber">
+      <soap12:operation soapAction="http://anjacreation.in/Service/GetInvoiceNumber" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

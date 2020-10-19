@@ -16,27 +16,47 @@ namespace Invoicing_Application.Report.Report_Pages
         string strpartyName;
         DateTime InvoiceDate = DateTime.Now;
 
+     
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(LoadReport())
-            { 
-                PrintToPDF(strpartyName, strInvoiceID);
+            if (!IsPostBack)
+            {
+          
+
+
+                Session["invoiceID"] = Request.QueryString["InvoiceID"].ToString();
+                Session["PartyID"] = Request.QueryString["PartyID"].ToString();
+                Session["IGST"] = Request.QueryString["IGST"].ToString();
+                Session["IsMobile"] = Request.QueryString["isMobile"].ToString();
+
+                if (LoadReport())
+                {
+                    PrintToPDF(strpartyName, strInvoiceID);
+                }
+            }
+            else
+            {
+              
+
             }
            
+
+
         }
         public bool LoadReport()
         {
-            string invoiceID = Request.QueryString["InvoiceID"].ToString();
-            string PartyID = Request.QueryString["PartyID"].ToString();
-            string IGST = Request.QueryString["IGST"].ToString();
+            string invoiceID = Session["InvoiceID"].ToString();
+            string PartyID = Session["PartyID"].ToString();
+            string IGST = Session["IGST"].ToString();
 
             //string invoiceID = "108";
             //string PartyID = "12";
             //string IGST = "0";
 
-            //string invoiceID = "131";
-            //string PartyID = "12";
-            //string IGST = "1";
+
+            //string invoiceID = "3";
+            //string PartyID = "1";
+            //string IGST = "0";
 
             Invoicing_Application.Invoicing_Service.Invoicing_ServiceSoapClient ObjClient = new Invoicing_Service.Invoicing_ServiceSoapClient();
 
@@ -94,18 +114,24 @@ namespace Invoicing_Application.Report.Report_Pages
                 ReportParameter pConGST;
                 ReportParameter pConStateCode;
                 ReportParameter pConState;
-                string strBankDetails = "";
+               
+
+                ReportParameter parmBankName=null;
+                ReportParameter parmAccountNo = null; ;
+                ReportParameter parmIFSCCode = null; ;
+                ReportParameter ParmBranch = null; ;
 
                 if (dtBankDetails.Rows.Count>0)
                 {
-                    strBankDetails = "Bank Name:" + dtBankDetails.Rows[0]["BankName"].ToString() + ",Account No: " +
-                      dtBankDetails.Rows[0]["AccountNo"].ToString() + ",IFSC Code:" +
-                       dtBankDetails.Rows[0]["IFSC_Code"].ToString() + ",Branch: " +
-                        dtBankDetails.Rows[0]["Branch"].ToString();
+
+                     parmBankName = new ReportParameter("parmBankName", "Bank Name: " + dtBankDetails.Rows[0]["BankName"].ToString());
+                     parmAccountNo = new ReportParameter("parmAccountNo","Account No: " +dtBankDetails.Rows[0]["AccountNo"].ToString());
+                     parmIFSCCode = new ReportParameter("parmIFSCCode","IFSC Code: "+ dtBankDetails.Rows[0]["IFSC_Code"].ToString());
+                     ParmBranch = new ReportParameter("ParmBranch","Branch : "+ dtBankDetails.Rows[0]["Branch"].ToString());
 
                 }
                
-                ReportParameter pBankDetails = new ReportParameter("pBankDetails", strBankDetails);
+             
 
 
                 if (dtInvoiceOther.Rows.Count>0)
@@ -177,7 +203,10 @@ namespace Invoicing_Application.Report.Report_Pages
                 ReportViewer1.LocalReport.SetParameters(pConState);
                 ReportViewer1.LocalReport.SetParameters(pConStateCode);
                 ReportViewer1.LocalReport.SetParameters(pNetAmount);
-                ReportViewer1.LocalReport.SetParameters(pBankDetails);
+                ReportViewer1.LocalReport.SetParameters(parmBankName);
+                ReportViewer1.LocalReport.SetParameters(parmAccountNo);
+                ReportViewer1.LocalReport.SetParameters(parmIFSCCode);
+                ReportViewer1.LocalReport.SetParameters(ParmBranch);
                 ReportViewer1.LocalReport.SetParameters(parmNote);
 
                 ReportViewer1.LocalReport.SetParameters(pCGST_Percent);
@@ -229,7 +258,7 @@ namespace Invoicing_Application.Report.Report_Pages
             string str = PartyName;
             str = str.Replace(" ", "");
             //string fileName = str + "_" + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + "_"+ invoiceID;
-            string fileName = str + "_" + InvoiceDate.Day + "-" + InvoiceDate.Month + "-" + InvoiceDate.Year + "_" + invoiceID;
+            string fileName = str + "_" + InvoiceDate.Day + "_" + InvoiceDate.Month + "_" + InvoiceDate.Year + "_" + invoiceID.Replace("/","_");
 
             //Export the RDLC Report to Byte Array.
             byte[] bytes = ReportViewer1.LocalReport.Render("PDF", null, out contentType, out encoding, out extension, out streamIds, out warnings);
@@ -240,11 +269,45 @@ namespace Invoicing_Application.Report.Report_Pages
 
             string DefaultURL = "../../Webs/Invoicing.aspx";
 
-            ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage1", "window.location.href = '" + DefaultURL + "';", true);
+           
+            if (Session["IsMobile"].ToString()=="1")
+            {
+                //ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage2", "window.location.href = '" + strURL + "';", true);
 
-            ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage2", "window.location.href = '" + strURL + "';", true);
 
-            //  ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage", "  window.open('"+ strURL + "');", true);
+                Session["FileName"] = fileName;
+
+            }
+            else
+            {
+                
+                //ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage1", "window.location.href = '" + DefaultURL + "';", true);
+
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage2", "window.location.href = '" + strURL + "';", true);
+
+                // ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage", "  window.open('"+ strURL + "');", true);
+
+                // Response.Write("<script>window.open('"+ strURL + "','_blank');</script>");
+
+            }
+
+
+
+
+
+
+        }
+
+        protected void Button1_Click1(object sender, EventArgs e)
+        {
+           
+            Response.ContentType = "application/pdf";
+            Response.AppendHeader("Content-Disposition", "attachment; filename=" + Session["FileName"].ToString() + ".pdf");
+            Response.TransmitFile(Server.MapPath("~/Temp/" + Session["FileName"].ToString() + ".pdf"));
+            
+            Response.End();
+
+
         }
     }
 }

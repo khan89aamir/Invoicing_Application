@@ -616,7 +616,7 @@ namespace Invoicing_Application.Service
                                         SKUID = r.Field<int>("SKUID"),
                                         SKUCode = r.Field<string>("SKUCode"),
                                         SKUName = r.Field<string>("SKUName"),
-                                        Rate = r.Field<decimal>("Rate"),
+                                        Rate =OldRate,
                                         HSNID = r.Field<int>("HSNID"),
                                         HSNCode = r.Field<string>("HSNCode"),
                                         CGST = r.Field<decimal>("CGST"),
@@ -641,6 +641,22 @@ namespace Invoicing_Application.Service
             Context.Response.AddHeader("content-length", strResponse.Length.ToString());
             Context.Response.Write(strResponse);
             Context.Response.Flush();
+        }
+
+        private string GetLastTaxInvoiceNumber()
+        {
+            // get the MAx invoice number for the current Year.. 01-April-Current Year to 31-March-Next Year
+            string q = "SELECT MAX(TaxInvoiceNo) FROM anjacreation.tblSalesInvoceMaster  where " +
+                       "InvoiceDate between date('" + DateTime.Now.Year + "-04-01') and date('" + (DateTime.Now.Year + 1) + "-03-31'); ";
+          object result=  ObjDAL.ExecuteScalarQuery(q);
+            if (result==null || result==DBNull.Value)
+            {
+                return "0";
+            }
+            else
+            {
+                return result.ToString();
+            }
         }
 
         [WebMethod]
@@ -682,9 +698,43 @@ namespace Invoicing_Application.Service
             {
                 parmIGST_Percent = "0";
             }
+            string InvoiceNumber = "NA";
 
             ObjDAL.SetStoreProcedureData("parmSaleInvoiceID", MySqlConnector.MySqlDbType.Int32, parmSaleInvoiceID, clsMySQLCoreApp.ParamType.Input);
-            ObjDAL.SetStoreProcedureData("parmInvoiceNumber", MySqlConnector.MySqlDbType.VarChar, parmInvoiceNumber, clsMySQLCoreApp.ParamType.Input);
+          
+            // if its New Invoice then check for last Tax invoice number for formating AC01/20-21
+            if (parmSaleInvoiceID==0)
+            {
+                // get the last taxinvoice no
+               string LastInvoiceNo=GetLastTaxInvoiceNumber();
+
+                // add one
+               int CurInvoiceNo = Convert.ToInt32(LastInvoiceNo) + 1;
+
+                // set this new, as next tax invoice number
+                ObjDAL.SetStoreProcedureData("parmTaxInvoiceNo", MySqlConnector.MySqlDbType.Int32, CurInvoiceNo, clsMySQLCoreApp.ParamType.Input);
+
+                // format the InvoiceNumber as per given format.
+                string InvoiceID = "AC" + CurInvoiceNo.ToString().PadLeft(2, '0') + "/";
+                string Year = DateTime.Now.ToString("yy");
+                string nextYear = Convert.ToString(Convert.ToInt32(Year) + 1);
+                InvoiceNumber = InvoiceID + Year + "-" + nextYear;
+
+                // set the formated invoice number to Invoice number parameter.
+                ObjDAL.SetStoreProcedureData("parmInvoiceNumber", MySqlConnector.MySqlDbType.VarChar, InvoiceNumber, clsMySQLCoreApp.ParamType.Input);
+
+
+            }
+            else
+            {
+                // does't mater we are not going to use it in update.
+                ObjDAL.SetStoreProcedureData("parmTaxInvoiceNo", MySqlConnector.MySqlDbType.Int32, "", clsMySQLCoreApp.ParamType.Input);
+
+                // incase of update, you will get the formated invoice number already.
+                ObjDAL.SetStoreProcedureData("parmInvoiceNumber", MySqlConnector.MySqlDbType.VarChar, parmInvoiceNumber, clsMySQLCoreApp.ParamType.Input);
+            }
+            
+          
             ObjDAL.SetStoreProcedureData("parmInvoiceDate", MySqlConnector.MySqlDbType.Date, parmInvoiceDate, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("parmStateID", MySqlConnector.MySqlDbType.Int32, parmStateID, clsMySQLCoreApp.ParamType.Input);
             ObjDAL.SetStoreProcedureData("parmPartyID", MySqlConnector.MySqlDbType.Int32, parmPartyID, clsMySQLCoreApp.ParamType.Input);
@@ -721,8 +771,10 @@ namespace Invoicing_Application.Service
                 {
                     int AutoInVoiceID = Convert.ToInt32(dRow[0]["Value"]);
 
+
                     message.Result = true;
                     message.Value = AutoInVoiceID;
+                  
                 }
                 else
                 {
@@ -1409,6 +1461,14 @@ namespace Invoicing_Application.Service
         }
 
         [WebMethod]
+       
+        public string GetInvoiceNumber(string invoiceID)
+        {
+          return  ObjDAL.ExecuteScalarQuery("SELECT InvoiceNumber FROM anjacreation.tblSalesInvoceMaster where SaleInvoiceID="+ invoiceID).ToString();
+        }
+
+
+            [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void GetBindInvoiceDetails(string invoiceID)
         {
@@ -1416,7 +1476,7 @@ namespace Invoicing_Application.Service
             string strQ = "select *,sm.StateName,sm.GSTStateCode  from anjacreation.tblSalesInvoceMaster im left join  " +
                             " anjacreation.tblInvoiceOtherDetails ot on im.SaleInvoiceID = ot.InvoiceID " +
                             " left join anjacreation.tblStateMaster sm  on ot.Consignee_StateID = sm.StateID " +
-                             " where im.SaleInvoiceID =" + invoiceID;
+                             " where im.InvoiceNumber ='" + invoiceID+"'";
 
             DataTable dtInvoiceMaster = ObjDAL.ExecuteSelectStatement(strQ);
 
@@ -1425,6 +1485,14 @@ namespace Invoicing_Application.Service
             if (dtInvoiceMaster != null && dtInvoiceMaster.Rows.Count > 0)
             {
                 jsonData = DataTableToJSONWithJSONNet(dtInvoiceMaster);
+            }
+            else
+            {
+                clsMessage clsMessageo = new clsMessage();
+                clsMessageo.Result = false;
+                jsonData= JsonConvert.SerializeObject(clsMessageo);
+
+
             }
 
             Context.Response.Clear();

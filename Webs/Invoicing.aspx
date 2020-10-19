@@ -32,6 +32,8 @@
     </style>
 
     <br />
+    <a id="reportPage" href="https://www.w3schools.com"  hidden>Visit W3Schools.com!</a> 
+
     <div id="mainContainer" class="container">
         <div class="container d-flex justify-content-start">
             <div class="card border-info" style="width: 100%">
@@ -61,14 +63,14 @@
                     </div>
                     <form id="frmInvoice" class="needs-validation" novalidate runat="server">
 
-                        <h5 class="PnlHeading">Invoice Header</h5>
+                      
                         <div class="form-row">
                             <div class="col-md-4">
 
                                 <div class="form-group">
                                     <label for="txtFullName">Invoice No : </label>
                                     <input type="text" id="txtInvoiceID" value="0" hidden />
-                                    <input type="text" class="form-control text " autocomplete="off" id="txtInvoiceNumber" name="txtInvoiceNumber" value="INV-{AUTO}" placeholder="Enter Invoice Number" disabled required>
+                                    <input type="text" class="form-control text " autocomplete="off" id="txtInvoiceNumber" name="txtInvoiceNumber" value="AC{AUTO}/Year-Year+1" placeholder="Enter Invoice Number" disabled required>
                                     <div class="invalid-feedback text-left">
                                         Please Enter Invoice No
                                     </div>
@@ -329,16 +331,16 @@
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
-                            <label for="colFormLabel" class="col-sm-3 col-form-label ">Total Amount Before Tax :</label>
+                            <label for="colFormLabel" class="col-sm-3 col-form-label ">Taxable Amount :</label>
                             <div class="col-sm-2">
                                 <input type="text" class="form-control form-control-sm disableValue" id="txtAmountBeforeTax" tabindex="-1" value="0.00">
                             </div>
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
-                            <label for="colFormLabel" class="col-sm-3 col-form-label ">Discount Amount (%) :</label>
+                            <label for="colFormLabel" class="col-sm-3 col-form-label " hidden>Discount Amount (%) :</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control form-control-sm " id="txtDiscountAmt" placeholder="0.00" onfocus="OnDiscountFocus()" onchange="MasterCalculation()">
+                                <input type="text" class="form-control form-control-sm " id="txtDiscountAmt" placeholder="0.00" onfocus="OnDiscountFocus()" onchange="MasterCalculation()" hidden>
                             </div>
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
@@ -383,7 +385,7 @@
                             <div class="col-7">
                                 <%--        blank col for shifting the content to right--%>
                             </div>
-                            <label for="colFormLabel" class="col-sm-3 col-form-label ">Total Amount After Tax : </label>
+                            <label for="colFormLabel" class="col-sm-3 col-form-label ">Total Amount : </label>
                             <div class="col-sm-2">
                                 <input type="text" class="form-control form-control-sm disableValue" id="txtAmountafterTax" tabindex="-1" placeholder="0.00">
                             </div>
@@ -471,8 +473,8 @@
         <div class="container">
         </div>
     </div>
-    <%-- <button id="btnTest" class="mb-4" onclick="SaveOtherInvoiceDetials(1)">Test</button>
-    <button id="btnReport" type="submit">Report</button>--%>
+    <%-- <button id="btnTest" class="mb-4" onclick="PostSalesInvioceDetails(1)">Test</button>--%>
+    <%--<button id="btnReport" type="submit">Report</button>--%>
     <%--<button id="btnTest" class="mb-4" onclick="SetVisbileControl()">Test</button>--%>
 
     <%--<button id="btnCalculateTax" class="mb-4">CalculateText</button>--%>

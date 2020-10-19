@@ -30,8 +30,21 @@
         });
 
     </script>
+
+    <style>
+
+        .underConstruction{
+            background-color:yellow;
+            padding:2px;
+            font-size:large;
+        }
+
+    </style>
+
 </head>
 <body>
+    
+    
     <%--DO NOT remove this Modal code from top of the page, else it wont Work--%>
     <!-- Modal Loading-->
     <div class="modal  " id="loadingBox" role="dialog" data-backdrop="static">
@@ -97,7 +110,7 @@
     </div>
 
     <!-- Modal -- Normal Message Model--->
-    <div class="modal fade" id="mdlNormalMessage" role="dialog" data-backdrop="static">
+    <div class="modal " id="mdlNormalMessage" role="dialog" data-backdrop="static">
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -137,6 +150,12 @@
     </div>
 
      <div id="myHeader">
+         <div class="underConstruction text-center" hidden>
+             <p>
+                  This system is underconstruction. Development is in progress. You may face inconsistency in some operation.
+             </p>
+      
+    </div>
     <nav class="navbar bg-primary navbar-light navbar-expand-md  justify-content-md-center justify-content-start  ">
         <h1 class="navbar-brand" style="color: white">Anja Creation</h1>
 
