@@ -93,6 +93,13 @@ namespace Invoicing_Application.Invoicing_Service {
         [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/ValidateLogin", ReplyAction="*")]
         System.Threading.Tasks.Task<System.Data.DataTable> ValidateLoginAsync(string UserName, string Password);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/TestLastInvoiceNo", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        string TestLastInvoiceNo();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/TestLastInvoiceNo", ReplyAction="*")]
+        System.Threading.Tasks.Task<string> TestLastInvoiceNoAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://anjacreation.in/Service/GetDefaultState", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         string GetDefaultState();
@@ -430,6 +437,14 @@ namespace Invoicing_Application.Invoicing_Service {
         
         public System.Threading.Tasks.Task<System.Data.DataTable> ValidateLoginAsync(string UserName, string Password) {
             return base.Channel.ValidateLoginAsync(UserName, Password);
+        }
+        
+        public string TestLastInvoiceNo() {
+            return base.Channel.TestLastInvoiceNo();
+        }
+        
+        public System.Threading.Tasks.Task<string> TestLastInvoiceNoAsync() {
+            return base.Channel.TestLastInvoiceNoAsync();
         }
         
         public string GetDefaultState() {

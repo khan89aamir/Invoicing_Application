@@ -410,6 +410,24 @@ namespace Invoicing_Application.Service
             }
             return dt;
         }
+        [WebMethod]
+        public string TestLastInvoiceNo()
+        {
+            // get the last taxinvoice no
+            string LastInvoiceNo = GetLastTaxInvoiceNumber();
+
+            // add one
+            int CurInvoiceNo = Convert.ToInt32(LastInvoiceNo) + 1;
+
+            // set this new, as next tax invoice number
+            ObjDAL.SetStoreProcedureData("parmTaxInvoiceNo", MySqlConnector.MySqlDbType.Int32, CurInvoiceNo, clsMySQLCoreApp.ParamType.Input);
+
+            // format the InvoiceNumber as per given format.
+            string InvoiceID = "AC" + CurInvoiceNo.ToString().PadLeft(2, '0') + "/";
+            string Year = GetCurrentYear().ToString().Substring(2, 2);
+            string nextYear = Convert.ToString(Convert.ToInt32(Year) + 1);
+            return  InvoiceID + Year + "-" + nextYear;
+        }
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -642,14 +660,31 @@ namespace Invoicing_Application.Service
             Context.Response.Write(strResponse);
             Context.Response.Flush();
         }
+        private int GetCurrentYear()
+        {
+            int currYear = 0;
 
+            if (DateTime.Now.Month >= 4) // if its April, then consider current year for From Year(date)
+            {
+                currYear = DateTime.Now.Year;
+            }
+            else
+            {
+                // if its Not April the consider previous error
+                currYear = DateTime.Now.Year - 1;
+            }
+
+            return currYear;
+        }
         private string GetLastTaxInvoiceNumber()
         {
+            int currYear = GetCurrentYear();
+
             // get the MAx invoice number for the current Year.. 01-April-Current Year to 31-March-Next Year
             string q = "SELECT MAX(TaxInvoiceNo) FROM anjacreation.tblSalesInvoceMaster  where " +
-                       "InvoiceDate between date('" + DateTime.Now.Year + "-04-01') and date('" + (DateTime.Now.Year + 1) + "-03-31'); ";
-          object result=  ObjDAL.ExecuteScalarQuery(q);
-            if (result==null || result==DBNull.Value)
+                       "InvoiceDate between date('" + currYear + "-04-01') and date('" + (currYear + 1) + "-03-31'); ";
+            object result = ObjDAL.ExecuteScalarQuery(q);
+            if (result == null || result == DBNull.Value)
             {
                 return "0";
             }
@@ -716,9 +751,9 @@ namespace Invoicing_Application.Service
 
                 // format the InvoiceNumber as per given format.
                 string InvoiceID = "AC" + CurInvoiceNo.ToString().PadLeft(2, '0') + "/";
-                string Year = DateTime.Now.ToString("yy");
+                string Year = GetCurrentYear().ToString().Substring(2, 2);
                 string nextYear = Convert.ToString(Convert.ToInt32(Year) + 1);
-                InvoiceNumber = InvoiceID + Year + "-" + nextYear;
+                 InvoiceNumber = InvoiceID + Year + "-" + nextYear;
 
                 // set the formated invoice number to Invoice number parameter.
                 ObjDAL.SetStoreProcedureData("parmInvoiceNumber", MySqlConnector.MySqlDbType.VarChar, InvoiceNumber, clsMySQLCoreApp.ParamType.Input);

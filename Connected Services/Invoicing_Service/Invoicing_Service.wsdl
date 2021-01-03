@@ -125,6 +125,16 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="TestLastInvoiceNo">
+        <s:complexType />
+      </s:element>
+      <s:element name="TestLastInvoiceNoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TestLastInvoiceNoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="GetDefaultState">
         <s:complexType />
       </s:element>
@@ -509,6 +519,12 @@
   <wsdl:message name="ValidateLoginSoapOut">
     <wsdl:part name="parameters" element="tns:ValidateLoginResponse" />
   </wsdl:message>
+  <wsdl:message name="TestLastInvoiceNoSoapIn">
+    <wsdl:part name="parameters" element="tns:TestLastInvoiceNo" />
+  </wsdl:message>
+  <wsdl:message name="TestLastInvoiceNoSoapOut">
+    <wsdl:part name="parameters" element="tns:TestLastInvoiceNoResponse" />
+  </wsdl:message>
   <wsdl:message name="GetDefaultStateSoapIn">
     <wsdl:part name="parameters" element="tns:GetDefaultState" />
   </wsdl:message>
@@ -716,6 +732,10 @@
       <wsdl:input message="tns:ValidateLoginSoapIn" />
       <wsdl:output message="tns:ValidateLoginSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="TestLastInvoiceNo">
+      <wsdl:input message="tns:TestLastInvoiceNoSoapIn" />
+      <wsdl:output message="tns:TestLastInvoiceNoSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="GetDefaultState">
       <wsdl:input message="tns:GetDefaultStateSoapIn" />
       <wsdl:output message="tns:GetDefaultStateSoapOut" />
@@ -919,6 +939,15 @@
     </wsdl:operation>
     <wsdl:operation name="ValidateLogin">
       <soap:operation soapAction="http://anjacreation.in/Service/ValidateLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestLastInvoiceNo">
+      <soap:operation soapAction="http://anjacreation.in/Service/TestLastInvoiceNo" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1264,6 +1293,15 @@
     </wsdl:operation>
     <wsdl:operation name="ValidateLogin">
       <soap12:operation soapAction="http://anjacreation.in/Service/ValidateLogin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestLastInvoiceNo">
+      <soap12:operation soapAction="http://anjacreation.in/Service/TestLastInvoiceNo" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
