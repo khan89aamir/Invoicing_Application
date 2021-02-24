@@ -231,7 +231,8 @@
                 CustomerName: customername, CompanyName: companyname, GSTNo: gstno, EmailID: email
                 , Address: address, StateID: stateid, CustomerID: customerid, UserID: varUserID
             };
-            //alert(JSON.stringify(CustomerData));
+
+            //alert(JSON.stringify(CustomerData));// Comment
 
             $.ajax({
                 url: "../Service/Invoicing_Service.asmx/ManageCustomers",
