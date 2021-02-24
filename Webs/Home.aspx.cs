@@ -37,5 +37,12 @@ namespace Invoicing_Application.Webs
                 //  ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Incorrect UserName or Password')", true);
             }
         }
+
+        protected void Test_Click(object sender, EventArgs e)
+        {
+            Invoicing_Service.Invoicing_ServiceSoapClient objClient = new Invoicing_Service.Invoicing_ServiceSoapClient();
+           string result= objClient.TestLastInvoiceNo();
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('"+ result + "')", true);
+        }
     }
 }

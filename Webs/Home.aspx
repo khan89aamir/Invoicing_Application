@@ -53,7 +53,7 @@
 
                         <div class="col-md-12 ">
                             <asp:Button ID="btnLogin" class="btn btn-primary w-100" runat="server" Text="Login" OnClick="btnLogin_Click" />
-
+                                <asp:Button ID="Test" runat="server"  Text="Button" Visible="false" OnClick="Test_Click" />
                         </div>
                     </div>
                 </form>
@@ -120,6 +120,8 @@
             </div>
         </div>
     </div>
+
+
 
     <script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields
